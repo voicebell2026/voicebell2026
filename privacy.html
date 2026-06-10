@@ -364,6 +364,14 @@
           <span class="item-label"><span class="ko">결제 정보 (이름, 이메일, 국가)</span><span class="en">Payment info (name, email, country)</span></span>
           <span><span class="ko">Paddle을 통한 구독·결제 처리. 카드번호 등 민감 결제 정보는 Paddle이 직접 처리하며 회사에 저장되지 않습니다.</span><span class="en">Subscription and payment processing via Paddle. Sensitive card details are handled directly by Paddle and are never stored by the Company.</span></span>
         </div>
+        <div class="item">
+          <span class="item-label"><span class="ko">이메일 (라이선스 검증용)</span><span class="en">Email (license verification)</span></span>
+          <span><span class="ko">결제 시 사용한 이메일을 라이선스 검증 목적으로 수집합니다. Cloudflare KV에 만료일과 함께 저장되며, 구독 만료 알림 이메일 발송에 사용됩니다.</span><span class="en">The email used at checkout is collected for license verification. It is stored in Cloudflare KV along with the expiry date, and used to send subscription expiry notifications.</span></span>
+        </div>
+        <div class="item">
+          <span class="item-label"><span class="ko">PC 고유 ID</span><span class="en">PC unique ID</span></span>
+          <span><span class="ko">1대의 PC에서만 서비스를 사용할 수 있도록 기기를 식별하는 데 사용됩니다. Cloudflare KV에 저장됩니다. PC 교체 시 hello@voicebell.app으로 문의하시면 초기화해 드립니다.</span><span class="en">Used to identify the device so that the service can only be used on one PC. Stored in Cloudflare KV. Contact hello@voicebell.app to reset when changing computers.</span></span>
+        </div>
       </div>
 
       <h3><span class="ko">손님(키오스크 이용객) 정보</span><span class="en">Guest (Kiosk User) Information</span></h3>
@@ -389,6 +397,10 @@
           <span class="item-label"><span class="ko">Paddle 서버</span><span class="en">Paddle servers</span></span>
           <span><span class="ko">결제 처리 및 구독 관리. Paddle의 개인정보처리방침이 적용됩니다.</span><span class="en">Payment processing and subscription management. Paddle's privacy policy applies.</span></span>
         </div>
+        <div class="item">
+          <span class="item-label"><span class="ko">Cloudflare KV</span><span class="en">Cloudflare KV</span></span>
+          <span><span class="ko">라이선스 이메일, 만료일, PC ID 저장. Cloudflare의 개인정보처리방침이 적용됩니다.</span><span class="en">License email, expiry date, and PC ID. Cloudflare's privacy policy applies.</span></span>
+        </div>
       </div>
     </div>
 
@@ -411,6 +423,14 @@
         <div class="item">
           <span class="item-label">Gmail SMTP</span>
           <span><span class="ko">이용자가 설정한 Gmail 계정을 통해 이메일 알림 발송</span><span class="en">Email notifications sent via the Gmail account configured by the user</span></span>
+        </div>
+        <div class="item">
+          <span class="item-label">Cloudflare Workers / KV</span>
+          <span><span class="ko">라이선스 검증을 위해 이메일, 만료일, PC ID를 저장·처리. Cloudflare의 개인정보처리방침이 적용됩니다.</span><span class="en">Email, expiry date, and PC ID stored and processed for license verification. Cloudflare's privacy policy applies.</span></span>
+        </div>
+        <div class="item">
+          <span class="item-label">Resend</span>
+          <span><span class="ko">다운로드 링크 및 구독 만료 알림 이메일 발송에 사용됩니다. Resend의 개인정보처리방침이 적용됩니다.</span><span class="en">Used to send download links and subscription expiry notification emails. Resend's privacy policy applies.</span></span>
         </div>
       </div>
       <p>
