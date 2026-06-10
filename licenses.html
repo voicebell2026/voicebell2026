@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오픈소스 라이선스 — VoiceBell</title>
+<meta name="description" content="VoiceBell이 사용하는 오픈소스 라이선스 고지입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --beige:     #F4F1EA;
+    --beige-mid: #EDE6D8;
+    --beige-dark:#D6CCBA;
+    --ink:       #2C2318;
+    --ink-mid:   #5C4F3A;
+    --ink-light: #9C8E78;
+    --purple:    #7B6FA0;
+    --purple-lt: #EDE7F6;
+    --purple-mid:#C5B8E0;
+    --green:     #4A7C59;
+    --green-lt:  #E8F5ED;
+    --accent:    #C17F3A;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--beige);
+    color: var(--ink);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(244,241,234,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--beige-dark);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--purple); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; }
+  .nav-links a {
+    font-size: 0.85rem;
+    color: var(--ink-mid);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .lang-toggle {
+    display: flex;
+    border: 1px solid var(--beige-dark);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .lang-btn {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.78rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-light);
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.2s;
+  }
+  .lang-btn.active { background: var(--ink); color: var(--beige); }
+
+  /* ── LANG SWITCH ── */
+  body:not(.lang-en) .en { display: none !important; }
+  body.lang-en .ko { display: none !important; }
+
+  /* ── PAGE HEADER ── */
+  .page-top {
+    padding-top: 7rem;
+    padding-bottom: 3rem;
+    padding-left: 5%;
+    padding-right: 5%;
+    border-bottom: 1px solid var(--beige-dark);
+  }
+  .page-top-inner { max-width: 800px; margin: 0 auto; }
+  .page-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 1rem;
+  }
+  .page-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .page-title-en {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-style: italic;
+    color: var(--ink-light);
+    margin-bottom: 1.5rem;
+  }
+  .page-effective {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    border: 1px solid var(--beige-dark);
+    border-radius: 2px;
+    padding: 0.25rem 0.75rem;
+  }
+
+  /* ── CONTENT ── */
+  .content-wrap {
+    display: block;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 4rem 5% 6rem;
+  }
+
+
+  /* ── ARTICLE ── */
+  article { flex: 1; min-width: 0; }
+
+  .section-block { margin-bottom: 3.5rem; }
+  .section-block:last-child { margin-bottom: 0; }
+
+  .section-block h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--beige-dark);
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+  .art-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--beige-dark);
+  }
+
+  /* ── PACKAGE CARDS ── */
+  .pkg-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border: 1px solid var(--beige-dark);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .pkg-card {
+    background: var(--beige-mid);
+    padding: 1.1rem 1.4rem;
+    border-bottom: 1px solid var(--beige-dark);
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: background 0.2s;
+  }
+  .pkg-card:last-child { border-bottom: none; }
+  .pkg-card:hover { background: var(--purple-lt); }
+
+  .pkg-main { flex: 1; }
+  .pkg-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.02em;
+  }
+  .pkg-desc {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    margin-bottom: 0.3rem;
+  }
+  .pkg-copy {
+    font-size: 0.76rem;
+    color: var(--ink-light);
+  }
+  .pkg-link {
+    font-size: 0.75rem;
+    color: var(--purple);
+    text-decoration: none;
+    white-space: nowrap;
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+  .pkg-link:hover { text-decoration: underline; }
+
+  /* 배지 */
+  .badge {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+    margin-top: 0.1rem;
+  }
+  .badge-bsd { background: var(--purple-lt); color: var(--purple); border: 1px solid var(--purple-mid); }
+  .badge-mit { background: var(--green-lt);  color: var(--green);  border: 1px solid #b5d4bf; }
+
+  /* ── LICENSE TEXT ── */
+  .license-text-block { margin-bottom: 2.5rem; }
+  .license-text-block h3 {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink-mid);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.04em;
+  }
+  .applies-to {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    margin-bottom: 0.8rem;
+    padding: 0.5rem 0.8rem;
+    background: var(--beige-mid);
+    border-left: 2px solid var(--beige-dark);
+    border-radius: 0 2px 2px 0;
+  }
+  .license-pre {
+    background: var(--beige-mid);
+    border: 1px solid var(--beige-dark);
+    border-radius: 4px;
+    padding: 1.4rem 1.6rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.76rem;
+    line-height: 1.85;
+    color: var(--ink-mid);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: var(--beige-dark);
+    padding: 3.5rem 5% 2rem;
+  }
+  .footer-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 3rem;
+    flex-wrap: wrap;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(214,204,186,0.2);
+    margin-bottom: 1.5rem;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--beige);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+  }
+  .footer-tagline {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    margin-bottom: 1.2rem;
+  }
+  .footer-biz { font-size: 0.78rem; color: var(--ink-light); line-height: 2; }
+  .footer-biz span { color: var(--beige-dark); }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 0.5rem; }
+  .footer-links a {
+    font-size: 0.82rem;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--beige); }
+  .footer-links a.active { color: var(--purple-mid); }
+  .footer-bottom {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .footer-inner { flex-direction: column; gap: 2rem; }
+    .content-wrap { padding: 3rem 5% 5rem; }
+    .pkg-card { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">Voice<span>Bell</span></a>
+  <div class="nav-links">
+    <a href="index.html#features"><span class="ko">기능</span><span class="en">Features</span></a>
+    <a href="index.html#pricing"><span class="ko">요금</span><span class="en">Pricing</span></a>
+    <a href="faq.html">FAQ</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('ko')">한국어</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-top">
+  <div class="page-top-inner">
+    <p class="page-eyebrow"><span class="ko">법적 문서</span><span class="en">Legal</span></p>
+    <h1 class="page-title ko">오픈소스 라이선스 고지</h1>
+    <h1 class="page-title en">Open Source Licenses</h1>
+    <p class="page-title-en ko">Open Source License Notice</p>
+    <p class="page-title-en en">오픈소스 라이선스 고지</p>
+    <span class="page-effective"><span class="ko">시행일: 2026년 7월 1일</span><span class="en">Effective: July 1, 2026</span></span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- ARTICLE -->
+  <article>
+
+    <p style="font-size:0.88rem; color:var(--ink-mid); margin-bottom:2.5rem; line-height:1.9;">
+      <span class="ko">VoiceBell은 아래 오픈소스 소프트웨어를 사용합니다. 각 라이선스 조건에 따라 저작권 고지를 제공합니다.</span>
+      <span class="en">VoiceBell uses the open-source software listed below. Copyright notices are provided in accordance with each license.</span>
+    </p>
+
+    <!-- 패키지 목록 -->
+    <div class="section-block" id="packages">
+      <h2>
+        <span class="art-num">01</span>
+        <span class="ko">사용 패키지</span>
+        <span class="en">Packages Used</span>
+      </h2>
+
+      <div class="pkg-list">
+
+        <div class="pkg-card">
+          <div class="pkg-main">
+            <div class="pkg-name">Flutter SDK <span style="font-family:'Noto Sans KR',sans-serif; font-size:0.75rem; font-weight:300; color:var(--ink-light);">3.44.0</span></div>
+            <div class="pkg-desc"><span class="ko">Flutter 프레임워크 및 포함된 Dart 패키지 (Dart SDK 3.12.0 포함)</span><span class="en">Flutter framework and bundled Dart packages (includes Dart SDK 3.12.0)</span></div>
+            <div class="pkg-copy">Copyright 2013 The Flutter Authors. All rights reserved.</div>
+          </div>
+          <span class="badge badge-bsd">BSD-3-Clause</span>
+          <a class="pkg-link" href="https://github.com/flutter/flutter/blob/master/LICENSE" target="_blank" rel="noopener">LICENSE ↗</a>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-main">
+            <div class="pkg-name">http</div>
+            <div class="pkg-desc"><span class="ko">HTTP 요청을 위한 비동기 클라이언트 라이브러리</span><span class="en">Composable, multi-platform HTTP client library</span></div>
+            <div class="pkg-copy">Copyright 2014, the Dart project authors.</div>
+          </div>
+          <span class="badge badge-bsd">BSD-3-Clause</span>
+          <a class="pkg-link" href="https://pub.dev/packages/http" target="_blank" rel="noopener">pub.dev ↗</a>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-main">
+            <div class="pkg-name">intl</div>
+            <div class="pkg-desc"><span class="ko">다국어 처리, 날짜·숫자 형식 변환 라이브러리</span><span class="en">Internationalization and localization library</span></div>
+            <div class="pkg-copy">Copyright 2013, the Dart project authors.</div>
+          </div>
+          <span class="badge badge-bsd">BSD-3-Clause</span>
+          <a class="pkg-link" href="https://pub.dev/packages/intl" target="_blank" rel="noopener">pub.dev ↗</a>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-main">
+            <div class="pkg-name">shared_preferences</div>
+            <div class="pkg-desc"><span class="ko">플랫폼별 로컬 키-값 저장소 플러그인</span><span class="en">Plugin for reading and writing simple key-value pairs</span></div>
+            <div class="pkg-copy">Copyright 2013, The Flutter Authors. All rights reserved.</div>
+          </div>
+          <span class="badge badge-bsd">BSD-3-Clause</span>
+          <a class="pkg-link" href="https://pub.dev/packages/shared_preferences" target="_blank" rel="noopener">pub.dev ↗</a>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-main">
+            <div class="pkg-name">flutter_lints</div>
+            <div class="pkg-desc"><span class="ko">Flutter 앱용 권장 린트 규칙 세트 (개발 의존성)</span><span class="en">Recommended lint rules for Flutter apps (dev dependency)</span></div>
+            <div class="pkg-copy">Copyright 2013, The Flutter Authors. All rights reserved.</div>
+          </div>
+          <span class="badge badge-bsd">BSD-3-Clause</span>
+          <a class="pkg-link" href="https://pub.dev/packages/flutter_lints" target="_blank" rel="noopener">pub.dev ↗</a>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-main">
+            <div class="pkg-name">file_picker</div>
+            <div class="pkg-desc"><span class="ko">네이티브 파일 탐색기를 통한 파일 선택 플러그인</span><span class="en">Plugin for picking files via the native file explorer</span></div>
+            <div class="pkg-copy">Copyright (c) Gonçalo Palma.</div>
+          </div>
+          <span class="badge badge-mit">MIT</span>
+          <a class="pkg-link" href="https://pub.dev/packages/file_picker" target="_blank" rel="noopener">pub.dev ↗</a>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-main">
+            <div class="pkg-name">archive</div>
+            <div class="pkg-desc"><span class="ko">ZIP, tar, gzip 등 압축 포맷 인코더/디코더</span><span class="en">Encoders and decoders for ZIP, tar, gzip, and more</span></div>
+            <div class="pkg-copy">Copyright (c) 2013-2021 Brendan Duncan. All rights reserved.</div>
+          </div>
+          <span class="badge badge-mit">MIT</span>
+          <a class="pkg-link" href="https://pub.dev/packages/archive" target="_blank" rel="noopener">pub.dev ↗</a>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-main">
+            <div class="pkg-name">mailer</div>
+            <div class="pkg-desc"><span class="ko">Dart용 이메일 발송 라이브러리 (SMTP, HTML, 첨부파일)</span><span class="en">Email sending library for Dart (SMTP, HTML, attachments)</span></div>
+            <div class="pkg-copy">Copyright (c) mailer contributors.</div>
+          </div>
+          <span class="badge badge-mit">MIT</span>
+          <a class="pkg-link" href="https://pub.dev/packages/mailer" target="_blank" rel="noopener">pub.dev ↗</a>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-main">
+            <div class="pkg-name">cupertino_icons</div>
+            <div class="pkg-desc"><span class="ko">Flutter Cupertino 위젯용 Apple 스타일 기본 아이콘 에셋</span><span class="en">Default icon assets for Flutter's Cupertino widgets</span></div>
+            <div class="pkg-copy">Copyright (c) 2016 The Flutter Authors.</div>
+          </div>
+          <span class="badge badge-mit">MIT</span>
+          <a class="pkg-link" href="https://pub.dev/packages/cupertino_icons" target="_blank" rel="noopener">pub.dev ↗</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BSD-3-Clause 전문 -->
+    <div class="section-block" id="bsd">
+      <h2>
+        <span class="art-num">02</span>
+        BSD-3-Clause License
+      </h2>
+      <div class="license-text-block">
+        <div class="applies-to">
+          <span class="ko">적용 패키지: Flutter SDK · http · intl · shared_preferences · flutter_lints</span>
+          <span class="en">Applies to: Flutter SDK · http · intl · shared_preferences · flutter_lints</span>
+        </div>
+        <pre class="license-pre">Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.</pre>
+      </div>
+    </div>
+
+    <!-- MIT 전문 -->
+    <div class="section-block" id="mit">
+      <h2>
+        <span class="art-num">03</span>
+        MIT License
+      </h2>
+      <div class="license-text-block">
+        <div class="applies-to">
+          <span class="ko">적용 패키지: file_picker · archive · mailer · cupertino_icons</span>
+          <span class="en">Applies to: file_picker · archive · mailer · cupertino_icons</span>
+        </div>
+        <pre class="license-pre">Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</pre>
+      </div>
+    </div>
+
+  </article>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">VoiceBell</div>
+      <div class="footer-tagline">Order by voice, or just tap.</div>
+      <div class="footer-biz">
+        <span class="ko">
+          상호명: <span>[등록 예정]</span><br>
+          대표자: <span>[등록 예정]</span><br>
+          사업자등록번호: <span>[등록 예정]</span><br>
+          통신판매업신고번호: <span>[등록 예정]</span><br>
+          주소: <span>[등록 예정]</span>
+        </span>
+        <span class="en">
+          Business name: <span>[Coming soon]</span><br>
+          Representative: <span>[Coming soon]</span><br>
+          Business reg. no.: <span>[Coming soon]</span><br>
+          E-commerce reg. no.: <span>[Coming soon]</span><br>
+          Address: <span>[Coming soon]</span>
+        </span>
+      </div>
+    </div>
+    <div>
+      <ul class="footer-links">
+        <li><a href="terms.html"><span class="ko">이용약관</span><span class="en">Terms of Service</span></a></li>
+        <li><a href="privacy.html"><span class="ko">개인정보처리방침</span><span class="en">Privacy Policy</span></a></li>
+        <li><a href="licenses.html" class="active"><span class="ko">오픈소스 라이선스</span><span class="en">Open Source Licenses</span></a></li>
+        <li><a href="faq.html">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 VoiceBell. All rights reserved.</span>
+    <span><span class="ko">결제는 Paddle이 처리합니다</span><span class="en">Payments processed by Paddle</span></span>
+  </div>
+</footer>
+
+<script>
+function setLang(lang) {
+  const isEn = lang === 'en';
+  document.body.classList.toggle('lang-en', isEn);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.documentElement.lang = lang;
+}
+</script>
+</body>
+</html>
