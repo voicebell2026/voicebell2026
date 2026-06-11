@@ -125,7 +125,14 @@
     <!-- 전체 액션 -->
     <div class="global-actions">
       <button class="btn-primary" onclick="toggleAddLicense()">라이선스 추가</button>
+      <button class="btn-warning" onclick="loadTransactions()">Paddle 거래 조회</button>
       <button class="btn-purple" onclick="deleteAll()">데이터 전체 삭제</button>
+    </div>
+
+    <!-- Paddle 거래 내역 -->
+    <div class="date-edit" id="paddleSection" style="margin-top:16px; padding-top:16px; border-top:1px solid #f0ede8;">
+      <div class="section-label" style="margin-bottom:10px;">Paddle 거래 내역</div>
+      <div id="transactionList"><div class="empty-state">거래 조회 버튼을 눌러주세요</div></div>
     </div>
 
     <!-- 라이선스 추가 -->
@@ -298,6 +305,76 @@ async function expireOne(pcId, i) {
     const data = await res.json();
     if (data.success) { toast('즉시 만료 처리됐어요'); search(); }
     else toast('처리 실패: ' + (data.reason ?? ''), true);
+  } catch(e) { toast('오류가 발생했어요', true); }
+}
+
+async function loadTransactions() {
+  document.getElementById('transactionList').innerHTML = '<div class="empty-state">조회 중...</div>';
+  document.getElementById('paddleSection').classList.add('show');
+  try {
+    const res = await fetch(`${WORKER}/admin/transactions?email=${encodeURIComponent(currentEmail)}`, {
+      headers: { 'X-Admin-Key': KEY }
+    });
+    const result = await res.json();
+    const txList = result.data?.data ?? [];
+
+    if (txList.length === 0) {
+      document.getElementById('transactionList').innerHTML = '<div class="empty-state">거래 내역이 없어요</div>';
+      return;
+    }
+
+    document.getElementById('transactionList').innerHTML = txList.map(tx => {
+      const date = new Date(tx.billed_at ?? tx.created_at).toLocaleDateString('ko-KR');
+      const amount = tx.details?.totals?.grand_total ?? '-';
+      const currency = tx.currency_code ?? '';
+      const status = tx.status;
+      const subId = tx.subscription_id ?? null;
+
+      return `
+        <div class="license-item" style="margin-bottom:8px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:0.85rem; font-weight:600;">${date} · ${amount} ${currency}</div>
+              <div style="font-size:0.75rem; color:#888; margin-top:2px;">상태: ${status} · ID: ${tx.id.substring(0,20)}...</div>
+              ${subId ? `<div style="font-size:0.75rem; color:#888;">구독 ID: ${subId.substring(0,20)}...</div>` : ''}
+            </div>
+          </div>
+          <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;">
+            <button class="btn-danger" style="padding:6px 12px; font-size:0.78rem;" onclick="refund('${tx.id}')">환불</button>
+            ${subId ? `<button class="btn-warning" style="padding:6px 12px; font-size:0.78rem;" onclick="cancelSub('${subId}')">구독 취소</button>` : ''}
+          </div>
+        </div>`;
+    }).join('');
+  } catch(e) {
+    document.getElementById('transactionList').innerHTML = '<div class="empty-state">조회 중 오류가 발생했어요</div>';
+  }
+}
+
+async function cancelSub(subscriptionId) {
+  if (!confirm('구독을 즉시 취소할까요?')) return;
+  try {
+    const res = await fetch(`${WORKER}/admin/cancel-subscription`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': KEY },
+      body: JSON.stringify({ subscriptionId })
+    });
+    const data = await res.json();
+    if (data.success) toast('구독이 취소됐어요');
+    else toast('취소 실패: ' + JSON.stringify(data.data?.error ?? ''), true);
+  } catch(e) { toast('오류가 발생했어요', true); }
+}
+
+async function refund(transactionId) {
+  if (!confirm('이 거래를 환불할까요?')) return;
+  try {
+    const res = await fetch(`${WORKER}/admin/refund`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': KEY },
+      body: JSON.stringify({ transactionId, reason: 'Customer request' })
+    });
+    const data = await res.json();
+    if (data.success) { toast('환불 처리됐어요'); loadTransactions(); }
+    else toast('환불 실패: ' + JSON.stringify(data.data?.error ?? ''), true);
   } catch(e) { toast('오류가 발생했어요', true); }
 }
 
