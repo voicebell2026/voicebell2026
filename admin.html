@@ -106,6 +106,18 @@
 <!-- 메인 -->
 <div class="container" id="mainArea" style="display:none;">
 
+  <!-- Paddle API Key 만료일 -->
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px; padding:10px 14px; background:#e8f4fd; border-radius:10px; font-size:0.85rem;">
+    <span style="color:#2980b9; font-weight:600;">🔑 Paddle API Key 만료일</span>
+    <span id="paddleKeyExpiry" style="color:#2c3e50; font-weight:600;"></span>
+    <button onclick="togglePaddleKeyEdit()" style="padding:4px 10px; border:1.5px solid #2980b9; background:transparent; color:#2980b9; border-radius:6px; font-size:0.78rem; cursor:pointer; font-weight:600;">변경</button>
+    <div id="paddleKeyEditArea" style="display:none; align-items:center; gap:6px;">
+      <input type="date" id="paddleKeyDate" style="padding:4px 8px; border:1px solid #ccc; border-radius:6px; font-size:0.82rem;">
+      <button onclick="savePaddleKeyExpiry()" style="padding:4px 10px; background:#2980b9; color:#fff; border:none; border-radius:6px; font-size:0.78rem; cursor:pointer; font-weight:600;">저장</button>
+      <button onclick="togglePaddleKeyEdit()" style="padding:4px 10px; border:1.5px solid #aaa; background:transparent; color:#aaa; border-radius:6px; font-size:0.78rem; cursor:pointer;">취소</button>
+    </div>
+  </div>
+
   <!-- 검색 -->
   <div class="card" style="margin-bottom:16px;">
     <div class="section-label">고객 조회</div>
@@ -170,6 +182,27 @@ function login() {
   document.getElementById('mainArea').style.display = 'block';
   toast('로그인됐어요');
 }
+
+  // Paddle API Key 만료일 (localStorage)
+  const savedPaddleKey = localStorage.getItem('paddleKeyExpiry');
+  if (savedPaddleKey) {
+    document.getElementById('paddleKeyExpiry').textContent = savedPaddleKey;
+    document.getElementById('paddleKeyDate').value = savedPaddleKey;
+  }
+
+  function togglePaddleKeyEdit() {
+    const area = document.getElementById('paddleKeyEditArea');
+    area.style.display = area.style.display === 'none' ? 'flex' : 'none';
+  }
+
+  function savePaddleKeyExpiry() {
+    const date = document.getElementById('paddleKeyDate').value;
+    if (!date) return;
+    localStorage.setItem('paddleKeyExpiry', date);
+    document.getElementById('paddleKeyExpiry').textContent = date;
+    togglePaddleKeyEdit();
+    toast('저장됐어요');
+  }
 
 async function search() {
   const email = document.getElementById('searchEmail').value.trim().toLowerCase();
@@ -240,13 +273,11 @@ function renderLicenses() {
         <div class="license-expiry">${expiryText}</div>
         <div class="license-days">${daysText}</div>
         ${txText ? `<div style="font-size:0.75rem; color:#aaa; margin-top:2px;">${txText}</div>` : ''}
-        ${l.scheduledCancelAt ? `<div style="font-size:0.75rem; color:#e67e22; margin-top:2px;">🗓 구독취소 예정: ${new Date(l.scheduledCancelAt).toLocaleDateString('ko-KR')}</div>` : ''}
         <div class="license-actions">
           ${l.pcId ? `<button class="btn-warning" onclick="resetPc('${l.pcId}', ${i})">PC 초기화</button>` : ''}
           <button class="btn-outline" onclick="toggleDateEdit(${i})">만료일 변경</button>
           <button class="btn-outline" onclick="expireOne('${l.pcId}', ${i})">즉시 만료</button>
           ${hasSubscription ? `<button class="btn-outline" onclick="cancelSubByPc('${l.pcId}', '${l.subscriptionId}', ${i})">구독 취소</button>` : ''}
-          <button class="btn-outline" onclick="toggleCancelSchedule(${i})">취소 예정일</button>
         </div>
         <div class="date-edit" id="dateEdit-${i}">
           <label>새 만료일</label>
@@ -256,15 +287,7 @@ function renderLicenses() {
             <button class="btn-outline" onclick="toggleDateEdit(${i})">취소</button>
           </div>
         </div>
-        <div class="date-edit" id="cancelSchedule-${i}">
-          <label>구독취소 예정일</label>
-          <div class="date-row">
-            <input type="date" id="cancelDate-${i}" value="${l.scheduledCancelAt ? l.scheduledCancelAt.substring(0,10) : ''}" style="flex:1;">
-            <button class="btn-primary" onclick="saveCancelSchedule('${l.pcId}', ${i})">저장</button>
-            <button class="btn-outline" onclick="saveCancelSchedule('${l.pcId}', ${i}, true)">삭제</button>
-            <button class="btn-outline" onclick="toggleCancelSchedule(${i})">취소</button>
-          </div>
-        </div>
+
       </div>`;
   }).join('');
 }
@@ -363,26 +386,6 @@ async function loadTransactions() {
   }
 }
 
-function toggleCancelSchedule(i) {
-  document.getElementById(`cancelSchedule-${i}`).classList.toggle('show');
-}
-
-async function saveCancelSchedule(pcId, i, clear = false) {
-  const date = clear ? null : document.getElementById(`cancelDate-${i}`).value;
-  if (!clear && !date) { toast('날짜를 선택해 주세요', true); return; }
-  try {
-    const res = await fetch(`${WORKER}/admin/set-cancel-schedule`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': KEY },
-      body: JSON.stringify({ email: currentEmail, pcId, scheduledCancelAt: date || null })
-    });
-    const data = await res.json();
-    if (data.success) {
-      toast(clear ? '취소 예정일이 삭제됐어요' : '취소 예정일이 저장됐어요');
-      search();
-    } else toast('저장 실패', true);
-  } catch(e) { toast('오류가 발생했어요', true); }
-}
 
 async function cancelSubByPc(pcId, subscriptionId, i) {
   if (!confirm('이 라이선스의 구독을 취소할까요?\n현재 이용 기간 종료 후 자동 갱신이 중단됩니다.')) return;
