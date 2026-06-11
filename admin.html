@@ -117,6 +117,15 @@
     </div>
   </div>
 
+  <!-- 거래 ID 직접 환불 -->
+  <div class="card" style="margin-bottom:16px;">
+    <div class="section-label">거래 ID로 직접 환불</div>
+    <div class="search-row">
+      <input type="text" id="directTxId" placeholder="거래 ID 입력 (txn_01xxx...)">
+      <button class="btn-danger" onclick="directRefund()">환불</button>
+    </div>
+  </div>
+
   <!-- 결과 -->
   <div class="card result-card" id="resultCard">
     <div class="section-label">라이선스 목록</div>
@@ -305,6 +314,25 @@ async function expireOne(pcId, i) {
     const data = await res.json();
     if (data.success) { toast('즉시 만료 처리됐어요'); search(); }
     else toast('처리 실패: ' + (data.reason ?? ''), true);
+  } catch(e) { toast('오류가 발생했어요', true); }
+}
+
+async function directRefund() {
+  const txId = document.getElementById('directTxId').value.trim();
+  if (!txId) return toast('거래 ID를 입력하세요', true);
+  if (!confirm(`거래 ID: ${txId}\n\n환불 처리할까요?`)) return;
+  try {
+    const res = await fetch(`${WORKER}/admin/refund`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': KEY },
+      body: JSON.stringify({ transactionId: txId, reason: 'Customer request' })
+    });
+    if (res.status === 401) return toast('Admin Key가 올바르지 않아요', true);
+    const data = await res.json();
+    if (data.success) {
+      toast('환불 처리됐어요');
+      document.getElementById('directTxId').value = '';
+    } else toast('환불 실패: ' + JSON.stringify(data.data?.error ?? ''), true);
   } catch(e) { toast('오류가 발생했어요', true); }
 }
 
