@@ -178,8 +178,12 @@ async function search() {
 
     const data = await res.json();
     if (!data.found) {
-      toast('등록된 고객이 없어요', true);
-      document.getElementById('resultCard').classList.remove('show');
+      // 고객 없어도 라이선스 추가 가능하게 빈 상태로 표시
+      currentEmail = email;
+      currentLicenses = [];
+      renderLicenses();
+      document.getElementById('resultCard').classList.add('show');
+      toast('등록된 라이선스가 없어요. 추가할 수 있어요.');
       return;
     }
 
