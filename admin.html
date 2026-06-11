@@ -240,11 +240,13 @@ function renderLicenses() {
         <div class="license-expiry">${expiryText}</div>
         <div class="license-days">${daysText}</div>
         ${txText ? `<div style="font-size:0.75rem; color:#aaa; margin-top:2px;">${txText}</div>` : ''}
+        ${l.scheduledCancelAt ? `<div style="font-size:0.75rem; color:#e67e22; margin-top:2px;">🗓 구독취소 예정: ${new Date(l.scheduledCancelAt).toLocaleDateString('ko-KR')}</div>` : ''}
         <div class="license-actions">
           ${l.pcId ? `<button class="btn-warning" onclick="resetPc('${l.pcId}', ${i})">PC 초기화</button>` : ''}
           <button class="btn-outline" onclick="toggleDateEdit(${i})">만료일 변경</button>
           <button class="btn-outline" onclick="expireOne('${l.pcId}', ${i})">즉시 만료</button>
           ${hasSubscription ? `<button class="btn-outline" onclick="cancelSubByPc('${l.pcId}', '${l.subscriptionId}', ${i})">구독 취소</button>` : ''}
+          <button class="btn-outline" onclick="toggleCancelSchedule(${i})">취소 예정일</button>
         </div>
         <div class="date-edit" id="dateEdit-${i}">
           <label>새 만료일</label>
@@ -252,6 +254,15 @@ function renderLicenses() {
             <input type="date" id="newExpiry-${i}" value="${expiry.toISOString().substring(0,10)}" style="flex:1;">
             <button class="btn-primary" onclick="updateExpiry('${l.pcId}', ${i})">저장</button>
             <button class="btn-outline" onclick="toggleDateEdit(${i})">취소</button>
+          </div>
+        </div>
+        <div class="date-edit" id="cancelSchedule-${i}">
+          <label>구독취소 예정일</label>
+          <div class="date-row">
+            <input type="date" id="cancelDate-${i}" value="${l.scheduledCancelAt ? l.scheduledCancelAt.substring(0,10) : ''}" style="flex:1;">
+            <button class="btn-primary" onclick="saveCancelSchedule('${l.pcId}', ${i})">저장</button>
+            <button class="btn-outline" onclick="saveCancelSchedule('${l.pcId}', ${i}, true)">삭제</button>
+            <button class="btn-outline" onclick="toggleCancelSchedule(${i})">취소</button>
           </div>
         </div>
       </div>`;
@@ -350,6 +361,27 @@ async function loadTransactions() {
   } catch(e) {
     document.getElementById('transactionList').innerHTML = '<div class="empty-state">조회 중 오류가 발생했어요</div>';
   }
+}
+
+function toggleCancelSchedule(i) {
+  document.getElementById(`cancelSchedule-${i}`).classList.toggle('show');
+}
+
+async function saveCancelSchedule(pcId, i, clear = false) {
+  const date = clear ? null : document.getElementById(`cancelDate-${i}`).value;
+  if (!clear && !date) { toast('날짜를 선택해 주세요', true); return; }
+  try {
+    const res = await fetch(`${WORKER}/admin/set-cancel-schedule`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': KEY },
+      body: JSON.stringify({ email: currentEmail, pcId, scheduledCancelAt: date || null })
+    });
+    const data = await res.json();
+    if (data.success) {
+      toast(clear ? '취소 예정일이 삭제됐어요' : '취소 예정일이 저장됐어요');
+      search();
+    } else toast('저장 실패', true);
+  } catch(e) { toast('오류가 발생했어요', true); }
 }
 
 async function cancelSubByPc(pcId, subscriptionId, i) {
