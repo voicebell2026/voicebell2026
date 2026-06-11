@@ -1270,6 +1270,7 @@ function closeMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
 }
 function setLang(lang) {
+  localStorage.setItem('vb_lang', lang);
   const isEn = lang === 'en';
   document.body.classList.toggle('lang-en', isEn);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
@@ -1290,6 +1291,12 @@ function setLang(lang) {
     img.style.display = isEn ? 'block' : 'none';
   });
 }
+
+// 언어 복원
+(function() {
+  const lang = localStorage.getItem('vb_lang');
+  if (lang === 'en') setLang('en');
+})();
 
 function toggleFaq(btn) {
   const item = btn.closest('.faq-item');
