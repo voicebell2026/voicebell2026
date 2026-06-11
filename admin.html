@@ -238,6 +238,7 @@ function renderLicenses() {
     const expiryText = expiry.toLocaleDateString('ko-KR', { year:'numeric', month:'long', day:'numeric' });
     const daysText = isValid ? `D-${daysLeft}` : '만료됨';
     const productText = l.product ?? '알 수 없음';
+    const txText = l.transactionId ? `거래 ID: ${l.transactionId}` : '';
 
     return `
       <div class="license-item" id="license-${i}">
@@ -248,6 +249,7 @@ function renderLicenses() {
         <div class="license-pc">${pcText}</div>
         <div class="license-expiry">${expiryText}</div>
         <div class="license-days">${daysText}</div>
+        ${txText ? `<div style="font-size:0.75rem; color:#aaa; margin-top:2px;">${txText}</div>` : ''}
         <div class="license-actions">
           ${l.pcId ? `<button class="btn-warning" onclick="resetPc('${l.pcId}', ${i})">PC 초기화</button>` : ''}
           <button class="btn-outline" onclick="toggleDateEdit(${i})">만료일 변경</button>
