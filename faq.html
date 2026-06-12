@@ -585,7 +585,7 @@
           3. start_voicebell.bat 더블클릭<br>
           4. Windows 방화벽 팝업 → 개인 + 공용 둘 다 체크 → 허용<br>
           5. 브라우저 자동 열림<br>
-          6. "연결이 비공개" 경고 → 고급 → localhost (으)로 이동 클릭 <a href="#faq-private-connection" style="color:var(--purple); font-size:0.85rem;">자세히 ↓</a><br>
+          6. "연결이 비공개" 경고 → 고급 → localhost (으)로 이동 클릭<br>
           7. 카운터 메인 페이지 → 결제 시 사용한 이메일 입력<br>
           8. 이메일 인증 완료 → 바로 사용 시작 🎉</div>
           <p>같은 와이파이에 연결된 태블릿·PC·스마트폰의 Chrome 브라우저에 카운터 PC의 IP 주소를 입력하면 키친·키오스크가 즉시 연결됩니다.</p>
@@ -599,7 +599,7 @@
           3. Double-click start_voicebell.bat<br>
           4. Windows Firewall popup → Check both Private + Public → Allow<br>
           5. Browser opens automatically<br>
-          6. "Your connection is not private" → Advanced → click localhost (unsafe) <a href="#faq-private-connection" style="color:var(--purple); font-size:0.85rem;">details ↓</a><br>
+          6. "Your connection is not private" → Advanced → click localhost (unsafe)<br>
           7. Counter main page → enter the email used at checkout<br>
           8. Verified → start using VoiceBell right away 🎉</div>
           <p>On any tablet, PC, or phone on the same Wi-Fi, open Chrome and enter the counter PC's IP address to connect the kitchen and kiosk instantly.</p>
@@ -1736,6 +1736,28 @@ function toggleFaq(btn) {
   document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
   if (!isOpen) item.classList.add('open');
 }
+
+function openFaqById(id) {
+  const item = document.getElementById(id);
+  if (!item) return;
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  item.classList.add('open');
+  setTimeout(() => item.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (window.location.hash) {
+    const id = window.location.hash.slice(1);
+    openFaqById(id);
+  }
+});
+
+window.addEventListener('hashchange', () => {
+  if (window.location.hash) {
+    const id = window.location.hash.slice(1);
+    openFaqById(id);
+  }
+});
 
 function setLang(lang) {
   localStorage.setItem('vb_lang', lang);
