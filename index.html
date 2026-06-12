@@ -61,6 +61,13 @@
     text-decoration: none;
   }
   .nav-logo span { color: var(--purple); }
+  .nav-tagline {
+    font-size: 0.6rem;
+    color: var(--ink-light);
+    letter-spacing: 0.03em;
+    opacity: 0.7;
+    line-height: 1;
+  }
   .nav-links { display: flex; align-items: center; gap: 2rem; }
   .nav-links a {
     font-size: 0.85rem;
@@ -148,6 +155,41 @@
     background: var(--green);
     top: 40%; left: 30%;
   }
+  .hero-price {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.2rem;
+    margin-top: 1.4rem;
+    justify-content: center;
+  }
+  .hero-badges span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    color: var(--ink-mid);
+    white-space: nowrap;
+  }
+  .hero-badges svg {
+    color: #5a9a6a;
+    flex-shrink: 0;
+  }
+  .hero-descriptor {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-light);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    opacity: 0.7;
+  }
   .hero-eyebrow {
     font-size: 0.78rem;
     letter-spacing: 0.2em;
@@ -180,8 +222,9 @@
   .hero-sub {
     font-size: 0.95rem;
     color: var(--ink-mid);
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     max-width: 480px;
+    text-align: center;
   }
   .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
   .btn-primary {
@@ -704,7 +747,10 @@
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#">Voice<span>Bell</span></a>
+  <div style="display:flex; flex-direction:column; gap:1px;">
+    <a class="nav-logo" href="#">Voice<span>Bell</span></a>
+    <span class="nav-tagline">Voice ordering + kiosk + kitchen display<br>in one browser-based system.</span>
+  </div>
   <div class="nav-links">
     <a href="#features"><span class="ko">기능</span><span class="en">Features</span></a>
     <a href="#how"><span class="ko">사용 방법</span><span class="en">How it works</span></a>
@@ -750,8 +796,8 @@
       <p class="hero-en-sub fade-in ko">Order by voice, or just tap.</p>
       <p class="hero-en-sub fade-in en" style="display:none; font-style:normal; font-family:'Noto Serif KR',serif; font-size:clamp(1rem,2vw,1.4rem); color:var(--ink-mid);">주문은 말로, 아니면 버튼으로</p>
       <p class="hero-sub fade-in">
-        <span class="ko">두 번 딸깍, 끝. 30일 무료로 시작하세요.</span>
-        <span class="en">Two clicks. That's it. Start free for 30 days.</span>
+        <span class="ko">두 번 딸깍, 끝. · 30일 무료 · 이후 월 ₩9,900</span>
+        <span class="en">Two clicks. That's it. · 30 days free · then $6.99/month</span>
       </p>
       <div class="hero-btns fade-in">
         <a href="#features" class="btn-secondary">See it in Action!</a>
@@ -759,6 +805,14 @@
           <span class="ko">무료로 시작하기</span>
           <span class="en">Start Free</span>
         </a>
+      </div>
+      <div class="hero-badges fade-in">
+        <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="ko">30일 무료 체험</span><span class="en">30-Day Free Trial</span></span>
+        <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="ko">설치 프로그램 없음</span><span class="en">No Installer</span></span>
+        <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="ko">데이터 내 PC 보관</span><span class="en">Data Stays on Your PC</span></span>
+        <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="ko">가게 와이파이로 작동</span><span class="en">Runs on Local Wi-Fi</span></span>
+        <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="ko">브라우저만으로 카운터·키친·키오스크 연결</span><span class="en">Counter · Kitchen · Kiosk via browser</span></span>
+        <span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="ko">언제든지 해지 가능</span><span class="en">Cancel Anytime</span></span>
       </div>
     </div>
     <div class="hero-image fade-in">

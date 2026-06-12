@@ -267,22 +267,7 @@
   }
   footer a { color: var(--purple); text-decoration: none; }
 
-  .popular-keywords {
-    padding: 0.5rem 0 0.8rem;
-    font-size: 0.82rem;
-    color: var(--ink-light);
-  }
-  .popular-keywords button {
-    background: none;
-    border: none;
-    padding: 0;
-    font-size: 0.82rem;
-    color: var(--purple);
-    cursor: pointer;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-  .popular-keywords button:hover { opacity: 0.7; }
+
   .search-wrap {
     max-width: 800px; margin: 0 auto;
     padding: 2rem 2rem 0;
@@ -389,32 +374,12 @@
       <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
     </svg>
     <input type="text" id="faqSearch"
-      placeholder="검색어를 입력하세요"
+      placeholder="설치 · 환불 · IP · 키오스크 · PC 교체 · 음성 주문"
       oninput="searchFaq(this.value)"
     >
     <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
   <div class="search-result-count" id="searchCount"></div>
-</div>
-<div class="popular-keywords" id="popularKeywords">
-  <span class="ko">인기 검색: </span>
-  <span class="en">Popular: </span>
-  <span class="ko">
-    <button onclick="searchFaq('설치'); document.getElementById('faqSearch').value='설치'; document.getElementById('popularKeywords').style.display='none';">설치</button> ·
-    <button onclick="searchFaq('환불'); document.getElementById('faqSearch').value='환불'; document.getElementById('popularKeywords').style.display='none';">환불</button> ·
-    <button onclick="searchFaq('IP'); document.getElementById('faqSearch').value='IP'; document.getElementById('popularKeywords').style.display='none';">IP</button> ·
-    <button onclick="searchFaq('키오스크'); document.getElementById('faqSearch').value='키오스크'; document.getElementById('popularKeywords').style.display='none';">키오스크</button> ·
-    <button onclick="searchFaq('PC 교체'); document.getElementById('faqSearch').value='PC 교체'; document.getElementById('popularKeywords').style.display='none';">PC 교체</button> ·
-    <button onclick="searchFaq('음성 주문'); document.getElementById('faqSearch').value='음성 주문'; document.getElementById('popularKeywords').style.display='none';">음성 주문</button>
-  </span>
-  <span class="en">
-    <button onclick="searchFaq('installation'); document.getElementById('faqSearch').value='installation'; document.getElementById('popularKeywords').style.display='none';">installation</button> ·
-    <button onclick="searchFaq('refund'); document.getElementById('faqSearch').value='refund'; document.getElementById('popularKeywords').style.display='none';">refund</button> ·
-    <button onclick="searchFaq('kiosk'); document.getElementById('faqSearch').value='kiosk'; document.getElementById('popularKeywords').style.display='none';">kiosk</button> ·
-    <button onclick="searchFaq('IP'); document.getElementById('faqSearch').value='IP'; document.getElementById('popularKeywords').style.display='none';">IP</button> ·
-    <button onclick="searchFaq('voice'); document.getElementById('faqSearch').value='voice'; document.getElementById('popularKeywords').style.display='none';">voice order</button> ·
-    <button onclick="searchFaq('network'); document.getElementById('faqSearch').value='network'; document.getElementById('popularKeywords').style.display='none';">network</button>
-  </span>
 </div>
 
 <div class="no-result" id="noResult">
@@ -1742,8 +1707,6 @@ function closeMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
 }
 function searchFaq(query) {
-  const pk = document.getElementById('popularKeywords');
-  if (pk) pk.style.display = query.trim() ? 'none' : '';
   const q = query.trim().toLowerCase();
   const items = document.querySelectorAll('.faq-item');
   const sections = document.querySelectorAll('.faq-section');
@@ -1862,6 +1825,12 @@ window.addEventListener('hashchange', () => {
 });
 
 function setLang(lang) {
+  const input = document.getElementById('faqSearch');
+  if (input) {
+    input.placeholder = lang === 'en'
+      ? 'installation · refund · kiosk · IP · voice order · network'
+      : '설치 · 환불 · IP · 키오스크 · PC 교체 · 음성 주문';
+  }
   localStorage.setItem('vb_lang', lang);
   const isEn = lang === 'en';
   document.body.classList.toggle('lang-en', isEn);
