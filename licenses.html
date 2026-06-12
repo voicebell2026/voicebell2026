@@ -2,6 +2,16 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
+<script>
+(function() {
+  if (localStorage.getItem('vb_lang') === 'en') {
+    document.documentElement.classList.add('lang-en-early');
+  }
+})();
+</script>
+<style>
+  .lang-en-early .ko { display: none !important; }
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>오픈소스 라이선스 — VoiceBell</title>
 <meta name="description" content="VoiceBell이 사용하는 오픈소스 라이선스 고지입니다.">
@@ -68,6 +78,14 @@
   }
 
 
+  .lang-btn {
+    background: none; border: 1px solid var(--beige-dark);
+    border-radius: 4px; padding: 4px 10px;
+    font-size: 0.8rem; cursor: pointer; color: var(--ink-mid);
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.2s;
+  }
+  .lang-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
   .lang-controls { display: flex; gap: 6px; align-items: center; }
   .nav-links { display: flex; align-items: center; gap: 2rem; }
   .nav-links a {
@@ -315,9 +333,8 @@
     .content-wrap { padding: 3rem 5% 5rem; }
     .pkg-card { flex-wrap: wrap; }
   }
-  
-    .hamburger { display: flex; }
-  }
+
+  /* ── HAMBURGER + MOBILE MENU ── */
   .hamburger {
     display: none;
     flex-direction: column;
@@ -376,6 +393,13 @@
     .hamburger { display: flex; }
   }
 </style>
+<script>
+  if (localStorage.getItem('vb_lang') === 'en') {
+    document.addEventListener('DOMContentLoaded', function() {});
+    // body 파싱 전 처리를 위해 style 직접 주입
+    document.write('<style id="early-lang">body .ko{display:none!important}.lang-btn[onclick*=\'ko\']{background:none!important;color:var(--ink-mid)!important;border-color:var(--beige-dark)!important}.lang-btn[onclick*=\'en\']{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}</style>');
+  }
+</script>
 </head>
 <body>
 
@@ -687,6 +711,7 @@ SOFTWARE.</pre>
 
 <script>
 function setLang(lang) {
+  localStorage.setItem('vb_lang', lang);
   const isEn = lang === 'en';
   document.body.classList.toggle('lang-en', isEn);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
@@ -706,6 +731,11 @@ function closeMenu() {
   document.getElementById('hamburger').classList.remove('open');
   document.getElementById('mobileMenu').classList.remove('open');
 }
+// 언어 복원
+(function() {
+  const lang = localStorage.getItem('vb_lang');
+  if (lang === 'en') setLang('en');
+})();
 </script>
 </body>
 </html>
