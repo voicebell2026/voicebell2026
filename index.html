@@ -1550,7 +1550,7 @@ function startCheckout() {
   if (!currentPriceType) return;
   closeConsent();
   Paddle.Checkout.open({
-    items: [{ priceId: PRICE_IDS[currentPriceType], quantity: 1 }],
+    items: [{ price_id: PRICE_IDS[currentPriceType], quantity: 1 }],
   });
 }
 
