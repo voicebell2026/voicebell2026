@@ -78,6 +78,78 @@
   }
   .lang-btn.active { background: var(--ink); color: var(--beige); }
 
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: sticky;
+    top: 56px;
+    left: 0; right: 0;
+    background: rgba(244,241,234,0.98);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--beige-dark);
+    padding: 0.5rem 2rem;
+    z-index: 99;
+    flex-direction: column;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    text-decoration: none;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--beige-dark);
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu .mobile-lang {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.9rem 0;
+    align-items: center;
+  }
+  .mobile-menu .mobile-lang-label {
+    font-size: 0.78rem;
+    color: var(--ink-light);
+    margin-right: 0.3rem;
+  }
+  .mobile-menu .m-lang-btn {
+    padding: 0.25rem 0.7rem;
+    font-size: 0.78rem;
+    background: none;
+    border: 1px solid var(--beige-dark);
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--ink-light);
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.2s;
+  }
+  .mobile-menu .m-lang-btn.active { background: var(--ink); color: var(--beige); border-color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .lang-toggle { display: none; }
+    .hamburger { display: flex; }
+  }
+
   /* ── LANG SWITCH ── */
   body:not(.lang-en) .en { display: none !important; }
   body.lang-en .ko { display: none !important; }
@@ -296,9 +368,6 @@
     .footer-bottom { flex-direction: column; }
     .content-wrap { padding: 3rem 5% 5rem; }
   }
-
-  @media (max-width: 700px) {
-    .nav-links { display: none; }
     .lang-toggle { display: none; }
     .hamburger { display: flex; }
   }
