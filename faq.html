@@ -320,6 +320,11 @@
     .search-wrap { padding: 1.5rem 1.2rem 0; }
   }
 </style>
+<script>
+  if (localStorage.getItem('vb_lang') === 'en') {
+    document.write('<style id="early-lang">body .ko{display:none!important}.lang-btn[onclick*=\'ko\']{background:none!important;color:var(--ink-mid)!important;border-color:var(--beige-dark)!important}.lang-btn[onclick*=\'en\']{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}</style>');
+  }
+</script>
 </head>
 <body>
 
@@ -579,8 +584,10 @@
           2. 압축 해제 → server 폴더 + start_voicebell.bat 바탕화면에 놓기<br>
           3. start_voicebell.bat 더블클릭<br>
           4. Windows 방화벽 팝업 → 개인 + 공용 둘 다 체크 → 허용<br>
-          5. 브라우저 자동 열림 → 결제 시 사용한 이메일 입력<br>
-          6. 인증 완료 → 바로 사용 시작</div>
+          5. 브라우저 자동 열림<br>
+          6. "연결이 비공개" 경고 → 고급 → localhost (으)로 이동 클릭 <a href="#faq-private-connection" style="color:var(--purple); font-size:0.85rem;">자세히 ↓</a><br>
+          7. 카운터 메인 페이지 → 결제 시 사용한 이메일 입력<br>
+          8. 이메일 인증 완료 → 바로 사용 시작 🎉</div>
           <p>같은 와이파이에 연결된 태블릿·PC·스마트폰의 Chrome 브라우저에 카운터 PC의 IP 주소를 입력하면 키친·키오스크가 즉시 연결됩니다.</p>
           <div class="tip">💡 이후 실행부터는 이메일 입력 없이 바로 시작됩니다. 별도 설치 프로그램은 없습니다.</div>
         </div>
@@ -591,15 +598,72 @@
           2. Extract the zip → place server folder + start_voicebell.bat on your desktop<br>
           3. Double-click start_voicebell.bat<br>
           4. Windows Firewall popup → Check both Private + Public → Allow<br>
-          5. Browser opens automatically → enter the email used at checkout<br>
-          6. Verified → start using VoiceBell right away</div>
+          5. Browser opens automatically<br>
+          6. "Your connection is not private" → Advanced → click localhost (unsafe) <a href="#faq-private-connection" style="color:var(--purple); font-size:0.85rem;">details ↓</a><br>
+          7. Counter main page → enter the email used at checkout<br>
+          8. Verified → start using VoiceBell right away 🎉</div>
           <p>On any tablet, PC, or phone on the same Wi-Fi, open Chrome and enter the counter PC's IP address to connect the kitchen and kiosk instantly.</p>
           <div class="tip">💡 From the next launch, the server starts without requiring your email. No installer required.</div>
         </div>
       </div></div>
     </div>
 
-    <!-- Q PC 교체 -->
+    <!-- Q8 연결이 비공개 -->
+    <div class="faq-item" id="faq-private-connection">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span><span class="ko">"연결이 비공개로 설정되어 있지 않습니다" 경고가 뜹니다.</span><span class="en">"Your connection is not private" warning appears.</span></span>
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="ko">
+          <p>😊 완전히 정상입니다. 해킹이나 보안 문제와는 전혀 관계없습니다.</p>
+          <p>VoiceBell은 인터넷이 아닌 <strong>내 컴퓨터 안에서만</strong> 실행되는 프로그램입니다. Chrome 브라우저가 화면을 표시하는 역할을 하는데, Chrome은 이 사실을 모르기 때문에 처음 보는 주소라며 자동으로 경고를 띄우는 것입니다.</p>
+          <p>아래 순서대로 한 번만 진행하면 이후에는 경고가 뜨지 않습니다.</p>
+          <div style="display:flex; align-items:center; gap:10px; margin:0.5rem 0 0.2rem; font-size:13px; color:#555;">
+            <span style="background:#f0ede8; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">1</span>
+            경고 화면 하단 <strong style="border:1px solid #3c3c3c; border-radius:3px; padding:1px 6px; font-size:11px; margin:0 2px;">고급</strong> 클릭
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; margin:0.2rem 0 0.8rem; font-size:13px; color:#555;">
+            <span style="background:#f0ede8; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">2</span>
+            아래에 나타나는 링크 클릭
+          </div>
+          <div style="margin:1rem 0;">
+            <p style="margin:0 0 10px; font-size:13px; color:#3c3c3c;">경고 화면 하단 <strong style="border:1px solid #3c3c3c; border-radius:3px; padding:1px 6px; font-size:11px;">고급</strong> 버튼을 클릭하면 아래가 나타납니다.</p>
+            <div style="display:inline-block; background:#f8f7f4; border:1px solid #e0ddd6; border-radius:8px; padding:14px 18px; font-family:sans-serif; max-width:360px;">
+              <div style="display:flex; justify-content:space-between; gap:6px; margin-bottom:12px;">
+                <span style="font-size:10px; color:#ccc; border:1px solid #eee; border-radius:4px; padding:4px 10px;">세부정보 숨기기</span>
+                <span style="font-size:10px; color:#a8c4e8; border:1px solid #c5daf0; border-radius:4px; padding:4px 10px; background:#f0f6fd;">안전한 페이지로 돌아가기</span>
+              </div>
+              <p style="font-size:13px; margin:0; display:flex; align-items:center; gap:4px; font-weight:500;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span style="color:#1a73e8; font-weight:600;">localhost</span><span style="color:#bbb; font-size:11px; font-weight:400;">(안전하지 않음)</span><span style="color:#bbb; font-size:11px; font-weight:400;">(으)로 이동</span>
+                <span style="font-size:11px; color:#fff; background:#e07b00; border-radius:3px; padding:1px 6px; white-space:nowrap; margin-left:4px;">← 클릭</span>
+              </p>
+            </div>
+            <p style="margin:10px 0 0; font-size:12px; color:#888;">💡 <strong>localhost</strong>는 내 컴퓨터 자신을 가리키는 주소입니다.</p>
+          </div>
+
+          <div class="tip">💡 카운터 PC의 IP가 바뀌거나 브라우저 인터넷 사용기록을 삭제한 경우 동일한 절차를 다시 진행해야 합니다. 키친·키오스크 기기에서는 인터넷 사용기록 삭제를 되도록 피해 주세요.</div>
+        </div>
+        <div class="en">
+          <p>😊 Completely normal — this has nothing to do with hacking or security risks.</p>
+          <p>VoiceBell runs entirely <strong>inside your own computer</strong>, not on the internet. Chrome is used to display the screen, but since Chrome doesn't know this, it shows a warning for any unfamiliar address.</p>
+          <p>Just follow these two steps once — the warning won't appear again after that.</p>
+          <div style="display:flex; align-items:center; gap:10px; margin:0.5rem 0 0.2rem; font-size:13px; color:#555;">
+            <span style="background:#f0ede8; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">1</span>
+            Click <strong style="border:1px solid #3c3c3c; border-radius:3px; padding:1px 6px; font-size:11px; margin:0 2px;">Advanced</strong> at the bottom of the warning screen
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; margin:0.2rem 0 0.8rem; font-size:13px; color:#555;">
+            <span style="background:#f0ede8; border-radius:50%; width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; flex-shrink:0;">2</span>
+            Click the link that appears below
+          </div>
+          <div class="tip">💡 You may need to repeat this if your counter PC's IP address changes or if you clear your browser history. Avoid clearing browser history on kitchen and kiosk devices.</div>
+        </div>
+      </div></div>
+    </div>
+
+
+        <!-- Q PC 교체 -->
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
         <span><span class="ko">컴퓨터를 바꿨어요. 새 컴퓨터에서 사용할 수 있나요?</span><span class="en">I got a new computer. Can I use VoiceBell on it?</span></span>
@@ -761,31 +825,10 @@
   <!-- ③ 네트워크/접속 -->
   <div class="faq-section">
     <div class="faq-section-title">
-      <span class="ko">🌐 네트워크 / 접속</span>
-      <span class="en">🌐 Network / Access</span>
+      <span class="ko">🌐 네트워크 / 접속 / 보안</span>
+      <span class="en">🌐 Network / Access / Security</span>
     </div>
 
-    <!-- Q8 연결이 비공개 -->
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <span><span class="ko">"연결이 비공개로 설정되어 있지 않습니다" 경고가 뜹니다.</span><span class="en">"Your connection is not private" warning appears.</span></span>
-        <span class="arrow">+</span>
-      </button>
-      <div class="faq-a"><div class="faq-a-inner">
-        <div class="ko">
-          <p>정상입니다. 음성 주문 기능을 위해 마이크를 사용하는데, 브라우저가 마이크를 허용하려면 보안 연결이 필요합니다.</p>
-          <p>VoiceBell은 가게 안에서만 작동하는 로컬 서버이기 때문에 공인 보안 인증서가 필요 없습니다만, 브라우저가 이런 상황을 알지 못하므로 공인 보안 인증서가 없는 외부 사이트와 동일하게 경고를 표시하는 것입니다. 그러므로 해킹이나 보안 문제와는 관계가 없기 때문에, 아래 방법으로 접속하시면 됩니다.</p>
-          <p>경고 화면 하단 "고급" 버튼 클릭 후 "이동(안전하지 않음)" 링크를 클릭하면 접속됩니다. 최초 1회만 진행하면 이후 동일 기기에서는 경고가 다시 뜨지 않습니다.</p>
-          <div class="tip">💡 카운터 PC의 IP가 바뀌거나 브라우저 인터넷 사용기록을 삭제한 경우 동일한 절차를 다시 진행해야 합니다. 키친·키오스크 기기에서는 인터넷 사용기록 삭제를 되도록 피해 주세요.</div>
-        </div>
-        <div class="en">
-          <p>This is normal. VoiceBell requires a secure connection to use the microphone for voice ordering.</p>
-          <p>VoiceBell runs as a local server inside your store and doesn't need an official security certificate. However, since the browser has no way of knowing this, it shows the same warning it would for any external site without one. This has nothing to do with hacking or security risks, so please proceed using the steps below.</p>
-          <p>Click "Advanced" at the bottom of the warning screen, then click "Proceed (unsafe)" to continue. This only needs to be done once per device.</p>
-          <div class="tip">💡 You may need to repeat this if your counter PC's IP address changes or if you clear your browser history. Avoid clearing browser history on kitchen and kiosk devices.</div>
-        </div>
-      </div></div>
-    </div>
 
     <!-- Q9 IP 확인 -->
     <div class="faq-item">
@@ -973,6 +1016,76 @@
       </div></div>
     </div>
 
+
+    <!-- Q25 데이터 저장 -->
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span><span class="ko">데이터는 어디에 저장되나요?</span><span class="en">Where is my data stored?</span></span>
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="ko">
+          <p>VoiceBell은 별도의 클라우드 서버를 운영하지 않습니다. 모든 데이터는 사장님의 서버 겸용 카운터 PC 안에서만 저장되며, VoiceBell로 전송되지 않습니다. 단, 이메일 알림을 설정하신 경우 매출 데이터가 사장님이 등록하신 Gmail로 발송됩니다.</p>
+          <p>매출 데이터는 바탕화면 orders 폴더에 엑셀 파일로 자동 저장됩니다. 메뉴, 매장 설정 등은 서버 폴더에 안전하게 보관됩니다.</p>
+          <div class="tip">💡 손님 개인정보는 수집하지 않습니다. 단, 손님이 직접 입력한 이메일 주소는 해당 주문 완료 후 즉시 삭제됩니다.</div>
+        </div>
+        <div class="en">
+          <p>VoiceBell does not operate any cloud servers. All data is stored only on your server-integrated counter PC and is never sent to VoiceBell. However, if you have set up email notifications, sales data will be sent to the Gmail address you registered.</p>
+          <p>Sales data is automatically saved as Excel files in the orders folder on your desktop. Menu and store settings are securely stored in the server folder.</p>
+          <div class="tip">💡 No customer personal information is collected. No names, contact details, or card numbers are stored.</div>
+        </div>
+      </div></div>
+    </div>
+    <!-- Q26 해킹 -->
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span><span class="ko">해킹 위험은 없나요?</span><span class="en">Is there a risk of hacking?</span></span>
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="ko">
+          <p>걱정하지 않으셔도 됩니다. VoiceBell은 가게 내부 와이파이에서만 작동하는 로컬 서버입니다. 인터넷을 통해 외부에서 접근하는 것 자체가 불가능합니다.</p>
+          <p>음성 주문은 Google 음성 인식 서비스를 사용합니다. 가게 기기가 Google에 먼저 요청한 것에 대한 정상 응답을 받는 구조로, 외부에서 일방적으로 침입하는 해킹과는 근본적으로 다릅니다.</p>
+          <p>"연결이 비공개" 경고는 공인 보안 인증서가 없어서 뜨는 것으로 해킹과는 무관합니다.</p>
+          <div class="tip">💡 전용 PC에서 인터넷 검색이나 이메일 확인 등 다른 용도로 사용하지 않으시면 보안 위험을 줄일 수 있습니다.</div>
+        </div>
+        <div class="en">
+          <p>There is no need to worry. VoiceBell runs as a local server that only operates within your store's Wi-Fi network. It is simply not possible to access it from outside via the internet.</p>
+          <p>Voice ordering uses Google Speech Recognition. Your device sends a request to Google and receives a response — this is fundamentally different from hacking, where an outsider forces their way in uninvited.</p>
+          <p>The "connection not private" warning appears because there is no official security certificate, and has nothing to do with hacking.</p>
+          <div class="tip">💡 If you avoid using the dedicated PC for other activities such as web browsing or personal email, you can reduce security risks.</div>
+        </div>
+      </div></div>
+    </div>
+    <!-- Q27 더 안전하게 -->
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span><span class="ko">VoiceBell을 더 안전하게 사용하는 방법이 있나요?</span><span class="en">How can I use VoiceBell more securely?</span></span>
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="ko">
+          <p>VoiceBell 전용 PC를 따로 두시는 것을 권장합니다.</p>
+          <ul>
+            <li>🏠 모든 데이터는 사장님의 서버 겸용 카운터 PC 안에서만 움직입니다. 외부로 나가지 않습니다.</li>
+            <li>📧 이메일 알림도 사장님 PC에서 직접 발송됩니다. 중간에 누가 볼 수 없습니다.</li>
+            <li>🙅 손님 개인정보는 수집하지 않습니다. 단, 손님이 직접 입력한 이메일 주소는 해당 주문 완료 후 즉시 삭제됩니다.</li>
+            <li>💳 VoiceBell 정기구독 및 기간권 결제는 Paddle이 처리합니다. 카드 정보가 VoiceBell에 저장되지 않습니다.</li>
+          </ul>
+          <div class="tip">💡 전용 PC에서 인터넷 검색이나 이메일 확인 등 다른 용도로 사용하지 않으시면 보안 위험을 줄일 수 있습니다.</div>
+        </div>
+        <div class="en">
+          <p>We recommend using a dedicated PC for VoiceBell.</p>
+          <ul>
+            <li>🏠 All data stays within your server-integrated counter PC. Nothing leaves your store.</li>
+            <li>📧 Email notifications are sent directly from your PC. No one else can see them in transit.</li>
+            <li>🙅 No customer personal information is collected. No names, contacts, or card numbers.</li>
+            <li>💳 VoiceBell subscription and pass payments are processed by Paddle. No card information is stored by VoiceBell.</li>
+          </ul>
+          <div class="tip">💡 If you avoid using the dedicated PC for other activities such as web browsing or personal email, you can reduce security risks.</div>
+        </div>
+      </div></div>
+    </div>
   </div>
 
   <!-- ④ 운영/기능 -->
@@ -1410,87 +1523,8 @@ Bibimbap,9000</div>
     </div>
   </div>
 
-  <!-- ⑦ 데이터/보안 -->
-  <div class="faq-section">
-    <div class="faq-section-title">
-      <span class="ko">🔒 데이터 / 보안</span>
-      <span class="en">🔒 Data / Security</span>
-    </div>
 
-    <!-- Q25 데이터 저장 -->
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <span><span class="ko">데이터는 어디에 저장되나요?</span><span class="en">Where is my data stored?</span></span>
-        <span class="arrow">+</span>
-      </button>
-      <div class="faq-a"><div class="faq-a-inner">
-        <div class="ko">
-          <p>VoiceBell은 별도의 클라우드 서버를 운영하지 않습니다. 모든 데이터는 사장님의 서버 겸용 카운터 PC 안에서만 저장되며, VoiceBell로 전송되지 않습니다. 단, 이메일 알림을 설정하신 경우 매출 데이터가 사장님이 등록하신 Gmail로 발송됩니다.</p>
-          <p>매출 데이터는 바탕화면 orders 폴더에 엑셀 파일로 자동 저장됩니다. 메뉴, 매장 설정 등은 서버 폴더에 안전하게 보관됩니다.</p>
-          <div class="tip">💡 손님 개인정보는 수집하지 않습니다. 단, 손님이 직접 입력한 이메일 주소는 해당 주문 완료 후 즉시 삭제됩니다.</div>
-        </div>
-        <div class="en">
-          <p>VoiceBell does not operate any cloud servers. All data is stored only on your server-integrated counter PC and is never sent to VoiceBell. However, if you have set up email notifications, sales data will be sent to the Gmail address you registered.</p>
-          <p>Sales data is automatically saved as Excel files in the orders folder on your desktop. Menu and store settings are securely stored in the server folder.</p>
-          <div class="tip">💡 No customer personal information is collected. No names, contact details, or card numbers are stored.</div>
-        </div>
-      </div></div>
-    </div>
-
-    <!-- Q26 해킹 -->
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <span><span class="ko">해킹 위험은 없나요?</span><span class="en">Is there a risk of hacking?</span></span>
-        <span class="arrow">+</span>
-      </button>
-      <div class="faq-a"><div class="faq-a-inner">
-        <div class="ko">
-          <p>걱정하지 않으셔도 됩니다. VoiceBell은 가게 내부 와이파이에서만 작동하는 로컬 서버입니다. 인터넷을 통해 외부에서 접근하는 것 자체가 불가능합니다.</p>
-          <p>음성 주문은 Google 음성 인식 서비스를 사용합니다. 가게 기기가 Google에 먼저 요청한 것에 대한 정상 응답을 받는 구조로, 외부에서 일방적으로 침입하는 해킹과는 근본적으로 다릅니다.</p>
-          <p>"연결이 비공개" 경고는 공인 보안 인증서가 없어서 뜨는 것으로 해킹과는 무관합니다.</p>
-          <div class="tip">💡 전용 PC에서 인터넷 검색이나 이메일 확인 등 다른 용도로 사용하지 않으시면 보안 위험을 줄일 수 있습니다.</div>
-        </div>
-        <div class="en">
-          <p>There is no need to worry. VoiceBell runs as a local server that only operates within your store's Wi-Fi network. It is simply not possible to access it from outside via the internet.</p>
-          <p>Voice ordering uses Google Speech Recognition. Your device sends a request to Google and receives a response — this is fundamentally different from hacking, where an outsider forces their way in uninvited.</p>
-          <p>The "connection not private" warning appears because there is no official security certificate, and has nothing to do with hacking.</p>
-          <div class="tip">💡 If you avoid using the dedicated PC for other activities such as web browsing or personal email, you can reduce security risks.</div>
-        </div>
-      </div></div>
-    </div>
-
-    <!-- Q27 더 안전하게 -->
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <span><span class="ko">VoiceBell을 더 안전하게 사용하는 방법이 있나요?</span><span class="en">How can I use VoiceBell more securely?</span></span>
-        <span class="arrow">+</span>
-      </button>
-      <div class="faq-a"><div class="faq-a-inner">
-        <div class="ko">
-          <p>VoiceBell 전용 PC를 따로 두시는 것을 권장합니다.</p>
-          <ul>
-            <li>🏠 모든 데이터는 사장님의 서버 겸용 카운터 PC 안에서만 움직입니다. 외부로 나가지 않습니다.</li>
-            <li>📧 이메일 알림도 사장님 PC에서 직접 발송됩니다. 중간에 누가 볼 수 없습니다.</li>
-            <li>🙅 손님 개인정보는 수집하지 않습니다. 단, 손님이 직접 입력한 이메일 주소는 해당 주문 완료 후 즉시 삭제됩니다.</li>
-            <li>💳 VoiceBell 정기구독 및 기간권 결제는 Paddle이 처리합니다. 카드 정보가 VoiceBell에 저장되지 않습니다.</li>
-          </ul>
-          <div class="tip">💡 전용 PC에서 인터넷 검색이나 이메일 확인 등 다른 용도로 사용하지 않으시면 보안 위험을 줄일 수 있습니다.</div>
-        </div>
-        <div class="en">
-          <p>We recommend using a dedicated PC for VoiceBell.</p>
-          <ul>
-            <li>🏠 All data stays within your server-integrated counter PC. Nothing leaves your store.</li>
-            <li>📧 Email notifications are sent directly from your PC. No one else can see them in transit.</li>
-            <li>🙅 No customer personal information is collected. No names, contacts, or card numbers.</li>
-            <li>💳 VoiceBell subscription and pass payments are processed by Paddle. No card information is stored by VoiceBell.</li>
-          </ul>
-          <div class="tip">💡 If you avoid using the dedicated PC for other activities such as web browsing or personal email, you can reduce security risks.</div>
-        </div>
-      </div></div>
-    </div>
-  </div>
-
-  <!-- ⑧ 유지보수 -->
+  <!-- ⑧  <!-- ⑧ 유지보수 -->
   <div class="faq-section">
     <div class="faq-section-title">
       <span class="ko">🔧 유지보수</span>
