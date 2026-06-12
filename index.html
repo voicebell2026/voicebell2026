@@ -741,6 +741,74 @@
   /* ── 페이드인 ── */
   .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .fade-in.visible { opacity: 1; transform: none; }
+  /* ── 동의 모달 ── */
+  .consent-overlay {
+    position: fixed; inset: 0; background: rgba(44,35,24,0.55);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 9999; opacity: 0; transition: opacity 0.2s; pointer-events: none;
+    padding: 1rem;
+  }
+  .consent-overlay.show { opacity: 1; pointer-events: all; }
+  .consent-box {
+    background: var(--beige); border-radius: 12px;
+    padding: 32px 28px 24px; width: 100%; max-width: 420px;
+    box-shadow: 0 12px 48px rgba(44,35,24,0.18);
+    transform: translateY(12px); transition: transform 0.2s;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .consent-overlay.show .consent-box { transform: translateY(0); }
+  .consent-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1rem; font-weight: 400; color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .consent-subtitle {
+    font-size: 0.78rem; color: var(--ink-light); margin-bottom: 20px;
+  }
+  .consent-items { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .consent-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.83rem; color: var(--ink-mid); line-height: 1.55; cursor: pointer;
+  }
+  .consent-item input[type="checkbox"] {
+    margin-top: 2px; flex-shrink: 0;
+    width: 16px; height: 16px; cursor: pointer; accent-color: var(--ink);
+  }
+  .consent-item a { color: var(--purple); text-decoration: none; }
+  .consent-item a:hover { text-decoration: underline; }
+  .consent-monthly-note {
+    font-size: 0.78rem; color: var(--ink-light);
+    background: var(--beige-mid); border-radius: 6px;
+    padding: 10px 12px; margin-bottom: 20px; line-height: 1.6;
+  }
+  .consent-btns { display: flex; gap: 8px; }
+  .consent-btn-cancel {
+    flex: 1; padding: 11px; border: 1.5px solid var(--beige-dark);
+    background: transparent; border-radius: 6px; font-size: 0.85rem;
+    color: var(--ink-mid); cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.15s;
+  }
+  .consent-btn-cancel:hover { border-color: var(--ink-mid); }
+  .consent-btn-confirm {
+    flex: 2; padding: 11px; border: none;
+    background: var(--ink); border-radius: 6px; font-size: 0.85rem;
+    color: var(--beige); cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500; transition: opacity 0.15s;
+  }
+  .consent-btn-confirm:hover { opacity: 0.85; }
+  .consent-btn-confirm:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* 기간제 버튼 3개 */
+  .prepaid-btns { display: flex; flex-direction: column; gap: 8px; margin-top: 1.4rem; }
+  .btn-prepaid {
+    display: block; width: 100%; padding: 10px 16px;
+    border: 1.5px solid var(--beige-dark); border-radius: 6px;
+    background: var(--beige); color: var(--ink);
+    font-size: 0.85rem; font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer; transition: all 0.15s; text-align: left;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .btn-prepaid:hover { border-color: var(--ink); background: var(--beige-mid); }
 </style>
 </head>
 <body>
@@ -1154,10 +1222,10 @@
           <li><span class="ko">이메일 알림</span><span class="en">Email notifications</span></li>
           <li><span class="ko">원클릭 해지</span><span class="en">Cancel anytime</span></li>
         </ul>
-        <a href="#" class="btn-pricing">
+        <button class="btn-pricing" onclick="openConsent('monthly')">
           <span class="ko">무료로 시작하기</span>
           <span class="en">Start Free</span>
-        </a>
+        </button>
       </div>
       <div class="pricing-card fade-in">
         <div class="pricing-label"><span class="ko">기간제 선불</span><span class="en">Prepaid</span></div>
@@ -1168,10 +1236,20 @@
           <li><span class="ko">단기 행사 · 팝업 · 푸드트럭에 적합</span><span class="en">Great for events, pop-ups &amp; food trucks</span></li>
           <li><span class="ko">동일한 전체 기능</span><span class="en">Full feature set included</span></li>
         </ul>
-        <a href="#" class="btn-pricing">
-          <span class="ko">구매하기</span>
-          <span class="en">Buy Now</span>
-        </a>
+        <div class="prepaid-btns">
+          <button class="btn-prepaid" onclick="openConsent('3day')">
+            <span><span class="ko">3일권</span><span class="en">3-Day Pass</span></span>
+            <span><span class="ko">₩1,900</span><span class="en">$1.49</span></span>
+          </button>
+          <button class="btn-prepaid" onclick="openConsent('7day')">
+            <span><span class="ko">7일권</span><span class="en">7-Day Pass</span></span>
+            <span><span class="ko">₩2,900</span><span class="en">$2.49</span></span>
+          </button>
+          <button class="btn-prepaid" onclick="openConsent('15day')">
+            <span><span class="ko">15일권</span><span class="en">15-Day Pass</span></span>
+            <span><span class="ko">₩4,900</span><span class="en">$3.99</span></span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -1364,5 +1442,123 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.15 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
+<!-- 동의 모달 -->
+<div class="consent-overlay" id="consentOverlay">
+  <div class="consent-box">
+    <div class="consent-title ko">구매 전 동의 확인</div>
+    <div class="consent-title en">Before You Continue</div>
+    <div class="consent-subtitle ko" id="consentSubtitle"></div>
+    <div class="consent-subtitle en" id="consentSubtitleEn"></div>
+
+    <div class="consent-items">
+      <label class="consent-item">
+        <input type="checkbox" id="chk1" onchange="updateConsentBtn()">
+        <span class="ko"><a href="terms.html" target="_blank">이용약관</a>을 읽고 동의합니다.</span>
+        <span class="en">I agree to the <a href="terms.html" target="_blank">Terms of Service</a>.</span>
+      </label>
+      <label class="consent-item">
+        <input type="checkbox" id="chk2" onchange="updateConsentBtn()">
+        <span class="ko"><a href="privacy.html" target="_blank">개인정보처리방침</a>을 읽고 동의합니다.</span>
+        <span class="en">I agree to the <a href="privacy.html" target="_blank">Privacy Policy</a>.</span>
+      </label>
+      <label class="consent-item">
+        <input type="checkbox" id="chk3" onchange="updateConsentBtn()">
+        <span class="ko">환불은 <a href="https://www.paddle.com" target="_blank">Paddle</a> 정책에 따르며, 카드 기준 7~14 영업일 소요됨을 확인했습니다.</span>
+        <span class="en">I understand refunds are handled by <a href="https://www.paddle.com" target="_blank">Paddle</a> and may take 7–14 business days.</span>
+      </label>
+      <label class="consent-item">
+        <input type="checkbox" id="chk4" onchange="updateConsentBtn()">
+        <span class="ko">등록 정보(이메일, PC ID)는 만료 또는 해지 후 1년 뒤 자동 파기됨을 확인했습니다.</span>
+        <span class="en">I understand my data (email, PC ID) will be automatically deleted 1 year after expiry or cancellation.</span>
+      </label>
+      <label class="consent-item" id="chk5wrap">
+        <input type="checkbox" id="chk5" onchange="updateConsentBtn()">
+        <span class="ko">30일 무료 체험 후 매월 ₩9,900이 자동 결제됨을 확인했습니다. 언제든지 해지 가능합니다.</span>
+        <span class="en">I understand that after the 30-day free trial, ₩9,900/month will be charged automatically. I can cancel anytime.</span>
+      </label>
+    </div>
+
+    <div class="consent-btns">
+      <button class="consent-btn-cancel" onclick="closeConsent()">
+        <span class="ko">취소</span><span class="en">Cancel</span>
+      </button>
+      <button class="consent-btn-confirm" id="consentConfirmBtn" disabled onclick="startCheckout()">
+        <span class="ko">동의하고 결제하기</span><span class="en">Agree & Continue</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+// Paddle 초기화 (Sandbox)
+Paddle.Environment.set('sandbox');
+Paddle.Initialize({ token: 'test_f3ee7ed576701bc88e586ae8e82' });
+
+const PRICE_IDS = {
+  monthly: 'pri_01ktxnctnm1qsk1we3jmz0t66k',
+  '3day':  'pri_01ktxnfkdkqr1hhmkfz8c6frdt',
+  '7day':  'pri_01ktxnhy0azxe6psdhq9kn3ydq',
+  '15day': 'pri_01ktxnnhjdajct8mk0txakhg8d',
+};
+
+let currentPriceType = null;
+
+const SUBTITLES = {
+  monthly: { ko: '월정액 구독 · 30일 무료 체험', en: 'Monthly · 30-day free trial' },
+  '3day':  { ko: '3일 이용권 · ₩1,900', en: '3-Day Pass · $1.49' },
+  '7day':  { ko: '7일 이용권 · ₩2,900', en: '7-Day Pass · $2.49' },
+  '15day': { ko: '15일 이용권 · ₩4,900', en: '15-Day Pass · $3.99' },
+};
+
+function openConsent(type) {
+  currentPriceType = type;
+  const isMonthly = type === 'monthly';
+
+  // 자동결제 체크박스 표시/숨김
+  document.getElementById('chk5wrap').style.display = isMonthly ? 'flex' : 'none';
+  if (!isMonthly) document.getElementById('chk5').checked = false;
+
+  // 부제목
+  const isEn = document.body.classList.contains('lang-en');
+  document.getElementById('consentSubtitle').textContent = SUBTITLES[type].ko;
+  document.getElementById('consentSubtitleEn').textContent = SUBTITLES[type].en;
+
+  // 체크박스 초기화
+  ['chk1','chk2','chk3','chk4','chk5'].forEach(id => {
+    document.getElementById(id).checked = false;
+  });
+  updateConsentBtn();
+
+  document.getElementById('consentOverlay').classList.add('show');
+}
+
+function closeConsent() {
+  document.getElementById('consentOverlay').classList.remove('show');
+  currentPriceType = null;
+}
+
+function updateConsentBtn() {
+  const isMonthly = currentPriceType === 'monthly';
+  const required = ['chk1','chk2','chk3','chk4'];
+  if (isMonthly) required.push('chk5');
+  const allChecked = required.every(id => document.getElementById(id).checked);
+  document.getElementById('consentConfirmBtn').disabled = !allChecked;
+}
+
+function startCheckout() {
+  if (!currentPriceType) return;
+  closeConsent();
+  Paddle.Checkout.open({
+    items: [{ priceId: PRICE_IDS[currentPriceType], quantity: 1 }],
+  });
+}
+
+// 모달 바깥 클릭 시 닫기
+document.getElementById('consentOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeConsent();
+});
+</script>
+
 </body>
 </html>
