@@ -696,6 +696,17 @@ function setLang(lang) {
   document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
   document.documentElement.lang = lang;
 }
+
+function toggleMenu() {
+  const h = document.getElementById('hamburger');
+  const m = document.getElementById('mobileMenu');
+  h.classList.toggle('open');
+  m.classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+}
 </script>
 </body>
 </html>
