@@ -35,22 +35,40 @@
 
   /* ── NAV ── */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.2rem 5%;
-    background: rgba(244,241,234,0.92);
-    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+    background: var(--beige);
     border-bottom: 1px solid var(--beige-dark);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
   }
   .nav-logo {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--ink);
-    letter-spacing: 0.04em;
+    font-size: 1.4rem; font-weight: 600; color: var(--ink);
     text-decoration: none;
   }
   .nav-logo span { color: var(--purple); }
+  .nav-back {
+    font-size: 0.85rem; color: var(--ink-mid);
+    text-decoration: none; display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+  }
+  .nav-back::before {
+    content: '';
+    display: inline-block;
+    width: 16px; height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239C8E78' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='15 18 9 12 15 6'/%3E%3C/svg%3E");
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    flex-shrink: 0; transition: transform 0.2s;
+  }
+  .nav-back:hover { color: var(--ink); }
+  .nav-back:hover::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232C2318' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='15 18 9 12 15 6'/%3E%3C/svg%3E");
+    transform: translateX(-2px);
+  }
+
+
+  .lang-controls { display: flex; gap: 6px; align-items: center; }
   .nav-links { display: flex; align-items: center; gap: 2rem; }
   .nav-links a {
     font-size: 0.85rem;
@@ -60,95 +78,11 @@
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--ink); }
-  .lang-toggle {
-    display: flex;
-    border: 1px solid var(--beige-dark);
-    border-radius: 20px;
-    overflow: hidden;
-  }
-  .lang-btn {
-    padding: 0.3rem 0.8rem;
-    font-size: 0.78rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--ink-light);
-    font-family: 'Noto Sans KR', sans-serif;
-    transition: all 0.2s;
-  }
-  .lang-btn.active { background: var(--ink); color: var(--beige); }
 
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-    background: none;
-    border: none;
-  }
-  .hamburger span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--ink);
-    border-radius: 2px;
-    transition: all 0.25s;
-  }
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  .mobile-menu {
-    display: none;
-    position: sticky;
-    top: 56px;
-    left: 0; right: 0;
-    background: rgba(244,241,234,0.98);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--beige-dark);
-    padding: 0.5rem 2rem;
-    z-index: 99;
-    flex-direction: column;
-  }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a {
-    font-size: 0.95rem;
-    color: var(--ink-mid);
-    text-decoration: none;
-    padding: 0.9rem 0;
-    border-bottom: 1px solid var(--beige-dark);
-  }
-  .mobile-menu a:last-child { border-bottom: none; }
-  .mobile-menu .mobile-lang {
-    display: flex;
-    gap: 0.5rem;
-    padding: 0.9rem 0;
-    align-items: center;
-  }
-  .mobile-menu .mobile-lang-label {
-    font-size: 0.78rem;
-    color: var(--ink-light);
-    margin-right: 0.3rem;
-  }
-  .mobile-menu .m-lang-btn {
-    padding: 0.25rem 0.7rem;
-    font-size: 0.78rem;
-    background: none;
-    border: 1px solid var(--beige-dark);
-    border-radius: 4px;
-    cursor: pointer;
-    color: var(--ink-light);
-    font-family: 'Noto Sans KR', sans-serif;
-    transition: all 0.2s;
-  }
-  .mobile-menu .m-lang-btn.active { background: var(--ink); color: var(--beige); border-color: var(--ink); }
 
-  @media (max-width: 600px) {
-    .nav-links { display: none; }
-    .lang-toggle { display: none; }
-    .hamburger { display: flex; }
-  }
+
+
 
   /* ── LANG SWITCH ── */
   body:not(.lang-en) .en { display: none !important; }
@@ -381,7 +315,64 @@
     .content-wrap { padding: 3rem 5% 5rem; }
     .pkg-card { flex-wrap: wrap; }
   }
-    .lang-toggle { display: none; }
+  
+    .hamburger { display: flex; }
+  }
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px; height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-menu {
+    display: none;
+    position: sticky;
+    top: 56px;
+    left: 0; right: 0;
+    background: rgba(244,241,234,0.98);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--beige-dark);
+    padding: 0.5rem 2rem;
+    z-index: 99;
+    flex-direction: column;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 0.95rem; color: var(--ink-mid);
+    text-decoration: none;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--beige-dark);
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu .mobile-lang {
+    display: flex; gap: 0.5rem;
+    padding: 0.9rem 0; align-items: center;
+  }
+  .mobile-menu .mobile-lang-label {
+    font-size: 0.78rem; color: var(--ink-light); margin-right: 0.3rem;
+  }
+  .mobile-menu .m-lang-btn {
+    padding: 0.25rem 0.7rem; font-size: 0.78rem;
+    background: none; border: 1px solid var(--beige-dark);
+    border-radius: 4px; cursor: pointer; color: var(--ink-light);
+    font-family: 'Noto Sans KR', sans-serif; transition: all 0.2s;
+  }
+  .mobile-menu .m-lang-btn.active { background: var(--ink); color: var(--beige); border-color: var(--ink); }
+  @media (max-width: 600px) {
+    .lang-controls { display: none; }
     .hamburger { display: flex; }
   }
 </style>
@@ -390,15 +381,14 @@
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="index.html">Voice<span>Bell</span></a>
-  <div class="nav-links">
-    <a href="index.html#features"><span class="ko">기능</span><span class="en">Features</span></a>
-    <a href="index.html#pricing"><span class="ko">요금</span><span class="en">Pricing</span></a>
-    <a href="index.html#faq">FAQ</a>
-  </div>
-  <div class="lang-toggle">
-    <button class="lang-btn active" onclick="setLang('ko')">KO</button>
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  <a href="index.html" class="nav-logo">Voice<span>Bell</span></a>
+  <div class="lang-controls">
+    <button class="lang-btn active" onclick="setLang('ko')">한국어</button>
+    <button class="lang-btn" onclick="setLang('en')">English</button>
+    <a href="index.html" class="nav-back">
+      <span class="ko">홈으로</span>
+      <span class="en">Home</span>
+    </a>
   </div>
   <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="메뉴">
     <span></span><span></span><span></span>
@@ -407,14 +397,15 @@
 
 <!-- 모바일 메뉴 -->
 <div class="mobile-menu" id="mobileMenu">
-  <a href="index.html#features" onclick="closeMenu()"><span class="ko">기능</span><span class="en">Features</span></a>
-  <a href="index.html#pricing" onclick="closeMenu()"><span class="ko">요금</span><span class="en">Pricing</span></a>
-  <a href="index.html#faq" onclick="closeMenu()">FAQ</a>
   <div class="mobile-lang">
     <span class="mobile-lang-label">Language</span>
-    <button class="m-lang-btn active" id="mLangKo" onclick="setLang('ko')">KO</button>
-    <button class="m-lang-btn" id="mLangEn" onclick="setLang('en')">EN</button>
+    <button class="m-lang-btn active" id="mLangKo" onclick="setLang('ko')">한국어</button>
+    <button class="m-lang-btn" id="mLangEn" onclick="setLang('en')">English</button>
   </div>
+  <a href="index.html" onclick="closeMenu()">
+    <span class="ko">← 홈으로</span>
+    <span class="en">← Home</span>
+  </a>
 </div>
 
 <!-- PAGE HEADER -->
@@ -700,9 +691,11 @@ function setLang(lang) {
   document.body.classList.toggle('lang-en', isEn);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.querySelectorAll('.m-lang-btn').forEach(b => b.classList.remove('active'));
+  const mBtn = document.getElementById(isEn ? 'mLangEn' : 'mLangKo');
+  if (mBtn) mBtn.classList.add('active');
   document.documentElement.lang = lang;
 }
-
 function toggleMenu() {
   const h = document.getElementById('hamburger');
   const m = document.getElementById('mobileMenu');
