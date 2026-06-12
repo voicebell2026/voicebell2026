@@ -642,6 +642,20 @@
           <p>😊 Completely normal — this has nothing to do with hacking or security risks.</p>
           <p>VoiceBell runs entirely <strong>inside your own computer</strong>, not on the internet. Chrome is used to display the screen, but since Chrome doesn't know this, it shows a warning for any unfamiliar address.</p>
           <p>Only needs to be done once. Click <strong style="border:1px solid #3c3c3c; border-radius:3px; padding:1px 6px; font-size:11px;">Advanced</strong> at the bottom of the screen — the following will appear.</p>
+          <div style="margin:1rem 0;">
+            <div style="display:inline-block; background:#f8f7f4; border:1px solid #e0ddd6; border-radius:8px; padding:14px 18px; font-family:sans-serif; max-width:360px;">
+              <div style="display:flex; justify-content:space-between; gap:6px; margin-bottom:12px;">
+                <span style="font-size:10px; color:#ccc; border:1px solid #eee; border-radius:4px; padding:4px 10px;">Hide details</span>
+                <span style="font-size:10px; color:#a8c4e8; border:1px solid #c5daf0; border-radius:4px; padding:4px 10px; background:#f0f6fd;">Back to safety</span>
+              </div>
+              <p style="font-size:13px; margin:0; display:flex; align-items:center; gap:4px; font-weight:500;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" stroke="#1a73e8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span style="color:#1a73e8; font-weight:600;">localhost</span><span style="color:#bbb; font-size:11px; font-weight:400;">(unsafe)</span><span style="color:#bbb; font-size:11px; font-weight:400;"> — Proceed</span>
+                <span style="font-size:11px; color:#fff; background:#e07b00; border-radius:3px; padding:1px 6px; white-space:nowrap; margin-left:4px;">← Click</span>
+              </p>
+            </div>
+            <p style="margin:10px 0 0; font-size:12px; color:#888;">💡 <strong>localhost</strong> refers to your own computer — not the internet.</p>
+          </div>
           <div class="tip">💡 You may need to repeat this if your counter PC's IP address changes or if you clear your browser history. Avoid clearing browser history on kitchen and kiosk devices.</div>
         </div>
       </div></div>
@@ -1840,7 +1854,9 @@ function setLang(lang) {
   const mBtn = document.getElementById(lang === 'ko' ? 'mLangKo' : 'mLangEn');
   if (mBtn) mBtn.classList.add('active');
   document.documentElement.lang = lang;
-  document.getElementById('faqSearch').placeholder = isEn ? 'Search keywords...' : '검색어를 입력하세요';
+  document.getElementById('faqSearch').placeholder = isEn
+    ? 'installation · refund · kiosk · IP · voice order · network'
+    : '설치 · 환불 · IP · 키오스크 · PC 교체 · 음성 주문';
   const q = document.getElementById('faqSearch').value;
   if (q) searchFaq(q);
 }
