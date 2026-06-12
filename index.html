@@ -1542,14 +1542,15 @@ function updateConsentBtn() {
 
 function startCheckout() {
   if (!currentPriceType) return;
-  closeConsent();
   const links = {
     monthly: 'https://sandbox-pay.paddle.io/?priceId=pri_01ktxnnhjdajct8mk0txakhg8d',
     '3day':  'https://sandbox-pay.paddle.io/?priceId=pri_01ktxnhy0azxe6psdhq9kn3ydq',
     '7day':  'https://sandbox-pay.paddle.io/?priceId=pri_01ktxnfkdkqr1hhmkfz8c6frdt',
     '15day': 'https://sandbox-pay.paddle.io/?priceId=pri_01ktxnctnm1qsk1we3jmz0t66k',
   };
-  window.open(links[currentPriceType], '_blank');
+  const url = links[currentPriceType];
+  closeConsent();
+  window.open(url, '_blank');
 }
 
 // 모달 바깥 클릭 시 닫기
