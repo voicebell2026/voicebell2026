@@ -472,9 +472,7 @@ async function loadTransactions() {
             </div>
           </div>
           ${taxBlock}
-          <div style="display:flex; gap:6px; margin-top:8px; flex-wrap:wrap;">
-            ${subId ? `<button class="btn-outline" style="padding:6px 12px; font-size:0.78rem;" onclick="cancelSub('${subId}')">구독 취소</button>` : ''}
-          </div>
+
         </div>`;
     }).join('');
   } catch(e) {
