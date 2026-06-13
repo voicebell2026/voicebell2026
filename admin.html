@@ -289,7 +289,7 @@ function renderLicenses() {
     const badge = isPending
       ? '<span class="badge badge-pending">⏳ 미등록</span>'
       : isValid
-        ? '<span class="badge badge-active">✅ 활성</span>'
+        ? (l.cancelledAt ? '<span class="badge badge-active">✅ 활성</span> <span class="badge badge-expired" style="background:#f39c12; border-color:#f39c12;">🔔 취소 예정</span>' : '<span class="badge badge-active">✅ 활성</span>')
         : '<span class="badge badge-expired">❌ 만료</span>';
 
     const pcText = l.pcId ? `PC: ${l.pcId.substring(0, 24)}...` : 'PC 미등록 (결제 완료, 첫 실행 대기)';
@@ -313,7 +313,7 @@ function renderLicenses() {
           ${l.pcId ? `<button class="btn-warning" onclick="resetPc('${l.pcId}', ${i})">PC 초기화</button>` : ''}
           <button class="btn-outline" onclick="toggleDateEdit(${i})">만료일 변경</button>
           <button class="btn-outline" onclick="expireOne('${l.pcId}', ${i})">즉시 만료</button>
-          ${hasSubscription ? `<button class="btn-outline" onclick="cancelSubByPc('${l.pcId}', '${l.subscriptionId}', ${i})">구독 취소</button>` : ''}
+          ${hasSubscription && !l.cancelledAt ? `<button class="btn-outline" onclick="cancelSubByPc('${l.pcId}', '${l.subscriptionId}', ${i})">구독 취소</button>` : ''}
           <button class="btn-outline" style="color:#c0392b; border-color:#c0392b;" onclick="deleteLicense(${i})">라이선스 삭제</button>
         </div>
         <div class="date-edit" id="dateEdit-${i}">

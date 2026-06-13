@@ -320,13 +320,11 @@
     .search-wrap { padding: 1.5rem 1.2rem 0; }
   }
 </style>
-<script>
-  if (localStorage.getItem('vb_lang') === 'en') {
-    document.write('<style id="early-lang">body .ko{display:none!important}.lang-btn[onclick*=\'ko\']{background:none!important;color:var(--ink-mid)!important;border-color:var(--beige-dark)!important}.lang-btn[onclick*=\'en\']{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}</style>');
-  }
-</script>
 </head>
 <body>
+<script>
+  if (localStorage.getItem('vb_lang') === 'en') document.body.classList.add('lang-en');
+</script>
 
 <nav>
   <a href="index.html" class="nav-logo">Voice<span>Bell</span></a>
@@ -1869,7 +1867,11 @@ function setLang(lang) {
   const isEn = lang === 'en';
   // early-lang 스타일 제거 (ko 전환 시 !important 해제)
   const earlyLang = document.getElementById('early-lang');
-  if (earlyLang && !isEn) earlyLang.remove();
+  if (earlyLang && !isEn) {
+    earlyLang.remove();
+    // early-lang 제거 후 .ko 요소 강제 표시
+    document.querySelectorAll('.ko').forEach(el => el.style.removeProperty('display'));
+  }
   document.body.classList.toggle('lang-en', isEn);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
@@ -1881,10 +1883,22 @@ function setLang(lang) {
   searchFaq(document.getElementById('faqSearch').value ?? '');
 }
 
-// 페이지 로드 시 언어 복원
+// 페이지 로드 시 버튼 상태 복원
 document.addEventListener('DOMContentLoaded', function() {
-  const lang = localStorage.getItem('vb_lang');
-  if (lang === 'en') setLang('en');
+  const lang = localStorage.getItem('vb_lang') ?? 'ko';
+  // 버튼 active 상태
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`);
+  if (btn) btn.classList.add('active');
+  const mBtn = document.getElementById(lang === 'ko' ? 'mLangKo' : 'mLangEn');
+  if (mBtn) mBtn.classList.add('active');
+  if (lang === 'en') {
+    document.querySelectorAll('.m-lang-btn').forEach(b => b.classList.remove('active'));
+    const mBtnEn = document.getElementById('mLangEn');
+    if (mBtnEn) mBtnEn.classList.add('active');
+  }
+  // FAQ 초기 렌더링
+  searchFaq('');
 });
 </script>
 </body>
