@@ -381,11 +381,14 @@
   }
 </style>
 <script>
-  if (localStorage.getItem('vb_lang') === 'en') {
-    document.addEventListener('DOMContentLoaded', function() {});
-    // body 파싱 전 처리를 위해 style 직접 주입
-    document.write('<style id="early-lang">body .ko{display:none!important}.lang-btn[onclick*=\'ko\']{background:none!important;color:var(--ink-mid)!important;border-color:var(--beige-dark)!important}.lang-btn[onclick*=\'en\']{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}</style>');
-  }
+  (function() {
+    if (localStorage.getItem('vb_lang') === 'en') {
+      var s = document.createElement('style');
+      s.id = 'early-lang';
+      s.textContent = 'body .ko{display:none!important}.lang-btn[onclick*=\'ko\']{background:none!important;color:var(--ink-mid)!important;border-color:var(--beige-dark)!important}.lang-btn[onclick*=\'en\']{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}';
+      document.head.appendChild(s);
+    }
+  })();
 </script>
 </head>
 <body>
@@ -481,8 +484,8 @@
 
       <h3><span class="ko">손님(키오스크 이용객) 정보</span><span class="en">Guest (Kiosk User) Information</span></h3>
       <div class="notice-box">
-        <span class="ko">매장 손님의 개인정보는 수집하지 않습니다.<br>음성 주문은 Google Web Speech API가 직접 처리하며 VoiceBell 서버를 거치지 않습니다.<br>손님이 이메일을 입력한 경우, 해당 이메일은 점주의 Gmail로만 전송되며 VoiceBell 서버에 저장되지 않습니다.</span>
-        <span class="en">We do not collect guest personal information.<br>Voice orders are processed by Google Web Speech API and never pass through VoiceBell servers.<br>If a guest enters their email, it is sent only via the owner's Gmail and not stored by VoiceBell.</span>
+        <span class="ko">VoiceBell은 손님의 개인정보를 자체 서버에 저장하지 않습니다.<br>음성 주문은 브라우저의 Google Web Speech API 음성 인식 서비스를 이용하며 VoiceBell 서버를 거치지 않습니다.<br>손님이 이메일을 입력한 경우, 해당 이메일은 점주의 Gmail로만 전송되며 VoiceBell 서버에 저장되지 않습니다.</span>
+        <span class="en">VoiceBell does not store guest personal information on its own servers.<br>Voice orders use the browser's Google Web Speech API speech recognition service and never pass through VoiceBell servers.<br>If a guest enters their email, it is sent only via the owner's Gmail and not stored by VoiceBell.</span>
       </div>
     </div>
 
@@ -504,7 +507,7 @@
         </div>
         <div class="item">
           <span class="item-label"><span class="ko">Cloudflare KV</span><span class="en">Cloudflare KV</span></span>
-          <span><span class="ko">이메일, 만료일, PC ID 저장.</span><span class="en">Email, expiry date, and PC ID.</span></span>
+          <span><span class="ko">이메일, 만료일, PC ID를 저장합니다. 데이터는 Cloudflare의 글로벌 네트워크에 저장되며, 해외 데이터센터에 저장될 수 있습니다. <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare 개인정보처리방침 ↗</a>이 적용됩니다.</span><span class="en">Stores email, expiry date, and PC ID. Data is stored on Cloudflare's global network and may be held in overseas data centers. <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare's privacy policy ↗</a> applies.</span></span>
         </div>
       </div>
     </div>
@@ -531,7 +534,7 @@
         </div>
         <div class="item">
           <span class="item-label">Cloudflare Workers / KV</span>
-          <span><span class="ko">이메일, 만료일, PC ID 저장·처리.</span><span class="en">Email, expiry date, and PC ID stored for license verification.</span></span>
+          <span><span class="ko">이메일, 만료일, PC ID를 라이선스 검증 목적으로 저장·처리합니다. 데이터는 해외 데이터센터에 저장될 수 있습니다.</span><span class="en">Email, expiry date, and PC ID stored for license verification. Data may be held in overseas data centers.</span></span>
         </div>
         <div class="item">
           <span class="item-label">Resend</span>
@@ -596,7 +599,7 @@
       <ul>
         <li><span class="ko">매장 내 로컬 네트워크에서만 작동합니다. 외부 접근이 차단됩니다.</span><span class="en">The service runs on your local network only. External access is blocked.</span></li>
         <li><span class="ko">결제 정보는 Paddle이 PCI-DSS 기준으로 처리합니다. VoiceBell에 저장되지 않습니다.</span><span class="en">Payment data is handled by Paddle (PCI-DSS). Never stored by VoiceBell.</span></li>
-        <li><span class="ko">손님 정보는 최소한만 수집하며, 주문 종료 후 삭제됩니다.</span><span class="en">Guest data is minimized and deleted when the order ends.</span></li>
+        <li><span class="ko">VoiceBell은 손님의 개인정보를 자체 서버에 저장하지 않으며, 주문 종료 후 매장 기기의 데이터도 자동으로 초기화됩니다.</span><span class="en">VoiceBell does not store guest personal information on its own servers. Device data is automatically cleared after the order ends.</span></li>
         <li><span class="ko">관리자 비밀번호는 이용자 기기에만 저장됩니다.</span><span class="en">Admin passwords are stored on your device only.</span></li>
       </ul>
     </div>

@@ -402,11 +402,14 @@
   }
 </style>
 <script>
-  if (localStorage.getItem('vb_lang') === 'en') {
-    document.addEventListener('DOMContentLoaded', function() {});
-    // body 파싱 전 처리를 위해 style 직접 주입
-    document.write('<style id="early-lang">body .ko{display:none!important}.lang-btn[onclick*=\'ko\']{background:none!important;color:var(--ink-mid)!important;border-color:var(--beige-dark)!important}.lang-btn[onclick*=\'en\']{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}</style>');
-  }
+  (function() {
+    if (localStorage.getItem('vb_lang') === 'en') {
+      var s = document.createElement('style');
+      s.id = 'early-lang';
+      s.textContent = 'body .ko{display:none!important}.lang-btn[onclick*=\'ko\']{background:none!important;color:var(--ink-mid)!important;border-color:var(--beige-dark)!important}.lang-btn[onclick*=\'en\']{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}';
+      document.head.appendChild(s);
+    }
+  })();
 </script>
 </head>
 <body>

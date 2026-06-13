@@ -394,11 +394,14 @@
   }
 </style>
 <script>
-  if (localStorage.getItem('vb_lang') === 'en') {
-    document.addEventListener('DOMContentLoaded', function() {});
-    // body 파싱 전 처리를 위해 style 직접 주입
-    document.write('<style id="early-lang">body .ko{display:none!important}.lang-btn[onclick*=\'ko\']{background:none!important;color:var(--ink-mid)!important;border-color:var(--beige-dark)!important}.lang-btn[onclick*=\'en\']{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}</style>');
-  }
+  (function() {
+    if (localStorage.getItem('vb_lang') === 'en') {
+      var s = document.createElement('style');
+      s.id = 'early-lang';
+      s.textContent = 'body .ko{display:none!important}.lang-btn[onclick*=\'ko\']{background:none!important;color:var(--ink-mid)!important;border-color:var(--beige-dark)!important}.lang-btn[onclick*=\'en\']{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}';
+      document.head.appendChild(s);
+    }
+  })();
 </script>
 </head>
 <body>
@@ -683,14 +686,16 @@ SOFTWARE.</pre>
           대표자: <span>[등록 예정]</span><br>
           사업자등록번호: <span>[등록 예정]</span><br>
           통신판매업신고번호: <span>[등록 예정]</span><br>
-          주소: <span>[등록 예정]</span>
+          주소: <span>[등록 예정]</span><br>
+          이메일: <span>[이메일 등록 예정]</span>
         </span>
         <span class="en">
           Business name: <span>[Coming soon]</span><br>
           Representative: <span>[Coming soon]</span><br>
           Business reg. no.: <span>[Coming soon]</span><br>
           E-commerce reg. no.: <span>[Coming soon]</span><br>
-          Address: <span>[Coming soon]</span>
+          Address: <span>[Coming soon]</span><br>
+          Email: <span>[Coming soon]</span>
         </span>
       </div>
     </div>
