@@ -314,6 +314,7 @@ function renderLicenses() {
           <button class="btn-outline" onclick="toggleDateEdit(${i})">만료일 변경</button>
           <button class="btn-outline" onclick="expireOne('${l.pcId}', ${i})">즉시 만료</button>
           ${hasSubscription ? `<button class="btn-outline" onclick="cancelSubByPc('${l.pcId}', '${l.subscriptionId}', ${i})">구독 취소</button>` : ''}
+          <button class="btn-outline" style="color:#c0392b; border-color:#c0392b;" onclick="deleteLicense(${i})">라이선스 삭제</button>
         </div>
         <div class="date-edit" id="dateEdit-${i}">
           <label>새 만료일</label>
@@ -539,6 +540,21 @@ async function addLicense() {
       document.getElementById('addLicense').classList.remove('show');
       search();
     } else toast('추가 실패: ' + (data.reason ?? ''), true);
+  } catch(e) { toast('오류가 발생했어요', true); }
+}
+
+async function deleteLicense(index) {
+  if (!confirm(`라이선스 #${index + 1}을 삭제할까요?\n이 작업은 되돌릴 수 없습니다.`)) return;
+  try {
+    const res = await fetch(`${WORKER}/admin/delete-license`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': KEY },
+      body: JSON.stringify({ email: currentEmail, index })
+    });
+    if (res.status === 401) return toast('Admin Key가 올바르지 않아요', true);
+    const data = await res.json();
+    if (data.success) { toast('라이선스가 삭제됐어요'); search(); }
+    else toast('삭제 실패: ' + (data.reason ?? ''), true);
   } catch(e) { toast('오류가 발생했어요', true); }
 }
 
