@@ -1874,15 +1874,8 @@ function setLang(lang) {
   const mBtn = document.getElementById(lang === 'ko' ? 'mLangKo' : 'mLangEn');
   if (mBtn) mBtn.classList.add('active');
   document.documentElement.lang = lang;
-  // 강제 리플로우 — 언어 전환 후 빈 화면 방지
-  document.body.style.display = 'none';
-  document.body.offsetHeight; // reflow trigger
-  document.body.style.display = '';
-  document.getElementById('faqSearch').placeholder = isEn
-    ? 'installation · refund · kiosk · IP · voice order · network'
-    : '설치 · 환불 · IP · 키오스크 · PC 교체 · 음성 주문';
-  const q = document.getElementById('faqSearch').value;
-  if (q) searchFaq(q);
+  // 언어 전환 후 FAQ 목록 재렌더링
+  searchFaq(document.getElementById('faqSearch').value ?? '');
 }
 
 // 페이지 로드 시 언어 복원
