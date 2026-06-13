@@ -1508,7 +1508,7 @@ document.getElementById('consentOverlay').addEventListener('click', function(e) 
 // 결제 완료 팝업
 (function() {
   const params = new URLSearchParams(window.location.search);
-  if (params.has('_ptxn')) {
+  if (params.has('transaction_id') || params.has('_ptxn')) {
     // URL 파라미터 제거 (히스토리 오염 방지)
     const cleanUrl = window.location.pathname;
     window.history.replaceState({}, '', cleanUrl);
