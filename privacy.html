@@ -466,7 +466,7 @@
         </div>
         <div class="item">
           <span class="item-label"><span class="ko">이름</span><span class="en">Name</span></span>
-          <span><span class="ko">관리자 인증 및 이메일 알림 발신자 식별</span><span class="en">Admin authentication and email sender identification</span></span>
+          <span><span class="ko">관리자 인증 기록, 비밀번호 변경·실패 알림 이름 표시, 이메일 알림 발신자 이름 설정에 사용됩니다.</span><span class="en">Used for admin authentication records, password change/failure notification name display, and email notification sender name.</span></span>
         </div>
         <div class="item">
           <span class="item-label"><span class="ko">결제 정보 (이름, 이메일, 국가)</span><span class="en">Payment info (name, email, country)</span></span>
@@ -530,7 +530,7 @@
         </div>
         <div class="item">
           <span class="item-label">Gmail SMTP</span>
-          <span><span class="ko">이용자가 설정한 Gmail 계정을 통해 이메일 알림 발송</span><span class="en">Email notifications sent via the Gmail account configured by the user</span></span>
+          <span><span class="ko">이용자가 직접 설정한 Gmail 계정을 통해 매장 운영 알림(결제 알림, 매출 리포트, 비밀번호 변경 알림 등)을 발송합니다. 이 이메일은 VoiceBell 서버가 아닌 이용자 본인의 Gmail을 통해 발송됩니다.</span><span class="en">Sends store operation notifications (payment alerts, sales reports, password change alerts, etc.) via the Gmail account configured by the user. These emails are sent through the user's own Gmail, not VoiceBell's servers.</span></span>
         </div>
         <div class="item">
           <span class="item-label">Cloudflare Workers / KV</span>
@@ -538,7 +538,7 @@
         </div>
         <div class="item">
           <span class="item-label">Resend</span>
-          <span><span class="ko">결제 완료 이메일 발송에 사용됩니다.</span><span class="en">Used to send purchase confirmation emails.</span></span>
+          <span><span class="ko">VoiceBell이 고객에게 발송하는 이메일(결제 완료 다운로드 안내, 데이터 삭제 완료 안내)에 사용됩니다.</span><span class="en">Used for emails sent by VoiceBell to customers (purchase confirmation with download link, data deletion confirmation).</span></span>
         </div>
       </div>
       <p>
@@ -558,7 +558,7 @@
         <li><span class="ko">이메일, PC ID: 구독 만료 또는 해지 후 <strong>1년</strong> 보관 후 자동 삭제됩니다.</span><span class="en">Email and PC ID: retained for <strong>1 year</strong> after expiry or cancellation, then automatically deleted.</span></li>
         <li><span class="ko">결제 정보: Paddle이 보관하며 Paddle 정책에 따릅니다.</span><span class="en">Payment data: retained by Paddle under their own policy.</span></li>
         <li><span class="ko">PC 로컬 데이터 (주문·결제 기록): 이용자가 직접 삭제합니다.</span><span class="en">Local PC data (orders/payments): deleted by you directly.</span></li>
-        <li><span class="ko">삭제를 요청하시려면 hello@voicebell.app으로 문의해 주세요.</span><span class="en">To request deletion, contact hello@voicebell.app.</span></li>
+        <li><span class="ko">삭제를 요청하시려면 구매 시 사용한 이메일로 구매번호를 포함하여 hello@voicebell.app으로 문의해 주세요.</span><span class="en">To request deletion, email hello@voicebell.app from your purchase email address, including your order number.</span></li>
       </ul>
     </div>
 
