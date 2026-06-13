@@ -1879,10 +1879,10 @@ function setLang(lang) {
 }
 
 // 페이지 로드 시 언어 복원
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
   const lang = localStorage.getItem('vb_lang');
   if (lang === 'en') setLang('en');
-})();
+});
 </script>
 </body>
 </html>
