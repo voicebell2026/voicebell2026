@@ -1415,8 +1415,8 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
       </label>
       <label class="consent-item" id="chk6wrap">
         <input type="checkbox" id="chk6" onchange="updateConsentBtn()">
-        <span class="ko">기간제 이용권은 구매 즉시 기간이 시작됩니다. 빠르게 설치 후 사용해 주세요.</span>
-        <span class="en">The prepaid pass period starts immediately upon purchase. Please install and start using VoiceBell right away.</span>
+        <span class="ko">⚠️ 월정액/기간제 모두 구매 즉시 기간이 시작됩니다. 이메일을 받으신 후 빠르게 설치하여 사용해 주세요.</span>
+        <span class="en">⚠️ The subscription/pass period starts immediately upon purchase. Please install and start using VoiceBell as soon as you receive the email.</span>
       </label>
       <label class="consent-item">
         <input type="checkbox" id="chk3" onchange="updateConsentBtn()">
@@ -1468,7 +1468,7 @@ function openConsent(type) {
   const isEn = document.body.classList.contains('lang-en');
   document.getElementById('consentSubtitle').textContent = isEn ? SUBTITLES[type].en : SUBTITLES[type].ko;
   document.getElementById('chk5wrap').style.display = isMonthly ? 'flex' : 'none';
-  document.getElementById('chk6wrap').style.display = isMonthly ? 'none' : 'flex';
+  document.getElementById('chk6wrap').style.display = 'flex';
 
   // 환불 항목 동적 설정
   if (isMonthly) {
@@ -1493,7 +1493,7 @@ function updateConsentBtn() {
   const isMonthly = currentPriceType === 'monthly';
   const required = ['chk1','chk2','chk3','chk4'];
   if (isMonthly) required.push('chk5');
-  if (!isMonthly) required.push('chk6');
+  required.push('chk6');
   const allChecked = required.every(id => document.getElementById(id).checked);
   document.getElementById('consentConfirmBtn').disabled = !allChecked;
 }
