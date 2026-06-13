@@ -1867,6 +1867,9 @@ function setLang(lang) {
   }
   localStorage.setItem('vb_lang', lang);
   const isEn = lang === 'en';
+  // early-lang 스타일 제거 (ko 전환 시 !important 해제)
+  const earlyLang = document.getElementById('early-lang');
+  if (earlyLang && !isEn) earlyLang.remove();
   document.body.classList.toggle('lang-en', isEn);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
