@@ -372,7 +372,7 @@
       <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
     </svg>
     <input type="text" id="faqSearch"
-      placeholder="설치 · 환불 · IP · 키오스크 · PC 교체 · 음성 주문"
+      placeholder="실행 · 환불 · IP · 키오스크 · PC 교체 · 음성 주문"
       oninput="searchFaq(this.value)"
     >
     <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
@@ -614,8 +614,8 @@
   <!-- ② 설치/시작 -->
   <div class="faq-section">
     <div class="faq-section-title">
-      <span class="ko">🚀 설치 / 시작</span>
-      <span class="en">🚀 Installation / Getting Started</span>
+      <span class="ko">🚀 실행 / 시작</span>
+      <span class="en">🚀 Run / Getting Started</span>
     </div>
 
     <!-- Q 결제 후 시작 -->
@@ -1894,7 +1894,7 @@ function setLang(lang) {
   if (input) {
     input.placeholder = lang === 'en'
       ? 'installation · refund · kiosk · IP · voice order · network'
-      : '설치 · 환불 · IP · 키오스크 · PC 교체 · 음성 주문';
+      : '실행 · 환불 · IP · 키오스크 · PC 교체 · 음성 주문';
   }
   localStorage.setItem('vb_lang', lang);
   const isEn = lang === 'en';
