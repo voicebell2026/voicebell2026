@@ -373,7 +373,7 @@ async function resetPc(pcId, i) {
 async function updateExpiry(pcId, i) {
   const dateVal = document.getElementById(`newExpiry-${i}`).value;
   if (!dateVal) return toast('날짜를 선택하세요', true);
-  const expiresAt = new Date(dateVal + 'T23:59:59.000Z').toISOString();
+  const expiresAt = new Date(dateVal + 'T14:59:59.000Z').toISOString();
   try {
     const res = await fetch(`${WORKER}/admin/set-expiry`, {
       method: 'POST',
@@ -562,7 +562,7 @@ async function addLicense() {
   const product = document.getElementById('addProduct').value;
   const dateVal = document.getElementById('addExpiry').value;
   if (!dateVal) return toast('만료일을 선택하세요', true);
-  const expiresAt = new Date(dateVal + 'T23:59:59.000Z').toISOString();
+  const expiresAt = new Date(dateVal + 'T14:59:59.000Z').toISOString();
 
   try {
     const res = await fetch(`${WORKER}/admin/add-license`, {
