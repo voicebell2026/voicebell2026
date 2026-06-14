@@ -1919,6 +1919,7 @@ function setLang(lang) {
 // 페이지 로드 시 버튼 상태 복원
 document.addEventListener('DOMContentLoaded', function() {
   const lang = localStorage.getItem('vb_lang') ?? 'ko';
+  if (lang === 'en') setLang('en');
   // 버튼 active 상태
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   const btn = document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`);
