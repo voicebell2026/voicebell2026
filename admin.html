@@ -170,7 +170,7 @@
     <div class="date-edit" id="addLicense" style="margin-top:16px; padding-top:16px; border-top:1px solid #f0ede8;">
       <div class="section-label" style="margin-bottom:10px;">라이선스 추가</div>
       <label>상품 종류</label>
-      <select id="addProduct" style="width:100%; padding:10px 13px; border:1.5px solid #e0ddd8; border-radius:8px; font-size:0.88rem; background:#faf9f7; margin-bottom:10px; outline:none;">
+      <select id="addProduct" onchange="setDefaultExpiry()" style="width:100%; padding:10px 13px; border:1.5px solid #e0ddd8; border-radius:8px; font-size:0.88rem; background:#faf9f7; margin-bottom:10px; outline:none;">
         <optgroup label="Paddle">
           <option value="VoiceBell Monthly">월정액</option>
           <option value="VoiceBell 3-Day Pass">3일 이용권</option>
@@ -521,11 +521,28 @@ async function cancelSub(subscriptionId) {
 
 function toggleAddLicense() {
   document.getElementById('addLicense').classList.toggle('show');
-  // 기본 만료일 오늘 + 30일
-  if (!document.getElementById('addExpiry').value) {
+  setDefaultExpiry();
+}
+
+function setDefaultExpiry() {
+  const product = document.getElementById('addProduct').value;
+  const dayMap = {
+    'VoiceBell Monthly': 30,
+    'VoiceBell 3-Day Pass': 3,
+    'VoiceBell 7-Day Pass': 7,
+    'VoiceBell 15-Day Pass': 15,
+    '스마트스토어 3일 이용권': 3,
+    '스마트스토어 7일 이용권': 7,
+    '스마트스토어 15일 이용권': 15,
+  };
+  const days = dayMap[product];
+  if (days) {
     const d = new Date();
-    d.setDate(d.getDate() + 30);
-    document.getElementById('addExpiry').value = d.toISOString().substring(0,10);
+    d.setDate(d.getDate() + days);
+    document.getElementById('addExpiry').value = d.toISOString().substring(0, 10);
+  } else {
+    // 기타: 빈 칸으로
+    document.getElementById('addExpiry').value = '';
   }
 }
 
