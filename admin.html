@@ -139,6 +139,18 @@
     </div>
   </div>
 
+  <!-- 내부 운영 원칙 -->
+  <div style="border:1px solid #e0ddd8; border-radius:10px; padding:16px 20px; background:#faf9f7; margin-bottom:16px;">
+    <div style="font-size:0.78rem; font-weight:600; color:#2C2318; margin-bottom:10px; letter-spacing:1px;">📋 내부 운영 원칙</div>
+    <ul style="font-size:0.78rem; color:#6B5544; line-height:2; margin:0; padding-left:16px;">
+      <li>모든 문의·다운로드 이메일은 <strong>결제 시 사용한 이메일</strong>로 통일</li>
+      <li>이메일 미수신 → 고객 이메일 문제 (스팸함 확인 안내)</li>
+      <li><strong>Paddle 결제</strong> → 이메일 변경 절대 불가 (Paddle customer_id와 연결됨)</li>
+      <li><strong>스마트스토어</strong> → PC 미등록 상태에서만 예외적으로 기존 삭제 + 새 이메일 재발급 가능</li>
+      <li>자동 파기: cancelledAt 또는 expiresAt 기준 +1년 (매일 UTC 00:00 실행)</li>
+    </ul>
+  </div>
+
   <!-- 검색 -->
   <div class="card" style="margin-bottom:16px;">
     <div class="section-label">고객 조회</div>
@@ -659,5 +671,6 @@ function toast(msg, isError=false) {
   setTimeout(() => t.className = 'toast', 2500);
 }
 </script>
+
 </body>
 </html>
