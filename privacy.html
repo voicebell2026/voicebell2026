@@ -461,8 +461,8 @@
       <h3><span class="ko">점주(이용자) 정보</span><span class="en">Owner (User) Information</span></h3>
       <div class="info-card">
         <div class="item">
-          <span class="item-label"><span class="ko">Gmail 주소</span><span class="en">Gmail address</span></span>
-          <span><span class="ko">이메일 알림 발송 (결제 완료, 매출 리포트, 임시 비밀번호 등)</span><span class="en">Email notifications (payment confirmation, sales reports, temporary password)</span></span>
+          <span class="item-label"><span class="ko">Gmail 계정 정보 (이메일, 앱 비밀번호)</span><span class="en">Gmail account info (email address, app password)</span></span>
+          <span><span class="ko">이용자가 직접 설정하는 매장 이메일 알림 발송용 계정입니다. (결제 완료, 매출 리포트, 임시 비밀번호 등)</span><span class="en">Used as the sender account for store email notifications configured by the user. (payment confirmation, sales reports, temporary password, etc.)</span></span>
         </div>
         <div class="item">
           <span class="item-label"><span class="ko">이름</span><span class="en">Name</span></span>
@@ -710,6 +710,14 @@
 function setLang(lang) {
   localStorage.setItem('vb_lang', lang);
   const isEn = lang === 'en';
+  // early-lang 스타일 제거 (ko 전환 시 !important 해제)
+  if (!isEn) {
+    const earlyLang = document.getElementById('early-lang');
+    if (earlyLang) {
+      earlyLang.remove();
+      document.querySelectorAll('.ko').forEach(el => el.style.removeProperty('display'));
+    }
+  }
   document.body.classList.toggle('lang-en', isEn);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');

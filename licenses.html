@@ -718,6 +718,14 @@ SOFTWARE.</pre>
 function setLang(lang) {
   localStorage.setItem('vb_lang', lang);
   const isEn = lang === 'en';
+  // early-lang 스타일 제거 (ko 전환 시 !important 해제)
+  if (!isEn) {
+    const earlyLang = document.getElementById('early-lang');
+    if (earlyLang) {
+      earlyLang.remove();
+      document.querySelectorAll('.ko').forEach(el => el.style.removeProperty('display'));
+    }
+  }
   document.body.classList.toggle('lang-en', isEn);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
