@@ -725,6 +725,7 @@ function setLang(lang) {
       earlyLang.remove();
       document.querySelectorAll('.ko').forEach(el => el.style.removeProperty('display'));
     }
+    document.documentElement.classList.remove('lang-en-early');
   }
   document.body.classList.toggle('lang-en', isEn);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
@@ -745,10 +746,10 @@ function closeMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
 }
 // 언어 복원
-(function() {
-  const lang = localStorage.getItem('vb_lang');
-  if (lang === 'en') setLang('en');
-})();
+document.addEventListener('DOMContentLoaded', function() {
+  const lang = localStorage.getItem('vb_lang') ?? 'ko';
+  setLang(lang);
+});
 </script>
 </body>
 </html>
