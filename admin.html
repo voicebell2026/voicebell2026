@@ -689,20 +689,6 @@ function toast(msg, isError=false) {
 }
 </script>
 
-  <!-- 내부 운영 원칙 -->
-  <div style="border:1px solid #e0ddd8; border-radius:10px; padding:16px 20px; background:#faf9f7; margin-top:16px;">
-    <div style="font-size:0.78rem; font-weight:600; color:#2C2318; margin-bottom:10px; letter-spacing:1px;">📋 내부 운영 원칙</div>
-    <ul style="font-size:0.78rem; color:#6B5544; line-height:2; margin:0; padding-left:16px;">
-      <li>모든 문의·다운로드 이메일은 <strong>결제 시 사용한 이메일</strong>로 통일</li>
-      <li>이메일 미수신 → 고객 이메일 문제 (스팸함 확인 안내)</li>
-      <li><strong>Paddle 결제</strong> → 이메일 변경 절대 불가 (Paddle customer_id와 연결됨)</li>
-      <li><strong>스마트스토어</strong> → PC 미등록 상태에서만 예외적으로 기존 삭제 + 새 이메일 재발급 가능 / 라이선스 추가 시 주문번호 입력 필수</li>
-      <li>자동 파기: cancelledAt 또는 expiresAt 기준 +1년 (매일 UTC 00:00 실행)</li>
-      <li><strong>즉시 만료</strong> → 일반적인 차단 처리. 데이터는 KV에 유지, 서버 재시작 시 종료</li>
-      <li><strong>라이선스 삭제</strong> → 고객 개인정보 삭제 요청 시에만 처리. 되돌릴 수 없으므로 신중하게</li>
-      <li><strong>월정액 라이선스 삭제 시</strong> → 반드시 Paddle 구독 취소 먼저. 구독 취소만 할 수도 있음 (기간 끝까지 사용 후 자동 갱신 중단)</li>
-    </ul>
-  </div>
 
 </body>
 </html>
