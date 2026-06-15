@@ -590,6 +590,9 @@ async function addLicense() {
   const orderNumber = isSmartstore ? document.getElementById('addOrderNumber').value.trim() : '';
   const memo = isEtc ? document.getElementById('addMemo').value.trim() : '';
 
+  if (isSmartstore && !orderNumber) return toast('스마트스토어 주문번호를 입력하세요', true);
+  if (isEtc && !memo) return toast('추가 사유를 입력하세요', true);
+
   try {
     const res = await fetch(`${WORKER}/admin/add-license`, {
       method: 'POST',
