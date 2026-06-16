@@ -1798,38 +1798,6 @@ Kiosk: https://192.168.**.***:8444/?role=kiosk</div>
       </div></div>
     </div>
 
-    <!-- Q HSTS 캐시 -->
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">
-        <span><span class="ko">노트북·PC에서 접속 시 "페이지가 작동하지 않습니다" 오류가 납니다.</span><span class="en">I get a "page not working" error when connecting from a laptop or PC.</span></span>
-        <span class="arrow">+</span>
-      </button>
-      <div class="faq-a"><div class="faq-a-inner">
-        <div class="ko">
-          <p>브라우저의 HSTS 캐시가 접속을 차단하는 경우입니다. 아래 방법으로 해결하세요.</p>
-          <ol>
-            <li>크롬 주소창에 <code>chrome://net-internals/#hsts</code> 입력</li>
-            <li>아래로 스크롤 → <strong>Delete domain security policies</strong></li>
-            <li>Domain 칸에 접속하려는 IP 주소 입력 (예: <code>192.168.1.100</code>)</li>
-            <li><strong>Delete</strong> 클릭</li>
-            <li>새 탭에서 다시 접속 시도</li>
-          </ol>
-          <div class="tip">💡 이후 "연결이 비공개" 페이지가 뜨면 고급 → IP주소로 이동을 클릭하세요.</div>
-        </div>
-        <div class="en">
-          <p>This is caused by the browser's HSTS cache blocking the connection. Follow these steps to resolve it.</p>
-          <ol>
-            <li>Enter <code>chrome://net-internals/#hsts</code> in the Chrome address bar</li>
-            <li>Scroll down → <strong>Delete domain security policies</strong></li>
-            <li>Enter the IP address you're trying to connect to (e.g. <code>192.168.1.100</code>)</li>
-            <li>Click <strong>Delete</strong></li>
-            <li>Try connecting again in a new tab</li>
-          </ol>
-          <div class="tip">💡 If a "connection is not private" page appears, click Advanced → Proceed to IP address.</div>
-        </div>
-      </div></div>
-    </div>
-
     <!-- Q 엑셀 없을 때 -->
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
