@@ -635,7 +635,7 @@
           5. 브라우저 자동 열림<br>
           6. "연결이 비공개" 경고 → 고급 → localhost (으)로 이동 클릭<br>
           7. 카운터 메인 페이지 → 결제 시 사용한 이메일 입력<br>
-          8. 이메일 인증 완료 → 바로 사용 시작 🎉</div>
+          8. 이메일 인증 완료 → 바로 사용 시작 🎉 <span style="color:#C0392B;">(인터넷 연결 필수)</span></div>
           <p>같은 와이파이에 연결된 태블릿·PC·스마트폰의 Chrome 브라우저에 카운터 PC의 IP 주소를 입력하면 키친·키오스크가 즉시 연결됩니다.</p>
           <div class="tip">⚠️ 월정액/기간제 모두 구매 즉시 기간이 시작됩니다. 이메일을 받으신 후 빠르게 파일을 실행하여 사용해 주세요.</div>
           <div class="tip">💡 이후 실행부터는 이메일 입력 없이 바로 시작됩니다. 별도 설치 프로그램은 없습니다.</div>
@@ -651,7 +651,7 @@
           6. "Your connection is not private" → Advanced → click localhost (unsafe)<br>
           <span style="font-size:0.85rem; color:#888; display:block; margin:2px 0 0 1.2rem;">This warning appears because localhost uses a self-signed certificate and does not indicate a security problem.</span>
           7. Counter main page → enter the email used at checkout<br>
-          8. Verified → start using VoiceBell right away 🎉</div>
+          8. Verified → start using VoiceBell right away 🎉 <span style="color:#C0392B;">(Internet connection required)</span></div>
           <p>On any tablet, PC, or phone on the same Wi-Fi, open Chrome and enter the counter PC's IP address to connect the kitchen and kiosk instantly.</p>
           <div class="tip">⚠️ The subscription/pass period starts immediately upon purchase. Please run the file and start using VoiceBell as soon as you receive the email.</div>
           <div class="tip">💡 From the next launch, the server starts without requiring your email. No installer required.</div>
@@ -1137,11 +1137,27 @@
         <div class="ko">
           <p>VoiceBell은 별도의 클라우드 서버를 운영하지 않습니다. 모든 데이터는 사장님의 서버 겸용 카운터 PC 안에서만 저장되며, VoiceBell로 전송되지 않습니다. 단, 이메일 알림을 설정하신 경우 매출 데이터가 사장님이 등록하신 Gmail로 발송됩니다.</p>
           <p>매출 데이터는 바탕화면 orders 폴더에 엑셀 파일로 자동 저장됩니다. 메뉴, 매장 설정 등은 서버 폴더에 안전하게 보관됩니다.</p>
+          <div class="warn">⚠️ 서버가 실행 중인 상태에서만 데이터가 저장됩니다. 영업 중에는 반드시 서버를 켜두세요.</div>
+          <p>엑셀 저장 종류:</p>
+          <ul>
+            <li><strong>일간</strong>: 카드/현금 결제 처리 시 실시간 저장</li>
+            <li><strong>월말</strong>: 익월 1일 오후 4시 자동 생성 (카운터 → 기타업무 → 이메일 설정에서 이메일을 등록한 경우, 변경 가능)</li>
+            <li><strong>분기말</strong>: 3·6·9·12월 월말 결산 시 함께 자동 생성</li>
+            <li><strong>연말</strong>: 12월 월말 결산 시 함께 자동 생성</li>
+          </ul>
           <div class="tip">💡 VoiceBell은 손님의 개인정보를 자체 서버에 저장하지 않습니다. 단, 손님이 직접 입력한 이메일 주소는 해당 주문 완료 후 즉시 삭제됩니다.</div>
         </div>
         <div class="en">
           <p>VoiceBell does not operate any cloud servers. All data is stored only on your server-integrated counter PC and is never sent to VoiceBell. However, if you have set up email notifications, sales data will be sent to the Gmail address you registered.</p>
           <p>Sales data is automatically saved as Excel files in the orders folder on your desktop. Menu and store settings are securely stored in the server folder.</p>
+          <div class="warn">⚠️ Data is only saved while the server is running. Please keep the server on during business hours.</div>
+          <p>Excel save types:</p>
+          <ul>
+            <li><strong>Daily</strong>: Saved in real time when card/cash payment is processed</li>
+            <li><strong>Monthly</strong>: Auto-generated on the 1st of the following month at 4:00 PM (changeable if email is registered under Counter → Other Tasks → Email Settings)</li>
+            <li><strong>Quarterly</strong>: Auto-generated alongside the monthly closing in March, June, September, and December</li>
+            <li><strong>Annual</strong>: Auto-generated alongside the December monthly closing</li>
+          </ul>
           <div class="tip">💡 VoiceBell does not store guest personal information on its own servers. Any email address entered by a guest is deleted immediately after their order is complete.</div>
         </div>
       </div></div>
@@ -1526,6 +1542,13 @@ Bibimbap,9000</div>
           </ul>
           <p>열람용 엑셀 파일이 열려 있는 동안에는 해당 파일에 바로 저장되지 않습니다. 하지만 보관용 엑셀에는 빠짐없이 기록됩니다. 열람용 파일을 닫은 후 다음 결제가 이루어지면 보관용 엑셀의 내용이 열람용 엑셀에 자동으로 반영됩니다.</p>
           <div class="tip">💡 카드/현금 결제 처리 시 자동 저장됩니다. 엑셀 파일은 직접 수정이 어려우므로 결제 취소 및 결제수단 변경은 카운터 → 기타업무를 통해 처리하시기 바랍니다.</div>
+          <p>결산 파일은 바탕화면/orders/secure 폴더에 자동 생성됩니다.</p>
+          <ul>
+            <li><strong>월말</strong>: monthly_closing_연도_월.xlsx — 익월 1일 오후 4시 자동 생성</li>
+            <li><strong>분기말</strong>: quarterly_closing_연도_Q분기.xlsx — 3·6·9·12월 월말 결산 시 함께 생성</li>
+            <li><strong>연말</strong>: annual_closing_연도.xlsx — 12월 월말 결산 시 함께 생성</li>
+          </ul>
+          <div class="warn">⚠️ 월말·분기말·연말 엑셀 생성은 서버가 실행 중인 상태에서만 가능합니다. 정산일에는 반드시 서버가 켜져 있는지 확인해주세요.</div>
         </div>
         <div class="en">
           <p>Files are automatically saved to the orders folder on the desktop of your server-integrated counter PC.</p>
@@ -1536,6 +1559,13 @@ Bibimbap,9000</div>
           </ul>
           <p>While the general Excel file is open, new payments are not saved directly to it. However, they are always recorded in the secure Excel file. Once you close the general file and the next payment is made, the secure file's contents are automatically reflected in the general file.</p>
           <div class="tip">💡 Files are saved automatically when card or cash payment is processed. As the Excel files are not easily editable, please use Counter → Other Tasks for payment cancellations and payment method changes.</div>
+          <p>Closing files are auto-generated in the Desktop/orders/secure folder.</p>
+          <ul>
+            <li><strong>Monthly</strong>: monthly_closing_year_month.xlsx — Auto-generated on the 1st of the following month at 4:00 PM</li>
+            <li><strong>Quarterly</strong>: quarterly_closing_year_Q#.xlsx — Generated alongside the monthly closing in March, June, September, December</li>
+            <li><strong>Annual</strong>: annual_closing_year.xlsx — Generated alongside the December monthly closing</li>
+          </ul>
+          <div class="warn">⚠️ Monthly, quarterly, and annual Excel files can only be generated while the server is running. Please make sure the server is on during closing time.</div>
         </div>
       </div></div>
     </div>
@@ -1700,13 +1730,13 @@ Kiosk: https://192.168.**.***:8444/?role=kiosk</div>
           <p>결제 완료된 매출 데이터는 사라지지 않습니다. 바탕화면 orders 폴더의 엑셀 파일에 이미 저장되어 있습니다.</p>
           <p>메뉴, 매장 설정, 오늘의 메뉴 / 인기추천 메뉴 사진도 서버 폴더에 저장되어 있어 재시작 후에도 유지됩니다.</p>
           <p>단, 현재 진행 중인 주문(결제 전)은 카운터 브라우저를 닫은 경우 초기화됩니다. 브라우저를 닫지 않았다면 카운터의 주문 데이터는 유지됩니다.</p>
-          <div class="warn">⚠️ 영업 중에는 서버를 끄지 않도록 주의하세요.</div>
+          <div class="warn">⚠️ 서버가 꺼진 동안에는 결제 데이터 엑셀 저장 및 월말·분기말·연말 엑셀 생성이 불가합니다. 영업 중에는 서버를 끄지 않도록 주의하세요.</div>
         </div>
         <div class="en">
           <p>Completed payment data is not lost. It is already saved in the Excel files in the orders folder on your desktop.</p>
           <p>Menu, store settings, and today's menu / recommended menu photos are stored in the server folder and will be retained after a restart.</p>
           <p>However, orders currently in progress (before payment) will be lost if the counter browser is closed. If the browser remains open, the counter's order data will be preserved.</p>
-          <div class="warn">⚠️ Avoid turning off the server during business hours.</div>
+          <div class="warn">⚠️ While the server is off, Excel data saving and monthly/quarterly/annual closing file generation are unavailable. Avoid turning off the server during business hours.</div>
         </div>
       </div></div>
     </div>
@@ -1739,6 +1769,58 @@ Kiosk: https://192.168.**.***:8444/?role=kiosk</div>
           </ul>
           <div class="warn">⚠️ Deleting or modifying files in the server folder may reset your menu and settings. Do not delete any files.</div>
           <div class="tip">💡 Regular backups of the server folder are strongly recommended.</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Q HSTS 캐시 -->
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span><span class="ko">노트북·PC에서 접속 시 "페이지가 작동하지 않습니다" 오류가 납니다.</span><span class="en">I get a "page not working" error when connecting from a laptop or PC.</span></span>
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="ko">
+          <p>브라우저의 HSTS 캐시가 접속을 차단하는 경우입니다. 아래 방법으로 해결하세요.</p>
+          <ol>
+            <li>크롬 주소창에 <code>chrome://net-internals/#hsts</code> 입력</li>
+            <li>아래로 스크롤 → <strong>Delete domain security policies</strong></li>
+            <li>Domain 칸에 접속하려는 IP 주소 입력 (예: <code>192.168.1.100</code>)</li>
+            <li><strong>Delete</strong> 클릭</li>
+            <li>새 탭에서 다시 접속 시도</li>
+          </ol>
+          <div class="tip">💡 이후 "연결이 비공개" 경고가 뜨면 고급 → IP주소로 이동을 클릭하세요.</div>
+        </div>
+        <div class="en">
+          <p>This is caused by the browser's HSTS cache blocking the connection. Follow these steps to resolve it.</p>
+          <ol>
+            <li>Enter <code>chrome://net-internals/#hsts</code> in the Chrome address bar</li>
+            <li>Scroll down → <strong>Delete domain security policies</strong></li>
+            <li>Enter the IP address you're trying to connect to (e.g. <code>192.168.1.100</code>)</li>
+            <li>Click <strong>Delete</strong></li>
+            <li>Try connecting again in a new tab</li>
+          </ol>
+          <div class="tip">💡 If a "connection is not private" warning appears, click Advanced → Proceed to IP address.</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Q 엑셀 없을 때 -->
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span><span class="ko">저장된 엑셀 파일이 열리지 않아요.</span><span class="en">The saved Excel file won't open.</span></span>
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="ko">
+          <p>저장된 파일(.xlsx)을 열려면 Microsoft Excel이 필요합니다.</p>
+          <p>Excel이 없는 경우 인터넷 환경에서 구글 스프레드시트(drive.google.com)에서 파일이 열리는 지 확인해 보시기 바랍니다.</p>
+          <div class="tip">💡 구글 스프레드시트 사용 방법: drive.google.com 접속 → 새로 만들기 → 파일 업로드 → 저장된 엑셀 파일 선택</div>
+        </div>
+        <div class="en">
+          <p>Microsoft Excel is required to open the saved .xlsx files.</p>
+          <p>If you don't have Excel, you can try opening the file using Google Sheets (drive.google.com) with an internet connection.</p>
+          <div class="tip">💡 To use Google Sheets: go to drive.google.com → New → File upload → select the saved Excel file</div>
         </div>
       </div></div>
     </div>

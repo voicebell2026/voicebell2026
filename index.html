@@ -1231,7 +1231,7 @@
               <li>검은 창이 잠깐 뜨다가 Chrome이 자동으로 열림</li>
               <li>Windows 방화벽 허용 팝업 → 개인/공용 네트워크 둘 다 체크 → 액세스 허용 클릭 ⚠️</li>
               <li>"연결이 비공개" 경고 → 고급 → localhost (으)로 이동 클릭</li>
-              <li>결제 시 사용한 이메일 입력 → 인증 완료</li>
+              <li>결제 시 사용한 이메일 입력 → 인증 완료 <span style="color:#C0392B;">(인터넷 연결 필수)</span></li>
               <li>카운터 화면 시작 🎉</li>
             </ol>
             <p style="margin-top:0.8rem;">자세한 내용은 <a href="https://voicebell.app/faq.html#faq-private-connection" target="_blank" style="color:var(--purple);">FAQ</a>를 참조하세요.</p>
@@ -1245,7 +1245,7 @@
               <li>A black window appears briefly, then Chrome opens automatically</li>
               <li>Windows Firewall popup → Check both Private and Public networks → Click Allow access ⚠️</li>
               <li>"Your connection is not private" → Advanced → click localhost (unsafe)</li>
-              <li>Enter the email used at checkout → Verified</li>
+              <li>Enter the email used at checkout → Verified <span style="color:#C0392B;">(Internet connection required)</span></li>
               <li>Counter screen starts 🎉</li>
             </ol>
             <p style="margin-top:0.8rem;">For more details, see the <a href="https://voicebell.app/faq.html#faq-private-connection" target="_blank" style="color:var(--purple);">FAQ</a>.</p>
@@ -1268,8 +1268,22 @@
           <span class="arrow">+</span>
         </button>
         <div class="faq-a"><div class="faq-a-inner">
-          <span class="ko">모든 데이터는 사장님의 카운터 PC에만 저장됩니다. VoiceBell 서버로 전송되지 않습니다. 손님 개인정보는 수집하지 않습니다.</span>
-          <span class="en">All data is stored only on your counter PC. Nothing is sent to VoiceBell servers. No customer personal information is collected.</span>
+          <div class="ko">
+            <p>모든 데이터는 사장님의 카운터 PC에만 저장됩니다. VoiceBell 서버로 전송되지 않습니다. 손님 개인정보는 수집하지 않습니다.</p>
+            <p style="margin-top:0.5rem; color:#C0392B; font-size:0.9rem;">⚠️ 서버가 실행 중인 상태에서만 데이터가 저장됩니다. 영업 중에는 반드시 서버를 켜두세요.</p>
+            <ul style="margin-top:0.5rem; padding-left:1.2rem; line-height:1.9; font-size:0.9rem;">
+              <li><strong>일간</strong>: 카드/현금 결제 처리 시 실시간 저장</li>
+              <li><strong>월말·분기말·연말</strong>: 해당 시점에 자동 생성 (서버 실행 중이어야 함)</li>
+            </ul>
+          </div>
+          <div class="en">
+            <p>All data is stored only on your counter PC. Nothing is sent to VoiceBell servers. No customer personal information is collected.</p>
+            <p style="margin-top:0.5rem; color:#C0392B; font-size:0.9rem;">⚠️ Data is only saved while the server is running. Please keep the server on during business hours.</p>
+            <ul style="margin-top:0.5rem; padding-left:1.2rem; line-height:1.9; font-size:0.9rem;">
+              <li><strong>Daily</strong>: Saved in real time when card/cash payment is processed</li>
+              <li><strong>Monthly/Quarterly/Annual</strong>: Auto-generated at the relevant closing time (server must be running)</li>
+            </ul>
+          </div>
         </div></div>
       </div>
       <div class="faq-item">
