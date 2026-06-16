@@ -633,7 +633,7 @@
           3. start_voicebell.bat 더블클릭<br>
           4. Windows 방화벽 팝업 → 개인 + 공용 둘 다 체크 → 허용<br>
           5. 브라우저 자동 열림<br>
-          6. "연결이 비공개" 경고 → 고급 → localhost (으)로 이동 클릭<br>
+          6. "연결이 비공개" 페이지 → 고급 → localhost (으)로 이동 클릭<br>
           7. 카운터 메인 페이지 → 결제 시 사용한 이메일 입력<br>
           8. 이메일 인증 완료 → 바로 사용 시작 🎉 <span style="color:#C0392B;">(인터넷 연결 필수)</span></div>
           <p>같은 와이파이에 연결된 태블릿·PC·스마트폰의 Chrome 브라우저에 카운터 PC의 IP 주소를 입력하면 키친·키오스크가 즉시 연결됩니다.</p>
@@ -649,7 +649,7 @@
           4. Windows Firewall popup → Check both Private + Public → Allow<br>
           5. Browser opens automatically<br>
           6. "Your connection is not private" → Advanced → click localhost (unsafe)<br>
-          <span style="font-size:0.85rem; color:#888; display:block; margin:2px 0 0 1.2rem;">This warning appears because localhost uses a self-signed certificate and does not indicate a security problem.</span>
+          <span style="font-size:0.85rem; color:#888; display:block; margin:2px 0 0 1.2rem;">This page appears because localhost uses a self-signed certificate and does not indicate a security problem.</span>
           7. Counter main page → enter the email used at checkout<br>
           8. Verified → start using VoiceBell right away 🎉 <span style="color:#C0392B;">(Internet connection required)</span></div>
           <p>On any tablet, PC, or phone on the same Wi-Fi, open Chrome and enter the counter PC's IP address to connect the kitchen and kiosk instantly.</p>
@@ -662,13 +662,13 @@
     <!-- Q8 연결이 비공개 -->
     <div class="faq-item" id="faq-private-connection">
       <button class="faq-q" onclick="toggleFaq(this)">
-        <span><span class="ko">"연결이 비공개로 설정되어 있지 않습니다" 경고가 뜹니다.</span><span class="en">"Your connection is not private" warning appears.</span></span>
+        <span><span class="ko">"연결이 비공개로 설정되어 있지 않습니다" 페이지가 뜹니다.</span><span class="en">"Your connection is not private" page appears.</span></span>
         <span class="arrow">+</span>
       </button>
       <div class="faq-a"><div class="faq-a-inner">
         <div class="ko">
           <p>😊 완전히 정상입니다. 해킹이나 보안 문제와는 전혀 관계없습니다.</p>
-          <p>VoiceBell은 인터넷이 아닌 <strong>내 컴퓨터 안에서만</strong> 실행되는 프로그램입니다. Chrome 브라우저가 화면을 표시하는 역할을 하는데, Chrome은 이 사실을 모르기 때문에 처음 보는 주소라며 자동으로 경고를 띄우는 것입니다.</p>
+          <p>VoiceBell은 인터넷이 아닌 <strong>내 컴퓨터 안에서만</strong> 실행되는 프로그램입니다. Chrome 브라우저가 화면을 표시하는 역할을 하는데, Chrome은 이 사실을 모르기 때문에 처음 보는 주소라며 자동으로 안내 페이지를 띄우는 것입니다.</p>
           <p>한 번만 진행하면 이후에는 뜨지 않습니다. 화면 하단 <strong style="border:1px solid #3c3c3c; border-radius:3px; padding:1px 6px; font-size:11px;">고급</strong> 버튼을 클릭하면 아래가 나타납니다.</p>
           <div style="margin:1rem 0;">
             <div style="display:inline-block; background:#f8f7f4; border:1px solid #e0ddd6; border-radius:8px; padding:14px 18px; font-family:sans-serif; max-width:360px;">
@@ -689,7 +689,7 @@
         </div>
         <div class="en">
           <p>😊 Completely normal — this has nothing to do with hacking or security risks.</p>
-          <p>VoiceBell runs entirely <strong>inside your own computer</strong>, not on the internet. Chrome is used to display the screen, but since Chrome doesn't know this, it shows a warning for any unfamiliar address.</p>
+          <p>VoiceBell runs entirely <strong>inside your own computer</strong>, not on the internet. Chrome is used to display the screen, but since Chrome doesn't know this, it shows a guidance page for any unfamiliar address.</p>
           <p>Only needs to be done once. Click <strong style="border:1px solid #3c3c3c; border-radius:3px; padding:1px 6px; font-size:11px;">Advanced</strong> at the bottom of the screen — the following will appear.</p>
           <div style="margin:1rem 0;">
             <div style="display:inline-block; background:#f8f7f4; border:1px solid #e0ddd6; border-radius:8px; padding:14px 18px; font-family:sans-serif; max-width:360px;">
@@ -1190,13 +1190,13 @@
         <div class="ko">
           <p>걱정하지 않으셔도 됩니다. VoiceBell은 가게 내부 와이파이에서만 작동하는 로컬 서버입니다. 일반적인 공유기 환경에서는 외부 인터넷에서 직접 접근할 수 없습니다.</p>
           <p>음성 주문은 브라우저의 Google Web Speech API 음성 인식 서비스를 이용합니다. 가게 기기가 Google에 먼저 요청한 것에 대한 정상 응답을 받는 구조로, 외부에서 일방적으로 침입하는 해킹과는 근본적으로 다릅니다.</p>
-          <p>"연결이 비공개" 경고는 공인 보안 인증서가 없어서 뜨는 것으로 해킹과는 무관합니다.</p>
+          <p>"연결이 비공개" 페이지는 공인 보안 인증서가 없어서 뜨는 것으로 해킹과는 무관합니다.</p>
           <div class="tip">💡 전용 PC에서 인터넷 검색이나 이메일 확인 등 다른 용도로 사용하지 않으시면 보안 위험을 줄일 수 있습니다.</div>
         </div>
         <div class="en">
           <p>There is no need to worry. VoiceBell runs as a local server that only operates within your store's Wi-Fi network. It is simply not possible to access it from outside via the internet.</p>
           <p>Voice ordering uses the browser's Google Web Speech API speech recognition service. Your device sends a request to Google and receives a response — this is fundamentally different from hacking, where an outsider forces their way in uninvited.</p>
-          <p>The "connection not private" warning appears because there is no official security certificate, and has nothing to do with hacking.</p>
+          <p>The "connection not private" page appears because there is no official security certificate, and has nothing to do with hacking.</p>
           <div class="tip">💡 If you avoid using the dedicated PC for other activities such as web browsing or personal email, you can reduce security risks.</div>
         </div>
       </div></div>
@@ -1534,6 +1534,7 @@ Bibimbap,9000</div>
       </button>
       <div class="faq-a"><div class="faq-a-inner">
         <div class="ko">
+          <div class="warn">⚠️ 아래 모든 파일은 서버가 실행 중인 상태에서만 저장 및 생성됩니다.</div>
           <p>서버 겸용 카운터 PC 바탕화면의 orders 폴더에 자동으로 저장됩니다.</p>
           <ul>
             <li>일반 엑셀: 바탕화면/orders/날짜_orders.xlsx (열람용 — 보관용을 복사해서 보여주는 파일)</li>
@@ -1548,7 +1549,6 @@ Bibimbap,9000</div>
             <li><strong>분기말</strong>: quarterly_closing_연도_Q분기.xlsx — 3·6·9·12월 월말 결산 시 함께 생성</li>
             <li><strong>연말</strong>: annual_closing_연도.xlsx — 12월 월말 결산 시 함께 생성</li>
           </ul>
-          <div class="warn">⚠️ 월말·분기말·연말 엑셀 생성은 서버가 실행 중인 상태에서만 가능합니다. 정산일에는 반드시 서버가 켜져 있는지 확인해주세요.</div>
         </div>
         <div class="en">
           <p>Files are automatically saved to the orders folder on the desktop of your server-integrated counter PC.</p>
@@ -1565,7 +1565,6 @@ Bibimbap,9000</div>
             <li><strong>Quarterly</strong>: quarterly_closing_year_Q#.xlsx — Generated alongside the monthly closing in March, June, September, December</li>
             <li><strong>Annual</strong>: annual_closing_year.xlsx — Generated alongside the December monthly closing</li>
           </ul>
-          <div class="warn">⚠️ Monthly, quarterly, and annual Excel files can only be generated while the server is running. Please make sure the server is on during closing time.</div>
         </div>
       </div></div>
     </div>
@@ -1596,7 +1595,7 @@ Bibimbap,9000</div>
             <li>앱 이름: VoiceBell 입력 → 생성</li>
             <li>표시된 16자리를 앱 비밀번호 칸에 입력</li>
           </ol>
-          <p><strong>받을 수 있는 알림</strong></p>
+          <p><strong>받을 수 있는 알림</strong> <span style="color:#C0392B;">(매장 인터넷 연결 필수)</span></p>
           <ul>
             <li>결제 완료 / 결제 취소 / 결제수단 변경</li>
             <li>비밀번호 변경</li>
@@ -1618,7 +1617,7 @@ Bibimbap,9000</div>
             <li>Enter app name: VoiceBell → Create</li>
             <li>Enter the 16-digit code in the app password field</li>
           </ol>
-          <p><strong>Notifications available</strong></p>
+          <p><strong>Notifications available</strong> <span style="color:#C0392B;">(Internet connection required)</span></p>
           <ul>
             <li>Payment complete / Payment cancelled / Payment method changed</li>
             <li>Password changed</li>
@@ -1662,7 +1661,7 @@ Bibimbap,9000</div>
           <p>카운터 → 기타업무 → 5) 관리자 비번 변경 화면에서 이메일로 임시 비밀번호 받기 버튼을 누르면 등록된 Gmail로 임시 비밀번호(6자리, 10분 유효)가 발송됩니다. 임시 비밀번호로 인증 후 새 비밀번호를 설정하시면 됩니다.</p>
           <p><strong>이메일 알림을 설정하지 않은 경우</strong></p>
           <p>브라우저의 인터넷 사용기록을 비밀번호 설정 시점 이전으로 삭제하면 비밀번호가 초기화됩니다.</p>
-          <div class="warn">⚠️ 인터넷 사용기록 삭제 시 비밀번호 등 브라우저에 저장된 부가 설정이 초기화됩니다. 메뉴, 매출 데이터 등 서버에 저장된 정보는 그대로 유지됩니다. 초기화 후에는 "연결이 비공개" 경고 해제 및 마이크 허용 절차를 다시 거쳐야 합니다. 비밀번호 분실에 대비해 이메일 알림 등록을 적극 권장합니다.</div>
+          <div class="warn">⚠️ 인터넷 사용기록 삭제 시 비밀번호 등 브라우저에 저장된 부가 설정이 초기화됩니다. 메뉴, 매출 데이터 등 서버에 저장된 정보는 그대로 유지됩니다. 초기화 후에는 "연결이 비공개" 페이지 해제 및 마이크 허용 절차를 다시 거쳐야 합니다. 비밀번호 분실에 대비해 이메일 알림 등록을 적극 권장합니다.</div>
         </div>
         <div class="en">
           <p><strong>If email notifications are set up</strong></p>
@@ -1789,7 +1788,7 @@ Kiosk: https://192.168.**.***:8444/?role=kiosk</div>
             <li><strong>Delete</strong> 클릭</li>
             <li>새 탭에서 다시 접속 시도</li>
           </ol>
-          <div class="tip">💡 이후 "연결이 비공개" 경고가 뜨면 고급 → IP주소로 이동을 클릭하세요.</div>
+          <div class="tip">💡 이후 "연결이 비공개" 페이지가 뜨면 고급 → IP주소로 이동을 클릭하세요.</div>
         </div>
         <div class="en">
           <p>This is caused by the browser's HSTS cache blocking the connection. Follow these steps to resolve it.</p>
@@ -1800,7 +1799,7 @@ Kiosk: https://192.168.**.***:8444/?role=kiosk</div>
             <li>Click <strong>Delete</strong></li>
             <li>Try connecting again in a new tab</li>
           </ol>
-          <div class="tip">💡 If a "connection is not private" warning appears, click Advanced → Proceed to IP address.</div>
+          <div class="tip">💡 If a "connection is not private" page appears, click Advanced → Proceed to IP address.</div>
         </div>
       </div></div>
     </div>
