@@ -171,12 +171,6 @@
       <div class="section-label" style="margin-bottom:10px;">라이선스 추가</div>
       <label>상품 종류</label>
       <select id="addProduct" onchange="setDefaultExpiry()" style="width:100%; padding:10px 13px; border:1.5px solid #e0ddd8; border-radius:8px; font-size:0.88rem; background:#faf9f7; margin-bottom:10px; outline:none;">
-        <optgroup label="Paddle">
-          <option value="VoiceBell Monthly">월정액</option>
-          <option value="VoiceBell 3-Day Pass">3일 이용권</option>
-          <option value="VoiceBell 7-Day Pass">7일 이용권</option>
-          <option value="VoiceBell 15-Day Pass">15일 이용권</option>
-        </optgroup>
         <optgroup label="스마트스토어">
           <option value="스마트스토어 3일 이용권">스마트스토어 3일 이용권</option>
           <option value="스마트스토어 7일 이용권">스마트스토어 7일 이용권</option>
@@ -541,10 +535,6 @@ function toggleAddLicense() {
 function setDefaultExpiry() {
   const product = document.getElementById('addProduct').value;
   const dayMap = {
-    'VoiceBell Monthly': 30,
-    'VoiceBell 3-Day Pass': 3,
-    'VoiceBell 7-Day Pass': 7,
-    'VoiceBell 15-Day Pass': 15,
     '스마트스토어 3일 이용권': 3,
     '스마트스토어 7일 이용권': 7,
     '스마트스토어 15일 이용권': 15,
