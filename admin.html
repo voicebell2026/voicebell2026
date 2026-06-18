@@ -401,8 +401,8 @@ async function expireOne(pcId, i) {
 
 
 async function loadTransactions() {
-  document.getElementById('transactionList').innerHTML = '<div class="empty-state">조회 중...</div>';
   document.getElementById('paddleSection').classList.add('show');
+  document.getElementById('transactionList').innerHTML = '<div class="empty-state">조회 중...</div>';
   try {
     const res = await fetch(`${WORKER}/admin/transactions?email=${encodeURIComponent(currentEmail)}`, {
       headers: { 'X-Admin-Key': KEY }
