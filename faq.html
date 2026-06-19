@@ -763,6 +763,46 @@
       </div></div>
     </div>
 
+    <!-- Q 카운터 다른 기기 접속 -->
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span><span class="ko">카운터를 서버 PC가 아닌 태블릿이나 노트북에서 쓸 수 있나요?</span><span class="en">Can I use the counter on a tablet or laptop instead of the server PC?</span></span>
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="ko">
+          <p>가능합니다. 키친·키오스크와 동일하게 <strong>https://[서버IP]:8444?role=counter</strong> 로 접속하시면 됩니다.</p>
+          <p>단, 서버는 항상 켜져 있어야 하고, 같은 공유기(와이파이)에 연결돼 있어야 해요.</p>
+          <div class="tip">💡 서버 IP는 카운터 화면 첫 시작 시 표시되는 주소에서 확인할 수 있어요.<br>예: https://192.168.**.***:8444?role=counter</div>
+        </div>
+        <div class="en">
+          <p>Yes. Connect using <strong>https://[serverIP]:8444?role=counter</strong>, just like the kitchen and kiosk.</p>
+          <p>The server must be running, and the device must be on the same Wi-Fi network.</p>
+          <div class="tip">💡 You can find the server IP in the startup popup when the counter screen first launches.<br>Example: https://192.168.**.***:8444?role=counter</div>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Q 카운터 화면 권장 크기 -->
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span><span class="ko">카운터 화면은 어느 정도 크기가 적당한가요?</span><span class="en">What screen size is recommended for the counter?</span></span>
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">
+        <div class="ko">
+          <p>테이블 수에 따라 권장 화면 크기가 달라져요.</p>
+          <p>6테이블 이하: 최소 12인치 이상<br>9테이블 이상: 14인치 이상 권장</p>
+          <div class="tip">💡 카운터는 여러 테이블 상황을 한눈에 봐야 하기 때문에 화면이 작으면 사용이 불편할 수 있어요.</div>
+        </div>
+        <div class="en">
+          <p>Recommended screen size depends on the number of tables.</p>
+          <p>6 tables or fewer: minimum 12 inches<br>9 tables or more: 14 inches or larger recommended</p>
+          <div class="tip">💡 Since the counter needs to display multiple tables at once, a small screen may be inconvenient to use.</div>
+        </div>
+      </div></div>
+    </div>
+
     <!-- Q6 -->
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
@@ -1748,6 +1788,7 @@ Bibimbap,9000</div>
             <li>브라우저 탭을 닫은 경우 인터넷 주소창에 아래 주소를 입력하세요.</li>
           </ol>
           <div class="code-block">카운터: https://localhost:8444/?role=counter
+(또는 https://192.168.**.***:8444/?role=counter)
 키친: https://192.168.**.***:8444/?role=kitchen
 키오스크: https://192.168.**.***:8444/?role=kiosk</div>
           <div class="tip">💡 영업 중에는 서버 PC를 끄지 않도록 주의하세요. 절전 모드도 연결이 끊길 수 있으므로 Windows 설정에서 미리 해제해 두시길 권장합니다.</div>
@@ -1761,6 +1802,7 @@ Bibimbap,9000</div>
             <li>If the browser tab was closed, enter the following address in the browser address bar.</li>
           </ol>
           <div class="code-block">Counter: https://localhost:8444/?role=counter
+(or https://192.168.**.***:8444/?role=counter)
 Kitchen: https://192.168.**.***:8444/?role=kitchen
 Kiosk: https://192.168.**.***:8444/?role=kiosk</div>
           <div class="tip">💡 Avoid turning off the server PC during business hours. Sleep mode can also disconnect devices, so we recommend disabling it in Windows settings in advance.</div>
