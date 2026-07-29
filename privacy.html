@@ -468,18 +468,6 @@
           <span class="item-label"><span class="ko">이름</span><span class="en">Name</span></span>
           <span><span class="ko">관리자 인증 기록, 비밀번호 변경·실패 알림 이름 표시, 이메일 알림 발신자 이름 설정에 사용됩니다.</span><span class="en">Used for admin authentication records, password change/failure notification name display, and email notification sender name.</span></span>
         </div>
-        <div class="item">
-          <span class="item-label"><span class="ko">결제 정보 (이름, 이메일, 국가)</span><span class="en">Payment info (name, email, country)</span></span>
-          <span><span class="ko">Paddle을 통해 결제 처리. 카드 정보는 Paddle이 보관하며 VoiceBell에 저장되지 않습니다.</span><span class="en">Payment processing via Paddle. Card details are handled by Paddle and never stored by VoiceBell.</span></span>
-        </div>
-        <div class="item">
-          <span class="item-label"><span class="ko">이메일 (라이선스 검증용)</span><span class="en">Email (license verification)</span></span>
-          <span><span class="ko">라이선스 검증에 사용됩니다. Cloudflare KV에 저장됩니다.</span><span class="en">Used for license verification. Stored in Cloudflare KV.</span></span>
-        </div>
-        <div class="item">
-          <span class="item-label"><span class="ko">PC 고유 ID</span><span class="en">PC unique ID</span></span>
-          <span><span class="ko">1대의 PC에서만 사용할 수 있도록 기기를 식별합니다. Cloudflare KV에 저장됩니다.</span><span class="en">Identifies your device so the service runs on one PC only. Stored in Cloudflare KV.</span></span>
-        </div>
       </div>
 
       <h3><span class="ko">손님(키오스크 이용객) 정보</span><span class="en">Guest (Kiosk User) Information</span></h3>
@@ -499,15 +487,7 @@
       <div class="info-card">
         <div class="item">
           <span class="item-label"><span class="ko">이용자 PC 로컬</span><span class="en">Local PC (orders/)</span></span>
-          <span><span class="ko">주문·결제 기록. 외부로 전송되지 않습니다.</span><span class="en">Order and payment records. Never sent to external servers.</span></span>
-        </div>
-        <div class="item">
-          <span class="item-label"><span class="ko">Paddle 서버</span><span class="en">Paddle servers</span></span>
-          <span><span class="ko">결제 처리 및 구독 관리. <a href="https://www.paddle.com/legal/privacy" target="_blank" rel="noopener">Paddle 개인정보처리방침 ↗</a>이 적용됩니다.</span><span class="en">Payment processing and subscription management. <a href="https://www.paddle.com/legal/privacy" target="_blank" rel="noopener">Paddle's privacy policy ↗</a> applies.</span></span>
-        </div>
-        <div class="item">
-          <span class="item-label"><span class="ko">Cloudflare KV</span><span class="en">Cloudflare KV</span></span>
-          <span><span class="ko">이메일, 만료일, PC ID를 저장합니다. 데이터는 Cloudflare의 글로벌 네트워크에 저장되며, 해외 데이터센터에 저장될 수 있습니다. <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare 개인정보처리방침 ↗</a>이 적용됩니다.</span><span class="en">Stores email, expiry date, and PC ID. Data is stored on Cloudflare's global network and may be held in overseas data centers. <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Cloudflare's privacy policy ↗</a> applies.</span></span>
+          <span><span class="ko">주문 기록. 외부로 전송되지 않습니다.</span><span class="en">Order records. Never sent to external servers.</span></span>
         </div>
       </div>
     </div>
@@ -525,20 +505,8 @@
       </p>
       <div class="info-card">
         <div class="item">
-          <span class="item-label">Paddle</span>
-          <span><span class="ko">구독 결제 및 환불 처리를 위해 이름·이메일·국가 정보 제공</span><span class="en">Name, email, and country for subscription payment and refund processing</span></span>
-        </div>
-        <div class="item">
           <span class="item-label">Gmail SMTP</span>
           <span><span class="ko">이용자가 직접 설정한 Gmail 계정을 통해 매장 운영 알림(결제 알림, 매출 리포트, 비밀번호 변경 알림 등)을 발송합니다. 이 이메일은 VoiceBell 서버가 아닌 이용자 본인의 Gmail을 통해 발송됩니다.</span><span class="en">Sends store operation notifications (payment alerts, sales reports, password change alerts, etc.) via the Gmail account configured by the user. These emails are sent through the user's own Gmail, not VoiceBell's servers.</span></span>
-        </div>
-        <div class="item">
-          <span class="item-label">Cloudflare Workers / KV</span>
-          <span><span class="ko">이메일, 만료일, PC ID를 라이선스 검증 목적으로 저장·처리합니다. 데이터는 해외 데이터센터에 저장될 수 있습니다.</span><span class="en">Email, expiry date, and PC ID stored for license verification. Data may be held in overseas data centers.</span></span>
-        </div>
-        <div class="item">
-          <span class="item-label">Resend</span>
-          <span><span class="ko">VoiceBell이 고객에게 발송하는 이메일(결제 완료 다운로드 안내, 데이터 삭제 완료 안내)에 사용됩니다.</span><span class="en">Used for emails sent by VoiceBell to customers (purchase confirmation with download link, data deletion confirmation).</span></span>
         </div>
       </div>
       <p>
@@ -555,10 +523,8 @@
         <span class="en">Retention Period</span>
       </h2>
       <ul>
-        <li><span class="ko">이메일, PC ID: 구독 만료 또는 해지 후 <strong>1년</strong> 보관 후 자동 삭제됩니다.</span><span class="en">Email and PC ID: retained for <strong>1 year</strong> after expiry or cancellation, then automatically deleted.</span></li>
-        <li><span class="ko">결제 정보: Paddle이 보관하며 Paddle 정책에 따릅니다.</span><span class="en">Payment data: retained by Paddle under their own policy.</span></li>
-        <li><span class="ko">PC 로컬 데이터 (주문·결제 기록): 이용자가 직접 삭제합니다.</span><span class="en">Local PC data (orders/payments): deleted by you directly.</span></li>
-        <li><span class="ko">삭제를 요청하시려면 구매 시 사용한 이메일로 구매번호를 포함하여 hello@voicebell.app으로 문의해 주세요.</span><span class="en">To request deletion, email hello@voicebell.app from your purchase email address, including your order number.</span></li>
+        <li><span class="ko">PC 로컬 데이터 (주문 기록): 이용자가 직접 삭제합니다.</span><span class="en">Local PC data (order records): deleted by you directly.</span></li>
+        <li><span class="ko">삭제를 요청하시려면 hello@voicebell.app으로 문의해 주세요.</span><span class="en">To request deletion, email hello@voicebell.app.</span></li>
       </ul>
     </div>
 
@@ -582,10 +548,6 @@
           <span class="ko">이메일 알림 설정은 카운터 → 기타업무 → 6)에서 수정·삭제할 수 있습니다.</span>
           <span class="en">Email notification settings can be updated via Counter → Other Tasks → 6).</span>
         </li>
-        <li>
-          <span class="ko">결제 정보 삭제는 <a href="https://www.paddle.com/legal/privacy" target="_blank" rel="noopener">Paddle 개인정보처리방침 ↗</a>을 참고하세요.</span>
-          <span class="en">For payment data, see <a href="https://www.paddle.com/legal/privacy" target="_blank" rel="noopener">Paddle's Privacy Policy ↗</a>.</span>
-        </li>
       </ul>
     </div>
 
@@ -598,7 +560,6 @@
       </h2>
       <ul>
         <li><span class="ko">매장 내 로컬 네트워크에서만 작동합니다. 외부 접근이 차단됩니다.</span><span class="en">The service runs on your local network only. External access is blocked.</span></li>
-        <li><span class="ko">결제 정보는 Paddle이 PCI-DSS 기준으로 처리합니다. VoiceBell에 저장되지 않습니다.</span><span class="en">Payment data is handled by Paddle (PCI-DSS). Never stored by VoiceBell.</span></li>
         <li><span class="ko">VoiceBell은 손님의 개인정보를 자체 서버에 저장하지 않으며, 주문 종료 후 매장 기기의 데이터도 자동으로 초기화됩니다.</span><span class="en">VoiceBell does not store guest personal information on its own servers. Device data is automatically cleared after the order ends.</span></li>
         <li><span class="ko">관리자 비밀번호는 이용자 기기에만 저장됩니다.</span><span class="en">Admin passwords are stored on your device only.</span></li>
       </ul>
@@ -619,10 +580,6 @@
         <div class="item">
           <span class="item-label">Google Web Speech API</span>
           <span><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></span>
-        </div>
-        <div class="item">
-          <span class="item-label">Paddle</span>
-          <span><a href="https://www.paddle.com/legal/privacy" target="_blank" rel="noopener">paddle.com/legal/privacy</a></span>
         </div>
         <div class="item">
           <span class="item-label">Gmail SMTP</span>
@@ -677,15 +634,12 @@
           상호명: <span>신가공삶</span><br>
           대표자: <span>노순영</span><br>
           사업자등록번호: <span>448-17-02829</span><br>
-          통신판매업신고번호: <span>제 2026-서울강서-1697 호</span><br>
-          주소: <span>서울특별시 강서구 초록마을로30길 15, 가동 302호</span><br>
           이메일: <span>hello@voicebell.app</span>
         </span>
         <span class="en">
           Business name: <span>Singagong-salm</span><br>
           Representative: <span>Roh Soon-young</span><br>
           Business reg. no.: <span>448-17-02829</span><br>
-          E-commerce reg. no.: <span>2026-Seoul Gangseo-1697</span><br>
           Address: <span>15, Chorokmaul-ro 30-gil, Gangseo-gu, Seoul, Republic of Korea</span><br>
           Email: <span>hello@voicebell.app</span>
         </span>
@@ -702,7 +656,6 @@
   </div>
   <div class="footer-bottom">
     <span>© 2026 VoiceBell. All rights reserved.</span>
-    <span>Payments processed by Paddle</span>
   </div>
 </footer>
 
