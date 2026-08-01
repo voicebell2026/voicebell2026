@@ -99,7 +99,6 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    /* 상자 열리는 총 시간을 0.7초로 단축 */
     animation: chestOpenFast 0.7s steps(1) forwards;
   }
 
@@ -177,7 +176,6 @@
     left:calc(44% - 300px);
     top:calc(82% - 155px);
     --jx:300px; --jy:155px;
-    /* 상자가 열린 직후(0.45초) 빠르게 튀어나오도록 단축 */
     animation:jumpOut .5s cubic-bezier(.34,1.56,.64,1) 0.45s both,
               floatY 3.4s ease-in-out infinite 1.0s;
   }
@@ -255,36 +253,116 @@
     color:var(--ink);
   }
   .parchment-panel .lines .muted{ color:var(--ink-soft); }
-  .account-box{
-    margin:6px auto 0;
-    padding:18px 20px;
-    background:#fff;
-    border:1.5px solid var(--parchment-edge);
-    border-radius:14px;
-    display:inline-block;
-    text-align:center;
-    box-shadow:0 4px 14px rgba(90,80,40,0.12);
+
+  /* [후원하기] 버튼 스타일 */
+  .support-btn {
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Gowun Dodum', sans-serif;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(240, 180, 41, 0.4);
+    transition: transform 0.15s ease, background 0.15s ease;
+    margin-top: 10px;
   }
-  .account-box .qr-code{
-    width:132px; height:132px;
-    display:block;
-    margin:0 auto 10px;
-    border-radius:6px;
+  .support-btn:hover {
+    background: #e5a822;
+    transform: translateY(-2px);
   }
-  .account-box .account-memo{
-    margin-top:10px;
-    padding-top:10px;
-    border-top:1px dashed var(--parchment-edge);
-    font-size:0.74rem;
-    color:var(--ink-soft);
-    line-height:1.5;
-    max-width:180px;
-  }
+
   .disclaimer{
     margin-top:18px;
     font-size:0.72rem;
     color:var(--ink-soft);
     line-height:1.6;
+  }
+
+  /* ───────────────────── 팝업 모달 스타일 ───────────────────── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+  }
+  .modal-overlay.active {
+    display: flex;
+  }
+  .modal-content {
+    background: var(--parchment);
+    border: 1px solid var(--parchment-edge);
+    border-radius: 16px;
+    padding: 30px 24px 24px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    position: relative;
+    animation: modalPop 0.25s ease-out;
+  }
+  @keyframes modalPop {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .modal-title {
+    font-size: 1.1rem;
+    font-family: 'Gowun Batang', serif;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  .account-info-box {
+    background: #fff;
+    border: 1.5px solid var(--parchment-edge);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+    text-align: left;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .copy-btn {
+    width: 100%;
+    background: var(--forest-mid);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: 'Gowun Dodum', sans-serif;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: background 0.15s ease;
+  }
+  .copy-btn:hover {
+    background: #3f562e;
+  }
+  .modal-memo {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-top: 12px;
+    word-break: keep-all;
   }
 
   footer{
@@ -349,16 +427,69 @@
       <span class="muted">프로그램이 도움이 되었다면,<br>계좌로 응원해 주시면 큰 힘이 됩니다.</span><br><br>
       <span class="muted">후원 여부와 관계없이 모든 프로그램은<br>동일하게 이용하실 수 있습니다.</span>
     </div>
-    <div class="account-box">
-      <img src="support-qr.png" alt="후원 계좌 QR 코드" class="qr-code">
-    </div>
+    
+    <!-- 후원하기 버튼 -->
+    <button class="support-btn" id="openModalBtn">후원하기</button>
+
     <p class="disclaimer">※ 본 후원은 대가성이 없는 자발적 후원이므로<br>세금계산서 및 현금영수증 발행이 불가합니다.</p>
   </div>
 </section>
+
+<!-- 후원 계좌 팝업 모달 -->
+<div class="modal-overlay" id="supportModal">
+  <div class="modal-content">
+    <button class="modal-close" id="closeModalBtn">&times;</button>
+    <h3 class="modal-title">후원 계좌 안내</h3>
+    <div class="account-info-box" id="accountInfoText">
+      🏦 우리은행<br>
+      1002-963-460363<br>
+      예금주 : 노순영
+    </div>
+    <button class="copy-btn" id="copyAccountBtn">📋 계좌번호 복사</button>
+    <div class="modal-memo">
+      송금 메모에 <strong>"개발을 응원해요"</strong>라고 남겨주시면 큰 힘이 됩니다!
+    </div>
+  </div>
+</div>
 
 <footer>
   © 2026 VoiceBell. All rights reserved.
 </footer>
 
+<script>
+  const modal = document.getElementById('supportModal');
+  const openBtn = document.getElementById('openModalBtn');
+  const closeBtn = document.getElementById('closeModalBtn');
+  const copyBtn = document.getElementById('copyAccountBtn');
+
+  // 모달 열기
+  openBtn.addEventListener('click', () => {
+    modal.classList.add('active');
+  });
+
+  // 모달 닫기 (X 버튼)
+  closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
+
+  // 모달 외부 클릭 시 닫기
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+
+  // 계좌번호 복사 기능
+  copyBtn.addEventListener('click', () => {
+    const accountText = "1002963460363";
+    navigator.clipboard.writeText(accountText).then(() => {
+      alert('계좌번호가 복사되었습니다!');
+    }).catch(err => {
+      console.error('복사 실패:', err);
+    });
+  });
+</script>
+
 </body>
 </html>
+```[cite: 1]
