@@ -1779,6 +1779,9 @@ function buildCatTree(){
     t[L] = t[L] || {}; t[L][M] = t[L][M] || [];
     if(S && !t[L][M].includes(S)) t[L][M].push(S);
   });
+  // 항상 선택 가능한 기본 분류: 기타 > 기타 > 기타 (잘못 걸린 전화, 번호 오입력, 무응답 등)
+  t['기타'] = t['기타'] || {}; t['기타']['기타'] = t['기타']['기타'] || [];
+  if(!t['기타']['기타'].includes('기타')) t['기타']['기타'].push('기타');
   return t;
 }
 function fillSel(el, arr, ph){ el.innerHTML = '<option value="">'+ph+'</option>' + arr.map(x=>`<option>${escHtml(x)}</option>`).join(''); }
