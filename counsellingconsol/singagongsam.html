@@ -371,28 +371,6 @@
   }
   #toast.show{opacity:1;transform:translate(-50%,0);}
 
-  .faq-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px;}
-  .faq-form-grid .full{grid-column:1/3;}
-  .faq-form-grid label{display:block;font-size:11.5px;color:var(--ink-muted);font-weight:700;margin-bottom:4px;}
-  .faq-form-grid input[type="text"], .faq-form-grid textarea, .faq-form-grid select{
-    width:100%;box-sizing:border-box;border:1.5px solid var(--border);border-radius:8px;
-    padding:8px 10px;font-size:13px;font-family:var(--font-sans);outline:none;
-    margin:0 0 12px;color:var(--ink);background:var(--surface);
-  }
-  .faq-form-grid input[type="text"]:focus, .faq-form-grid textarea:focus, .faq-form-grid select:focus{border-color:var(--accent);}
-  .faq-form-grid textarea{resize:vertical;min-height:56px;line-height:1.4;}
-  .faq-transfer-row{display:flex;align-items:center;gap:6px;margin-bottom:12px;}
-  .faq-transfer-row input{width:auto;margin:0;}
-  .faq-warn-box{
-    font-size:12px;color:var(--signal);background:var(--signal-soft);
-    border-radius:8px;padding:10px 12px;line-height:1.5;margin:14px 0;text-align:left;
-  }
-  .edit-faq-btn{
-    background:var(--surface-alt);border:1px solid var(--border);
-    padding:3px 9px;border-radius:6px;font-size:11px;font-weight:600;
-    cursor:pointer;color:var(--ink-muted);margin-right:6px;
-  }
-  .edit-faq-btn:hover{background:var(--accent-soft);color:var(--accent);}
 
   #loginOverlay{position:fixed;inset:0;background:rgba(19,32,58,.88);display:flex;align-items:center;justify-content:center;z-index:2000;}
   .login-card{background:#fff;padding:32px;border-radius:14px;width:360px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3);}
@@ -490,18 +468,12 @@
     </div>
     <div class="topbar-right">
       <span class="top-btn" id="callCounter" style="cursor:default;">📞 오늘 콜 IN <b id="cntIn">0</b> · OUT <b id="cntOut">0</b></span>
-      <button class="top-btn" id="csvLoadBtn" style="display:none" onclick="openCsvSaveInfoModal()">📂 FAQ 불러오기(csv)</button>
       <span id="syncBox" style="display:none;align-items:center;gap:6px;flex-wrap:wrap;">
         <span id="syncStatus" style="font-size:11.5px;color:var(--ink-muted);"></span>
         <button class="top-btn master-reset-btn" onclick="syncFaq(true)">🔃 FAQ 새로고침</button>
       </span>
-      <input type="file" id="csvFileInput" accept=".csv" style="display:none;" onchange="handleCsvUpload(event)">
       <button class="top-btn" id="statsBtn" style="display:none" onclick="openStats()">📊 통계</button>
       <button class="top-btn" id="agentAdminBtn" style="display:none" onclick="openAgentAdmin()">👥 상담사 관리</button>
-      <span id="adminOnlyButtons" style="display:none;">
-        <button class="top-btn" onclick="openFaqAddModal()">➕ FAQ 추가</button>
-        <button class="top-btn" onclick="downloadCsvTemplate()">⬇ 현재 FAQ(csv) 저장</button>
-      </span>
       <div class="clock" id="clock"></div>
     </div>
   </div>
@@ -666,85 +638,6 @@
     <div style="font-size:11.5px; color:#8991A3; text-align:left; margin-top:6px;">이미 있는 사번에 이름만 입력하면 이름이 수정되고, 개인코드를 함께 입력하면 코드도 바뀝니다. (코드 변경 시 해당 상담사의 접속이 종료됩니다)</div>
     <div class="modal-btns" style="margin-top:12px;">
       <button class="btn-cancel" onclick="closeAgentAdmin()">닫기</button>
-    </div>
-  </div>
-</div>
-
-<!-- CSV 저장 안내 모달 -->
-<div class="modal-overlay" id="csvSaveInfoModal">
-  <div class="modal" style="width:360px; text-align:left;">
-    <div style="font-weight:700; font-size:16px; text-align:center;">⚠️ 불러오기 전 안내</div>
-    <div style="font-size:13px; color:var(--ink-muted); line-height:1.6; margin:16px 0;">
-      브라우저 메모리상의 변경일 뿐, HTML 파일 자체가 수정되는 건 아닙니다.<br><br>
-      새로고침하면 불러오기 전 내용으로 초기화됩니다.<br><br>
-      불러오는 원본 FAQ(csv) 파일은 삭제하지 마시고 보관하세요.
-    </div>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeCsvSaveInfoModal()">취소</button>
-      <button class="btn-confirm" onclick="confirmCsvSave()">확인하고 불러오기</button>
-    </div>
-  </div>
-</div>
-
-<!-- FAQ 추가/수정 모달 -->
-<div class="modal-overlay" id="faqFormModal">
-  <div class="modal" style="width:480px; text-align:left; max-height:85vh; overflow-y:auto;">
-    <div style="font-weight:700; font-size:16px; text-align:center;" id="faqFormTitle">FAQ 추가</div>
-    <div class="faq-warn-box">
-      ⚠️ 여기서 추가·수정한 내용은 <b>브라우저 화면(메모리)</b>에만 반영됩니다.<br>
-      새로고침하면 사라지니, 작업 후 반드시 상단의 <b>"현재 FAQ(csv) 저장"</b> 버튼을 눌러 파일로 백업하세요.
-    </div>
-    <input type="hidden" id="faq-edit-id">
-    <div class="faq-form-grid">
-      <div>
-        <label>대분류</label>
-        <select id="faq-category-select" onchange="onCategorySelectChange()"></select>
-        <input type="text" id="faq-category-new" placeholder="새 대분류 입력" style="display:none;">
-      </div>
-      <div>
-        <label>중분류</label>
-        <input type="text" id="faq-subcategory" placeholder="ex. 예매취소">
-      </div>
-      <div class="full">
-        <label>소분류 (상담이력 대·중·소 분류로 자동 입력)</label>
-        <input type="text" id="faq-smallCat" placeholder="ex. 취소 방법 안내">
-      </div>
-      <div class="full">
-        <label>질문유형 (필수)</label>
-        <input type="text" id="faq-qtype" placeholder="ex. 영화 예매는 어떻게 하나요">
-      </div>
-      <div class="full">
-        <label>검색키워드 (쉼표로 구분, 최대 3개)</label>
-        <input type="text" id="faq-keywords" placeholder="ex. 영화 예매, 예매 방법, 예매하기">
-      </div>
-      <div class="full">
-        <label>유사표현 (쉼표로 구분, 최대 3개)</label>
-        <input type="text" id="faq-synonyms" placeholder="ex. 어떻게 예매, 예매 절차">
-      </div>
-      <div class="full">
-        <label>답변 (필수)</label>
-        <textarea id="faq-answer" placeholder="고객에게 안내할 상세 답변을 입력하세요"></textarea>
-      </div>
-      <div class="full">
-        <label>안내 경로</label>
-        <input type="text" id="faq-path" placeholder="ex. 앱 > 예매하기">
-      </div>
-      <div class="full">
-        <label>추가 확인 사항 (쉼표로 구분)</label>
-        <input type="text" id="faq-checks" placeholder="ex. 회원등급, 결제 일시">
-      </div>
-      <div class="full faq-transfer-row">
-        <input type="checkbox" id="faq-transfer">
-        <label style="margin:0;">이관 대상 문의입니다</label>
-      </div>
-      <div class="full">
-        <label>이관 내용 (이관 대상인 경우 작성)</label>
-        <textarea id="faq-transferText" placeholder="담당부서 전달용 이관 내용을 입력하세요"></textarea>
-      </div>
-    </div>
-    <div class="modal-btns">
-      <button class="btn-cancel" onclick="closeFaqFormModal()">취소</button>
-      <button class="btn-confirm" onclick="saveFaqForm()">저장</button>
     </div>
   </div>
 </div>
@@ -928,243 +821,8 @@ function csvRowsToFaqData(rows){
   });
 }
 
-function faqDataToCsvRows(data){
-  const esc = (v) => {
-    v = (v === undefined || v === null) ? '' : String(v);
-    if (v.includes(',') || v.includes('"') || v.includes('\n')) {
-      return '"' + v.replace(/"/g, '""') + '"';
-    }
-    return v;
-  };
-  const lines = [CSV_HEADER.join(',')];
-  data.forEach(item => {
-    const kw = item.keywords || [], syn = item.synonyms || [];
-    const row = [
-      item.id, item.category, item.subCategory, item.smallCat,
-      kw[0]||'', kw[1]||'', kw[2]||'',
-      syn[0]||'', syn[1]||'', syn[2]||'',
-      item.qtype, item.answer, item.path,
-      item.transfer ? 'O' : 'X', item.transferText || '',
-      (item.checks||[]).join('|')
-    ];
-    lines.push(row.map(esc).join(','));
-  });
-  return lines.join('\r\n');
-}
-
-// 💡 [개선됨] 한셀/엑셀에서 어떤 인코딩(ANSI, EUC-KR 등)으로 저장하든 한글이 절대 깨지지 않도록 자동 감지하여 읽어오는 스마트 기능
-function handleCsvUpload(event){
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  
-  // UTF-8로 먼저 읽고, UTF-8이 아니면(엑셀 'CSV' 저장 = EUC-KR) EUC-KR로 다시 읽는다.
-  reader.onload = (e) => {
-    try {
-      const buf = e.target.result;
-      const rawText = decodeCsvBuffer(buf);
-      
-      const rows = parseCsv(rawText);
-      const newData = csvRowsToFaqData(rows);
-      if (newData.length === 0) throw new Error('불러온 항목이 없습니다.');
-      
-      faqData = newData;
-      hasUnsavedChanges = false;
-      alert(`FAQ ${newData.length}건을 성공적으로 불러왔습니다!`);
-      markLocalFaq();
-      refreshCatOptions();
-      onInquiryInput();
-    } catch(err) {
-      alert('CSV를 읽는 중 문제가 발생했습니다. 파일 형식을 확인해주세요.\n(' + err.message + ')');
-    }
-  };
-  
-  reader.readAsArrayBuffer(file);
-  event.target.value = '';
-}
-
-function openCsvSaveInfoModal(){
-  document.getElementById('csvSaveInfoModal').classList.add('show');
-}
-
-function closeCsvSaveInfoModal(){
-  document.getElementById('csvSaveInfoModal').classList.remove('show');
-}
-
-function confirmCsvSave(){
-  closeCsvSaveInfoModal();
-  document.getElementById('csvFileInput').click();
-}
-
-let hasUnsavedChanges = false;
-
-window.addEventListener('beforeunload', function(e){
-  if(hasUnsavedChanges){
-    e.preventDefault();
-    e.returnValue = '';
-    return '';
-  }
-});
-
 function isAdmin(){
   return adminUnlocked && document.getElementById('agentName').textContent.trim() === '관리자';
-}
-
-function openFaqAddModal(){
-  document.getElementById('faqFormTitle').textContent = 'FAQ 추가';
-  document.getElementById('faq-edit-id').value = '';
-  populateCategorySelect('');
-  document.getElementById('faq-subcategory').value = '';
-  document.getElementById('faq-qtype').value = '';
-  document.getElementById('faq-keywords').value = '';
-  document.getElementById('faq-synonyms').value = '';
-  document.getElementById('faq-answer').value = '';
-  document.getElementById('faq-smallCat').value = '';
-  document.getElementById('faq-path').value = '';
-  document.getElementById('faq-checks').value = '';
-  document.getElementById('faq-transfer').checked = false;
-  document.getElementById('faq-transferText').value = '';
-  document.getElementById('faqFormModal').classList.add('show');
-}
-
-function openFaqEditModal(id){
-  const item = faqData.find(f => f.id === id);
-  if(!item) return;
-  document.getElementById('faqFormTitle').textContent = 'FAQ 수정';
-  document.getElementById('faq-edit-id').value = item.id;
-  populateCategorySelect(item.category || '');
-  document.getElementById('faq-subcategory').value = item.subCategory || '';
-  document.getElementById('faq-qtype').value = item.qtype || '';
-  document.getElementById('faq-keywords').value = (item.keywords || []).join(', ');
-  document.getElementById('faq-synonyms').value = (item.synonyms || []).join(', ');
-  document.getElementById('faq-answer').value = item.answer || '';
-  document.getElementById('faq-smallCat').value = item.smallCat || '';
-  document.getElementById('faq-path').value = item.path || '';
-  document.getElementById('faq-checks').value = (item.checks || []).join(', ');
-  document.getElementById('faq-transfer').checked = !!item.transfer;
-  document.getElementById('faq-transferText').value = item.transferText || '';
-  document.getElementById('faqFormModal').classList.add('show');
-}
-
-function populateCategorySelect(current){
-  const sel = document.getElementById('faq-category-select');
-  const newInput = document.getElementById('faq-category-new');
-  const categories = [...new Set(faqData.map(f => f.category).filter(Boolean))]
-    .sort((a, b) => a.localeCompare(b, 'ko'));
-
-  sel.innerHTML = categories.map(c => `<option value="${escHtml(c)}">${escHtml(c)}</option>`).join('')
-    + '<option value="__new__">+ 새 카테고리 직접 입력</option>';
-
-  if(current && categories.includes(current)){
-    sel.value = current;
-    newInput.style.display = 'none';
-    newInput.value = '';
-  } else if(current){
-    sel.value = '__new__';
-    newInput.style.display = 'block';
-    newInput.value = current;
-  } else {
-    sel.value = categories[0] || '__new__';
-    newInput.style.display = (sel.value === '__new__') ? 'block' : 'none';
-    newInput.value = '';
-  }
-}
-
-function onCategorySelectChange(){
-  const sel = document.getElementById('faq-category-select');
-  const newInput = document.getElementById('faq-category-new');
-  if(sel.value === '__new__'){
-    newInput.style.display = 'block';
-    newInput.focus();
-  } else {
-    newInput.style.display = 'none';
-    newInput.value = '';
-  }
-}
-
-function deleteFaqItem(id){
-  const item = faqData.find(f => f.id === id);
-  if(!item) return;
-  if(id === 0){
-    alert('기본 안내(기타) 항목은 삭제할 수 없습니다.');
-    return;
-  }
-  const label = item.qtype || item.category || ('#' + id);
-  if(!confirm(`"${label}" 항목을 삭제할까요?\n이 작업은 화면에서만 적용되며, "저장(csv)" 버튼을 눌러야 실제 파일에 반영됩니다.`)) return;
-
-  faqData = faqData.filter(f => f.id !== id);
-  hasUnsavedChanges = true;
-  showToast('FAQ 항목이 삭제되었습니다. "저장(csv)" 버튼을 눌러 백업하세요.');
-  markLocalFaq();
-  refreshCatOptions();
-  onInquiryInput();
-}
-
-function closeFaqFormModal(){
-  document.getElementById('faqFormModal').classList.remove('show');
-}
-
-function saveFaqForm(){
-  const splitList = (s) => s.split(',').map(v => v.trim()).filter(Boolean);
-  const qtype = document.getElementById('faq-qtype').value.trim();
-  const answer = document.getElementById('faq-answer').value.trim();
-  if(!qtype || !answer){
-    alert('질문유형과 답변은 필수 입력 항목입니다.');
-    return;
-  }
-
-  const catSel = document.getElementById('faq-category-select');
-  const category = catSel.value === '__new__'
-    ? document.getElementById('faq-category-new').value.trim()
-    : catSel.value;
-
-  const itemData = {
-    category,
-    subCategory: document.getElementById('faq-subcategory').value.trim(),
-    qtype,
-    answer,
-    keywords: splitList(document.getElementById('faq-keywords').value).slice(0, 3),
-    synonyms: splitList(document.getElementById('faq-synonyms').value).slice(0, 3),
-    smallCat: document.getElementById('faq-smallCat').value.trim(),
-    path: document.getElementById('faq-path').value.trim(),
-    checks: splitList(document.getElementById('faq-checks').value),
-    transfer: document.getElementById('faq-transfer').checked,
-    transferText: document.getElementById('faq-transferText').value.trim()
-  };
-
-  const idVal = document.getElementById('faq-edit-id').value;
-  hasUnsavedChanges = true;
-  if(idVal !== ''){
-    const id = parseInt(idVal, 10);
-    const idx = faqData.findIndex(f => f.id === id);
-    if(idx !== -1){
-      faqData[idx] = { ...faqData[idx], ...itemData, id };
-    }
-    showToast('FAQ 항목이 수정되었습니다. "저장(csv)" 버튼을 눌러 백업하세요.');
-  } else {
-    const maxId = faqData.reduce((m, f) => Math.max(m, f.id), 0);
-    itemData.id = maxId + 1;
-    faqData.push(itemData);
-    showToast('FAQ 항목이 추가되었습니다. "저장(csv)" 버튼을 눌러 백업하세요.');
-  }
-
-  closeFaqFormModal();
-  markLocalFaq();
-  refreshCatOptions();
-  onInquiryInput();
-}
-
-function downloadCsvTemplate(){
-  const csv = faqDataToCsvRows(faqData);
-  const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'FAQ_' + new Date().toISOString().slice(0,10) + '.csv';
-  a.click();
-  URL.revokeObjectURL(url);
-  hasUnsavedChanges = false;
-  showToast('현재 FAQ가 CSV로 저장되었습니다.');
 }
 
 // ===== 공유 FAQ 설정 =====
@@ -1174,12 +832,7 @@ const SYNC_INTERVAL_MIN = 10;   // 자동 동기화 주기(분)
 const FAQ_CACHE_KEY = 'faqSharedCache_v1';
 let syncedOnce = false;
 const DEFAULT_ITEM0 = JSON.parse(JSON.stringify(faqData.find(i => i.id === 0) || null));   // 기본 안내(번호 0) 보호용
-let faqLocalOverride = false, faqTimer = null;   // 관리자가 화면에서 직접 올리거나 고친 FAQ를 쓰는 중이면 자동 동기화를 멈춤
-function markLocalFaq(){
-  faqLocalOverride = true;
-  setSyncStatus('로컬 FAQ 사용 중 · 시트와 다름 (🔃 눌러 시트에서 다시 불러오기)', true);
-}
-
+let faqTimer = null;
 function decodeCsvBuffer(buf){
   try {
     return new TextDecoder('utf-8', { fatal: true }).decode(buf);
@@ -1206,7 +859,6 @@ function applySharedFaq(rows, manual, label){
   if(data.length === 0) throw new Error('FAQ 항목이 없습니다.');
   if(!data.some(i => i.id === 0) && DEFAULT_ITEM0) data.unshift(JSON.parse(JSON.stringify(DEFAULT_ITEM0)));   // 번호 0 행이 없어도 기본 안내 유지
   faqData = data;
-  hasUnsavedChanges = false;
   setSyncStatus(label, false);
   // 상담 중 입력 내용이 지워지지 않도록, 수동 새로고침이거나 입력창이 모두 비었을 때만 화면을 다시 그린다.
   refreshCatOptions();
@@ -1220,7 +872,6 @@ function applySharedFaq(rows, manual, label){
 
 // FAQ는 상담사 공유 시트(FAQ 탭)에 있고, 로그인한 사람에게만 서버가 전달합니다. 마지막으로 받은 FAQ는 브라우저에 저장해 두었다가 연결이 안 될 때 사용합니다.
 async function syncFaq(manual){
-  if(manual) faqLocalOverride = false;
   try {
     const r = await gasGetJson('action=faq&_=' + Date.now());
     if(!r.ok) throw new Error(r.error || 'FAQ 조회 실패');
@@ -1248,7 +899,7 @@ function startFaqSync(){
   setSyncStatus('동기화 중…', false);
   syncFaq(false);
   if(faqTimer) clearInterval(faqTimer);
-  faqTimer = setInterval(() => { if(!faqLocalOverride && !ended) syncFaq(false); }, SYNC_INTERVAL_MIN * 60 * 1000);
+  faqTimer = setInterval(() => { if(!ended) syncFaq(false); }, SYNC_INTERVAL_MIN * 60 * 1000);
 }
 
 function searchFaq(query) {
@@ -1344,8 +995,6 @@ function renderResults(query = "") {
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;padding-top:6px;border-top:1px dashed var(--border);">
         <span style="font-size:11.5px;color:var(--ink-muted);font-family:var(--font-mono);">${escHtml(r.category)} > ${escHtml(r.subCategory)}</span>
         <div>
-          ${isAdmin() ? `<button class="edit-faq-btn" onclick="event.stopPropagation(); openFaqEditModal(${r.id})">✏️ 수정</button>` : ''}
-          ${isAdmin() && r.id !== 0 ? `<button class="edit-faq-btn" onclick="event.stopPropagation(); deleteFaqItem(${r.id})">🗑 삭제</button>` : ''}
           ${r.transfer ? '<span class="tag transfer">이관 대상</span>' : '<span class="tag fallback">일반 안내</span>'}
         </div>
       </div>
@@ -1446,18 +1095,10 @@ function showToast(msg){
 
 function updateAdminUI(){
   const name = document.getElementById('agentName').textContent.trim();
-  const adminBtns = document.getElementById('adminOnlyButtons');
   document.getElementById('agentAdminBtn').style.display = (adminUnlocked && SESSION_ROLE === 'admin') ? '' : 'none';
   document.getElementById('statsBtn').style.display = (adminUnlocked && SESSION_ROLE === 'admin') ? '' : 'none';
-  document.getElementById('csvLoadBtn').style.display = isAdmin() ? '' : 'none';
   document.getElementById('callCounter').style.display = isAdmin() ? 'none' : '';
   document.getElementById('dialBtn').style.display = '';
-
-  if (isAdmin()) {
-    adminBtns.style.display = 'contents';   // 관리자 버튼도 개별로 줄바꿈되도록
-  } else {
-    adminBtns.style.display = 'none';
-  }
   if (typeof onInquiryInput === 'function') {
     onInquiryInput();
   }
@@ -1498,7 +1139,6 @@ function sessionLost(msg){
   try{ CTI.disable(); }catch(e){}
   if(wlTimer){ clearInterval(wlTimer); wlTimer = null; }
   if(teamPollTimer){ clearInterval(teamPollTimer); teamPollTimer = null; }
-  hasUnsavedChanges = false;
   try{ renderStatus(); }catch(e){}
   showEndScreen('⚠ 접속이 종료되었습니다', escHtml(msg || '다른 곳에서 로그인되었습니다.') + '<br><br>저장하지 못한 내용은 사라질 수 있습니다. 다시 로그인해 주세요.');
 }
@@ -1959,7 +1599,6 @@ async function logout(){
   loggedOut = true;
   SESSION_TOKEN = '';
   if(wlTimer){ clearInterval(wlTimer); wlTimer = null; }
-  hasUnsavedChanges = false;
   showEndScreen('👋 업무가 종료되었습니다', '퇴근 처리가 완료되어 인터넷전화 연결이 해제되었습니다.<br>이 창은 닫으셔도 됩니다.');
   try{ window.open('','_self'); window.close(); }catch(e){}   // 브라우저가 허용하는 경우 창 닫힘, 아니면 종료 화면 유지
 }
