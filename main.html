@@ -742,6 +742,94 @@
   .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .fade-in.visible { opacity: 1; transform: none; }
 
+  /* ── 후원 안내 팝업(모달) 스타일 ── */
+  .support-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(44,35,24,0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .support-modal-overlay.open {
+    display: flex;
+  }
+  .support-modal {
+    background: var(--beige);
+    border: 1px solid var(--beige-dark);
+    border-radius: 4px;
+    width: 100%;
+    max-width: 440px;
+    padding: 2.2rem;
+    box-shadow: 0 20px 50px rgba(44,35,24,0.25);
+    position: relative;
+    animation: modalScale 0.25s ease-out;
+    font-family: 'Noto Sans KR', sans-serif; /* 전체 폰트 고딕 통일 */
+  }
+  @keyframes modalScale {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .support-modal-close {
+    position: absolute;
+    top: 1rem; right: 1.2rem;
+    background: none; border: none;
+    font-size: 1.4rem; color: var(--ink-light);
+    cursor: pointer;
+  }
+  .support-modal-close:hover { color: var(--ink); }
+  .support-modal-title {
+    font-family: 'Noto Sans KR', sans-serif; /* 제목 폰트 통일 */
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+    border-bottom: 1px solid var(--beige-dark);
+    padding-bottom: 0.8rem;
+  }
+  .support-modal-body {
+    font-size: 0.9rem;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .support-box {
+    background: var(--beige-mid);
+    border: 1px solid var(--beige-dark);
+    padding: 0.8rem 1.2rem;
+    border-radius: 3px;
+    margin: 0.8rem 0;
+    font-family: 'Noto Sans KR', sans-serif; /* 계좌번호 폰트 통일 */
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    letter-spacing: 0.03em;
+  }
+  .copy-btn {
+    background: var(--ink);
+    color: var(--beige);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.78rem;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: background 0.2s;
+  }
+  .copy-btn:hover { background: var(--ink-mid); }
+  .support-notice {
+    font-size: 0.78rem;
+    color: var(--ink-light);
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
 </style>
 <body>
 
@@ -883,11 +971,11 @@
       </div>
       <div class="feature-card fade-in">
         <div class="feature-num">06</div>
-        <div class="feature-title"><span class="ko">원클릭 해지</span><span class="en">Cancel Anytime</span></div>
+        <div class="feature-title"><span class="ko">부담 없이</span><span class="en">No pressure</span></div>
         <div class="feature-title-en"><span class="ko">No questions asked</span><span class="en">언제든, 바로</span></div>
         <div class="feature-desc">
-          <span class="ko">전화도, 이메일도 필요 없습니다. 카운터 화면에서 버튼 하나로 즉시 해지됩니다. 위약금 없음.</span>
-          <span class="en">No calls, no emails. Cancel instantly from the counter screen with one tap. No penalty fees.</span>
+          <span class="ko">전화도, 이메일도 필요 없습니다. 카운터 화면에서 마우스 딸깍으로 삭제하시면됩니다.</span>
+          <span class="en">No calls, no emails. Just click and delete it on the counter screen.</span>
         </div>
       </div>
     </div>
@@ -1166,10 +1254,11 @@
           <li><span class="ko">VoiceBell은 무료로 계속 제공됩니다</span><span class="en">VoiceBell stays free either way</span></li>
           <li><span class="ko">마음이 생기실 때 자유롭게 후원해 주세요</span><span class="en">Support only if you'd like to</span></li>
         </ul>
-        <a href="index.html#support" class="btn-pricing">
+        <!-- 버튼 클릭 시 index로 이동하는 대신 팝업 모달을 띄우도록 수정 -->
+        <button type="button" class="btn-pricing" onclick="openSupportModal()">
           <span class="ko">후원하기</span>
           <span class="en">Donate</span>
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -1308,6 +1397,33 @@
   </div>
 </footer>
 
+<!-- 후원 안내 팝업 모달 HTML -->
+<div class="support-modal-overlay" id="supportModal" onclick="outsideClose(event)">
+  <div class="support-modal">
+    <button class="support-modal-close" onclick="closeSupportModal()">&times;</button>
+    <div class="support-modal-title">후원 안내</div>
+    <div class="support-modal-body">
+      <p style="font-size: 0.85rem; color: var(--ink-light); margin-bottom: 0.6rem;">😎 버그는 옵션, 업데이트는 언젠가는.</p>
+      <p style="margin-bottom: 1.2rem; font-weight: 500; color: var(--ink);">❤️ 후원은 선택, 감사한 마음은 우주너머!</p>
+      
+      <p style="font-size: 0.85rem; color: var(--ink-light); margin-bottom: 0.2rem;">후원 계좌 안내</p>
+      <p style="font-weight: 500;">🏦 우리은행</p>
+      
+      <div class="support-box">
+        <span id="accountNumber">1002-963-460363</span>
+        <button class="copy-btn" onclick="copyAccount()">📋 계좌번호 복사</button>
+      </div>
+      
+      <p style="font-size: 0.88rem;">예금주 : <strong>노순영</strong></p>
+      <p style="margin-top: 0.8rem; font-size: 0.85rem; color: var(--ink-mid);">송금 메모에 <strong>"개발을 응원해요"</strong>라고 남겨주시면 큰 힘이 됩니다!</p>
+      
+      <div class="support-notice">
+        ※ 본 후원은 대가성이 없는 자발적 후원이므로<br>세금계산서 및 현금영수증 발행이 불가합니다.
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 function toggleMenu() {
   const h = document.getElementById('hamburger');
@@ -1361,6 +1477,27 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.15 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ── 후원 팝업 관련 함수 ──
+function openSupportModal() {
+  document.getElementById('supportModal').classList.add('open');
+}
+function closeSupportModal() {
+  document.getElementById('supportModal').classList.remove('open');
+}
+function outsideClose(e) {
+  if (e.target.id === 'supportModal') {
+    closeSupportModal();
+  }
+}
+function copyAccount() {
+  const accountText = document.getElementById('accountNumber').innerText.trim();
+  navigator.clipboard.writeText(accountText).then(() => {
+    alert('계좌번호가 복사되었습니다: ' + accountText);
+  }).catch(err => {
+    console.error('복사 실패:', err);
+  });
+}
 </script>
 </body>
 </html>
