@@ -267,39 +267,6 @@
   }
   .panel-box.show{display:block;}
 
-  .sub-checklist {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-  }
-  .sub-check-item {
-    display: flex;
-    align-items: center;
-    background: var(--surface-alt);
-    padding: 6px 10px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    width: 100%;
-  }
-  .sub-check-item input[type="text"] {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 13px;
-    font-family: var(--font-sans);
-    background: var(--surface);
-    outline: none;
-    color: #13203A;
-  }
-  .sub-check-item input[type="text"]::placeholder {
-    color: #13203A;
-    opacity: 1;
-  }
-  .sub-check-item input[type="text"]:focus {
-    border-color: var(--accent);
-  }
-
   .detail-box{
     border:1.5px solid #BACBFF;
     background:#F8FAFF;
@@ -310,25 +277,6 @@
     display:flex;gap:16px;margin-bottom:8px;font-size:12.5px;color:var(--ink-muted);
   }
   .detail-meta b{color:var(--ink);}
-
-  .ref-image-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 10px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    background: var(--surface);
-    border: 1px solid #BACBFF;
-    padding: 4px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  .ref-image-link:hover {
-    background: var(--accent-soft);
-  }
 
   .history-box{
     border:1.5px solid #8CE0BD;
@@ -587,13 +535,6 @@
   <div class="result-list" id="resultList"></div>
 
 
-  <!-- 추가 확인 사항 박스 -->
-  <div class="panel-box check-box show" id="checkPanel">
-    <div class="panel-header-wrap">
-      <div class="panel-title"><span>📌</span> 추가 확인 사항 <span style="font-size:11px; color:var(--ink-muted); font-weight:normal;">(확인한 내용 입력 가능)</span></div>
-    </div>
-    <div class="sub-checklist" id="subChecklistContainer"></div>
-  </div>
 
 
   <!-- 1. 상세 답변 패널 -->
@@ -607,7 +548,6 @@
       <div>안내 경로: <b id="d-path">—</b></div>
     </div>
     <div class="detail-content" id="d-answer">—</div>
-    <div id="refImageContainer"></div>
   </div>
 
   <!-- 최근 상담 5건 (이 PC 브라우저에 저장, 저장 버튼 누를 때 함께 기록) -->
@@ -791,14 +731,6 @@
         <label>안내 경로</label>
         <input type="text" id="faq-path" placeholder="ex. 앱 > 예매하기">
       </div>
-      <div class="full">
-        <label>참고 이미지 경로 (이미지 형식 파일 하나만 등록 가능)</label>
-        <input type="text" id="faq-image" placeholder="ex. 참고 이미지/예시.png">
-      </div>
-      <div class="full">
-        <label>추가 확인 사항 (쉼표로 구분)</label>
-        <input type="text" id="faq-checks" placeholder="ex. 회원등급, 결제 일시">
-      </div>
       <div class="full faq-transfer-row">
         <input type="checkbox" id="faq-transfer">
         <label style="margin:0;">이관 대상 문의입니다</label>
@@ -834,8 +766,7 @@ let faqData = [
     answer: "앱 또는 홈페이지에서 상영관·시간·좌석을 선택한 후 결제하시면 예매가 완료됩니다. 예매 확인 문자는 결제 직후 발송됩니다.",
     smallCat: "예매 절차 안내",
     path: "앱 > 예매하기",
-    transfer: false, transferText: "", checks: [],
-    image: ""
+    transfer: false, transferText: "", checks: []
   },
   {
     id: 2, category: "예매", subCategory: "예매취소",
@@ -844,8 +775,7 @@ let faqData = [
     answer: "상영시간 20분 전까지는 앱 내 예매내역에서 직접 취소 가능하며, 결제수단으로 환불됩니다. 20분 이내에는 상영관 매표소에서만 취소 가능합니다.",
     smallCat: "예매취소 절차 안내",
     path: "앱 > 예매내역 > 취소",
-    transfer: false, transferText: "", checks: ["상영시간까지 남은 시간"],
-    image: ""
+    transfer: false, transferText: "", checks: ["상영시간까지 남은 시간"]
   },
   {
     id: 3, category: "좌석", subCategory: "좌석변경",
@@ -854,8 +784,7 @@ let faqData = [
     answer: "상영시간 전까지 앱 예매내역 > 좌석변경에서 빈 좌석으로 변경 가능하며, 좌석 등급 차액이 있는 경우 추가 결제 또는 환불이 발생합니다.",
     smallCat: "좌석변경 절차 안내",
     path: "앱 > 예매내역 > 좌석변경",
-    transfer: false, transferText: "", checks: [],
-    image: ""
+    transfer: false, transferText: "", checks: []
   },
   {
     id: 4, category: "상영정보", subCategory: "시간표확인",
@@ -864,8 +793,7 @@ let faqData = [
     answer: "앱 홈 화면 또는 상영시간표 메뉴에서 극장·날짜별 시간표를 확인하실 수 있습니다.",
     smallCat: "상영시간표 조회 경로 안내",
     path: "앱 홈 > 상영시간표",
-    transfer: false, transferText: "", checks: [],
-    image: ""
+    transfer: false, transferText: "", checks: []
   },
   {
     id: 5, category: "멤버십", subCategory: "포인트적립",
@@ -874,8 +802,7 @@ let faqData = [
     answer: "결제 금액의 일부가 자동 적립되며, 회원등급에 따라 적립률이 다릅니다. 적립 내역은 마이페이지에서 확인 가능합니다.",
     smallCat: "포인트 적립 안내",
     path: "마이페이지 > 포인트",
-    transfer: false, transferText: "", checks: ["회원등급"],
-    image: ""
+    transfer: false, transferText: "", checks: ["회원등급"]
   },
   {
     id: 6, category: "결제", subCategory: "중복결제",
@@ -886,8 +813,7 @@ let faqData = [
     path: "",
     transfer: true,
     transferText: "[이관 제목] 중복 결제 확인 요청\n■ 고객 문의 : 동일 거래 중복 결제 의심\n■ 확인 필요 내용 : 결제 일시/금액/주문번호 기준 중복 승인 여부\n■ 요청 부서 : 결제팀",
-    checks: ["결제 일시", "결제 금액", "주문번호"],
-    image: ""
+    checks: ["결제 일시", "결제 금액", "주문번호"]
   },
   {
     id: 0, category: "기타", subCategory: "확인 후 연락",
@@ -898,8 +824,7 @@ let faqData = [
     path: "",
     transfer: true,
     transferText: "[이관 제목] 문의 내용 확인 요청\n■ 고객 문의 : 상담 자료에서 확인되지 않는 문의\n■ 확인 필요 내용 : 문의 상세 내용 및 관련 부서 확인 필요\n■ 요청 부서 : 해당없음(확인 후 지정)",
-    checks: [],
-    image: ""
+    checks: []
   },
 ];
 
@@ -940,7 +865,7 @@ function bigramSimilarity(a, b){
 }
 
 const CSV_HEADER = ["번호","대분류","중분류","소분류","검색키워드1","검색키워드2","검색키워드3",
-  "유사표현1","유사표현2","유사표현3","질문유형","답변","경로","이관여부","이관내용","추가확인사항","참고이미지"];
+  "유사표현1","유사표현2","유사표현3","질문유형","답변","경로","이관여부","이관내용","추가확인사항"];
 
 function parseCsv(text){
   const rows = [];
@@ -996,8 +921,7 @@ function csvRowsToFaqData(rows){
       path: get('경로'),
       transfer: get('이관여부').toUpperCase() === 'O',
       transferText: get('이관내용'),
-      checks: get('추가확인사항').split('|').map(s => s.trim()).filter(Boolean),
-      image: get('참고이미지')
+      checks: get('추가확인사항').split('|').map(s => s.trim()).filter(Boolean)
     };
   });
 }
@@ -1019,8 +943,7 @@ function faqDataToCsvRows(data){
       syn[0]||'', syn[1]||'', syn[2]||'',
       item.qtype, item.answer, item.path,
       item.transfer ? 'O' : 'X', item.transferText || '',
-      (item.checks||[]).join('|'),
-      item.image || ''
+      (item.checks||[]).join('|')
     ];
     lines.push(row.map(esc).join(','));
   });
@@ -1096,8 +1019,6 @@ function openFaqAddModal(){
   document.getElementById('faq-answer').value = '';
   document.getElementById('faq-smallCat').value = '';
   document.getElementById('faq-path').value = '';
-  document.getElementById('faq-image').value = '';
-  document.getElementById('faq-checks').value = '';
   document.getElementById('faq-transfer').checked = false;
   document.getElementById('faq-transferText').value = '';
   document.getElementById('faqFormModal').classList.add('show');
@@ -1116,8 +1037,6 @@ function openFaqEditModal(id){
   document.getElementById('faq-answer').value = item.answer || '';
   document.getElementById('faq-smallCat').value = item.smallCat || '';
   document.getElementById('faq-path').value = item.path || '';
-  document.getElementById('faq-image').value = item.image || '';
-  document.getElementById('faq-checks').value = (item.checks || []).join(', ');
   document.getElementById('faq-transfer').checked = !!item.transfer;
   document.getElementById('faq-transferText').value = item.transferText || '';
   document.getElementById('faqFormModal').classList.add('show');
@@ -1204,8 +1123,6 @@ function saveFaqForm(){
     synonyms: splitList(document.getElementById('faq-synonyms').value).slice(0, 3),
     smallCat: document.getElementById('faq-smallCat').value.trim(),
     path: document.getElementById('faq-path').value.trim(),
-    image: document.getElementById('faq-image').value.trim(),
-    checks: splitList(document.getElementById('faq-checks').value),
     transfer: document.getElementById('faq-transfer').checked,
     transferText: document.getElementById('faq-transferText').value.trim()
   };
@@ -1472,35 +1389,9 @@ function selectResult(i, auto) {
   const r = currentResults[i];
   if(!r) return;
 
-  const checkContainer = document.getElementById('subChecklistContainer');
-  let checkListArray = r.checks ? [...r.checks] : [];
-  if(checkListArray.length % 2 !== 0){
-    checkListArray.push("");
-  }
-  const escAttr = (s) => (s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
-
-  checkContainer.innerHTML = checkListArray.map((c) => {
-    return `
-      <div class="sub-check-item">
-        <input type="text" value="${escAttr(c)}">
-      </div>
-    `;
-  }).join('');
-
   document.getElementById('d-qtype').textContent = r.qtype;
   document.getElementById('d-path').textContent = r.path || '—';
   document.getElementById('d-answer').textContent = r.answer;
-
-  const refContainer = document.getElementById('refImageContainer');
-  if (r.image && r.image.trim() !== '') {
-    refContainer.innerHTML = `
-      <a class="ref-image-link" href="#" onclick="openReferenceImage(currentResults[selectedIdx].image.trim()); return false;">
-        🖼️ 참고 이미지: ${escHtml(r.image.split('/').pop())}
-      </a>
-    `;
-  } else {
-    refContainer.innerHTML = '';
-  }
 
   // 대/중/소: 상담사가 좌측 자료를 직접 선택(클릭)했을 때 그 자료의 분류로 세팅
   // (대분류=대분류, 중분류=세부분류, 소분류=소분류). 입력 중 자동 선택(기본 안내)에서는 건드리지 않음
@@ -1515,14 +1406,6 @@ function selectResult(i, auto) {
   } else {
     banner.style.display = 'none';
   }
-}
-
-function openReferenceImage(filepath) {
-  if (/^\s*(javascript|data|vbscript):/i.test(filepath)) {
-    alert('허용되지 않는 이미지 경로입니다.');
-    return;
-  }
-  window.open(filepath, '_blank');
 }
 
 function resetAllData(){
@@ -1742,16 +1625,15 @@ function collectForm(){
     phone:v('callNum'), catL:$('catL').value, catM:$('catM').value, catS:$('catS').value,
     who:v('cl-who'), when:v('cl-when'), what:v('cl-what'), why:v('cl-why'), etc:v('cl-etc'),
     qtype:$('d-qtype').textContent.trim(),
-    checks:[...document.querySelectorAll('#subChecklistContainer input')].map(i=>i.value.trim()).filter(Boolean).join('\n'),
     inquiryNote:v('d-inquiry'), guide:v('d-guide'),
     transfer:$('transferBanner').style.display==='none' ? '' : v('transferText')
   };
 }
 let savedSig = '';
-function formSig(){ const f=collectForm(); return JSON.stringify([f.catL,f.catM,f.catS,f.who,f.when,f.what,f.why,f.etc,f.checks,f.inquiryNote,f.guide,f.transfer]); }
+function formSig(){ const f=collectForm(); return JSON.stringify([f.catL,f.catM,f.catS,f.who,f.when,f.what,f.why,f.etc,f.inquiryNote,f.guide,f.transfer]); }
 function hasUnsaved(){
   const f=collectForm();
-  if(!loadedId) return !!(f.inquiryNote || f.guide || f.checks || f.who || f.when || f.what || f.why || f.etc);
+  if(!loadedId) return !!(f.inquiryNote || f.guide || f.who || f.when || f.what || f.why || f.etc);
   return formSig() !== savedSig;
 }
 async function saveConsult(){
@@ -1785,8 +1667,6 @@ function fillForm(r, id){
   s('cl-who',r.who); s('cl-when',r.when); s('cl-what',r.what); s('cl-why',r.why); s('cl-etc',r.etc); s('callNum',r.phone); setCats(r.catL,r.catM,r.catS);
   document.querySelector('input[name=callDir][value='+(r.dir==='OUT'?'OUT':'IN')+']').checked = true;
   $('d-qtype').textContent = r.qtype || '—';
-  const arr = (r.checks||'').split('\n').filter(Boolean); if(arr.length%2) arr.push('');
-  $('subChecklistContainer').innerHTML = arr.map(c=>`<div class="sub-check-item"><input type="text" value="${escHtml(c).replace(/"/g,'&quot;')}"></div>`).join('');
   s('d-inquiry',r.inquiryNote); s('d-guide',r.guide);
   autoPrefix = ''; inqManual = true; s('transferText',r.transfer);
   $('transferBanner').style.display = r.transfer ? 'block' : 'none';
@@ -2192,13 +2072,11 @@ function updateSearchHint(query){
 const DEMO_SCENARIOS = {
   cancel: {
     faqId: 2,
-    cl: {who:'예매 고객', when:'오늘 앱', what:'예매한 표 취소하고 싶음', why:'일정 변경', etc:''},
-    checks: {'상영시간까지 남은 시간':'2시간'}
+    cl: {who:'예매 고객', when:'오늘 앱', what:'예매한 표 취소하고 싶음', why:'일정 변경', etc:'상영까지 2시간 남음'}
   },
   dup: {
     faqId: 6,
-    cl: {who:'예매 고객', when:'어제 앱 결제', what:'결제가 두 번 된 것 같음', why:'결제 문자 2건 수신', etc:''},
-    checks: {'결제 일시':'어제 19:30', '결제 금액':'28,000원', '주문번호':'M2611100123'}
+    cl: {who:'예매 고객', when:'어제 앱 결제', what:'결제가 두 번 된 것 같음', why:'결제 문자 2건 수신', etc:'28,000원 · 어제 19:30 · 주문번호 M2611100123'}
   },
   wallet: {
     faqId: 0,   // 자료에 없는 문의 → 기본 안내(기타 > 확인 후 연락)
@@ -2247,20 +2125,12 @@ function demoScenario(key){
   Object.keys(map).forEach(k => { $(map[k]).value = sc.cl[k] || ''; });
   onChecklistInput();
 
-  // 2) 상담사가 검색결과에서 해당 자료를 클릭하는 동작 (대·중·소 분류, 추가 확인 사항, 이관 양식 자동 세팅)
+  // 2) 상담사가 검색결과에서 해당 자료를 클릭하는 동작 (대·중·소 분류, 이관 양식 자동 세팅)
   const idx = currentResults.findIndex(r => r.id === sc.faqId);
   selectResult(idx >= 0 ? idx : 0, false);
   const r = currentResults[idx >= 0 ? idx : 0];
 
-  // 3) 추가 확인 사항에 확인한 값 기재
-  if(sc.checks){
-    document.querySelectorAll('#subChecklistContainer input').forEach(inp => {
-      const label = inp.value.trim();
-      if(label && sc.checks[label]) inp.value = label + ': ' + sc.checks[label];
-    });
-  }
-
-  // 4) 안내(상담이력) · 이관 양식
+  // 3) 안내(상담이력) · 이관 양식
   $('d-guide').value = sc.guide || (r ? r.answer : '');
   if(sc.transfer && $('transferBanner').style.display !== 'none') $('transferText').value = sc.transfer;
 
