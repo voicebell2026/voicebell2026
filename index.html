@@ -534,6 +534,17 @@
         </div>
 
         <div class="inq-row">
+          <span class="inq-label">운영(근무) 시간</span>
+          <p class="inq-hint">하루 운영 시간과 요일 기준입니다. 해당하는 것이 없으면 <b>기타 스케줄</b>을 선택하고 아래에 적어 주세요. (예: 점심 12~13시 제외 · 야간 18~22시 · 주 3일 오전만 · 행사 기간만)</p>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqHours" value="평일 9~18시 (주 5일)"><span>평일 9~18시 (주 5일)</span></label>
+            <label class="inq-chip"><input type="radio" name="inqHours" value="9~18시 365일 (주 7일·공휴일 포함)"><span>9~18시 365일</span></label>
+            <label class="inq-chip"><input type="radio" name="inqHours" value="기타 스케줄"><span>기타 스케줄</span></label>
+          </div>
+          <input type="text" class="inq-input" id="inqHoursEtc" style="margin-top:8px" placeholder="예: 평일 10~19시 + 토 9~13시" autocomplete="off" aria-label="기타 운영 시간 직접 입력">
+        </div>
+
+        <div class="inq-row">
           <label class="inq-label" for="inqTopic">주요 문의 내용</label>
           <input type="text" class="inq-input" id="inqTopic" placeholder="예: 쇼핑몰 고객 응대, 단기 이벤트 콜 대행, 기술지원 등" autocomplete="off">
         </div>
@@ -554,6 +565,28 @@
           <div class="inq-chips">
             <label class="inq-chip"><input type="radio" name="inqCti" value="미사용"><span>미사용</span></label>
             <label class="inq-chip"><input type="radio" name="inqCti" value="사용 중"><span>사용 중</span></label>
+          </div>
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">업무 난이도</span>
+          <p class="inq-hint">상담원이 답변하기 위해 필요한 <b>지식·판단</b>의 정도입니다.<br>
+            <b>상</b> 규정 해석·복잡한 절차·전문 지식 필요 · <b>중</b> 일부 절차 설명과 확인 필요 · <b>하</b> 정해진 FAQ대로 안내</p>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqLevel" value="상"><span>상</span></label>
+            <label class="inq-chip"><input type="radio" name="inqLevel" value="중"><span>중</span></label>
+            <label class="inq-chip"><input type="radio" name="inqLevel" value="하"><span>하</span></label>
+          </div>
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">민원(항의) 성향</span>
+          <p class="inq-hint">고객이 <b>화를 내거나 항의·반복 문의</b>하는 정도입니다.<br>
+            <b>상</b> 항의·강성 민원이 잦음 · <b>중</b> 가끔 불만 제기 · <b>하</b> 대체로 단순 문의</p>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqComplaint" value="상"><span>상</span></label>
+            <label class="inq-chip"><input type="radio" name="inqComplaint" value="중"><span>중</span></label>
+            <label class="inq-chip"><input type="radio" name="inqComplaint" value="하"><span>하</span></label>
           </div>
         </div>
 
@@ -649,9 +682,17 @@
       ['담당자 연락처', function () { return val('inqContact'); }],
       ['필요 상담원 수', function () { return radio('inqCnt'); }],
       ['운영 기간 및 시작 희망일', function () { return val('inqPeriod'); }],
+      ['운영 시간', function () {
+        var r = radio('inqHours'), t = val('inqHoursEtc');
+        if (!r) return t ? '기타 - ' + t : '';
+        if (r === '기타 스케줄') return t ? '기타 - ' + t : r;
+        return t ? r + ' / 보충: ' + t : r;
+      }],
       ['주요 문의 내용', function () { return val('inqTopic'); }],
       ['운영 유형', function () { return radio('inqType'); }],
       ['상담프로그램(CTI) 사용 여부', function () { return radio('inqCti'); }],
+      ['업무 난이도', function () { return radio('inqLevel'); }],
+      ['민원(항의) 성향', function () { return radio('inqComplaint'); }],
       ['정보열람 범위', function () { return radio('inqView'); }],
       ['정보수집 범위', function () { return radio('inqCollect'); }],
       ['인터넷 사용 제한', function () { return radio('inqNet'); }],
