@@ -220,6 +220,8 @@
     .inq-x { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border: none; background: #f1f5f9; border-radius: 50%; font-size: 16px; cursor: pointer; color: #475569; }
     .inq-x:hover { background: #e2e8f0; }
     .inq-body { padding: 18px 26px 8px; overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1; }
+    .inq-addr { margin-left: 8px; padding: 4px 10px; font-size: 12.5px; font-weight: 700; color: #0f3a8a; background: #fff; border: 1px solid #93b4f0; border-radius: 8px; cursor: pointer; white-space: nowrap; }
+    .inq-addr:hover { background: #dbeafe; }
     .inq-to { background: #eff6ff; border: 1px solid #bfdbfe; color: #0f3a8a; border-radius: 10px; padding: 10px 14px; font-size: 14px; font-weight: 600; margin-bottom: 18px; word-break: break-all; }
     .inq-row { margin-bottom: 18px; }
     .inq-label { display: block; font-size: 14.5px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
@@ -505,7 +507,7 @@
       </div>
 
       <div class="inq-body">
-        <div class="inq-to"><i class="fa-solid fa-envelope"></i> 수신 이메일 : <b>hello@voicebell.app</b></div>
+        <div class="inq-to"><i class="fa-solid fa-envelope"></i> 수신 이메일 : <b>hello@voicebell.app</b> <button type="button" class="inq-addr" id="inqAddrCopy">주소 복사</button></div>
 
         <div class="inq-row">
           <label class="inq-label" for="inqOrg">기관 / 업체명<span class="req">*</span></label>
@@ -613,7 +615,7 @@
         </div>
 
         <div class="inq-row">
-          <span class="inq-label">인터넷 사용 제한</span>
+          <span class="inq-label">인터넷 사용 가능 여부</span>
           <p class="inq-hint">상담 PC에서 외부 인터넷(검색·이메일·구글시트 등) 사용이 가능한지 알려주세요. 상담콘솔(구글시트)은 인터넷 접속이 필요합니다.</p>
           <div class="inq-chips">
             <label class="inq-chip"><input type="radio" name="inqNet" value="불가"><span>불가</span></label>
@@ -695,7 +697,7 @@
       ['민원(항의) 성향', function () { return radio('inqComplaint'); }],
       ['정보열람 범위', function () { return radio('inqView'); }],
       ['정보수집 범위', function () { return radio('inqCollect'); }],
-      ['인터넷 사용 제한', function () { return radio('inqNet'); }],
+      ['인터넷 사용 가능 여부', function () { return radio('inqNet'); }],
       ['운영 희망 범위', function () { return radio('inqScope'); }],
       ['요청 문서', function () { return checks('inqDoc'); }],
       ['그 외 문의', function () { return val('inqEtc'); }]
@@ -787,6 +789,12 @@
     document.getElementById('inquiryOpen').addEventListener('click', openModal);
     document.getElementById('inqClose').addEventListener('click', closeModal);
     document.getElementById('inqClose2').addEventListener('click', closeModal);
+    document.getElementById('inqAddrCopy').addEventListener('click', function () {
+      var b = this, ok = function () { setMsg('✅ 이메일 주소(' + TO + ')가 복사되었습니다.', 'ok'); b.textContent = '복사됨'; setTimeout(function () { b.textContent = '주소 복사'; }, 1800); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(TO).then(ok, function () { fallbackCopy(TO) ? ok() : setMsg('복사에 실패했습니다. 주소를 직접 선택해 복사해 주세요.', 'err'); });
+      } else { fallbackCopy(TO) ? ok() : setMsg('복사에 실패했습니다. 주소를 직접 선택해 복사해 주세요.', 'err'); }
+    });
     document.getElementById('inqCopy').addEventListener('click', copyForm);
     document.getElementById('inqMail').addEventListener('click', openMail);
     document.getElementById('inqReset').addEventListener('click', resetForm);
