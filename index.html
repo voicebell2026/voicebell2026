@@ -206,6 +206,61 @@
       .cta-group { flex-wrap: wrap; gap: 10px; }
       .btn-main, .btn-sub { padding: 14px 20px; font-size: 15px; white-space: nowrap; }
     }
+
+    /* 간편 제안 문의 팝업 */
+    .contact-info a.inquiry-link { border-bottom: 1px dashed #60a5fa; cursor: pointer; }
+    .contact-info a.inquiry-link:hover { text-decoration: none; color: #93c5fd; }
+    body.inq-lock { overflow: hidden; }
+    .inq-overlay { position: fixed; inset: 0; background: rgba(13,27,42,0.62); display: none; align-items: center; justify-content: center; z-index: 3000; padding: 16px; }
+    .inq-overlay.show { display: flex; }
+    .inq-modal { background: #fff; color: #1e293b; width: 100%; max-width: 680px; max-height: 92vh; max-height: 92dvh; border-radius: 20px; box-shadow: 0 30px 80px rgba(0,0,0,0.35); display: flex; flex-direction: column; overflow: hidden; text-align: left; }
+    .inq-head { padding: 22px 26px 14px; border-bottom: 1px solid #e2e8f0; position: relative; }
+    .inq-head h3 { font-size: 22px; font-weight: 800; color: #0d1b2a; padding-right: 40px; }
+    .inq-head p { font-size: 14px; color: #64748b; margin-top: 6px; word-break: keep-all; }
+    .inq-x { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border: none; background: #f1f5f9; border-radius: 50%; font-size: 16px; cursor: pointer; color: #475569; }
+    .inq-x:hover { background: #e2e8f0; }
+    .inq-body { padding: 18px 26px 8px; overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1; }
+    .inq-to { background: #eff6ff; border: 1px solid #bfdbfe; color: #0f3a8a; border-radius: 10px; padding: 10px 14px; font-size: 14px; font-weight: 600; margin-bottom: 18px; word-break: break-all; }
+    .inq-row { margin-bottom: 18px; }
+    .inq-label { display: block; font-size: 14.5px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .inq-label .req { color: #dc2626; margin-left: 3px; }
+    .inq-label .sub { font-size: 12px; font-weight: 600; color: #64748b; margin-left: 6px; }
+    .inq-hint { font-size: 12.5px; color: #64748b; line-height: 1.6; margin: 0 0 8px; word-break: keep-all; }
+    .inq-hint b { color: #334155; }
+    .inq-input, .inq-textarea { width: 100%; border: 1.5px solid #cbd5e1; border-radius: 10px; padding: 11px 13px; font-size: 16px; font-family: inherit; outline: none; color: #0f172a; background: #fff; line-height: 1.5; }
+    .inq-textarea { min-height: 84px; resize: vertical; }
+    .inq-input:focus, .inq-textarea:focus { border-color: #0052cc; box-shadow: 0 0 0 3px rgba(0,82,204,0.12); }
+    .inq-input.err { border-color: #dc2626; box-shadow: 0 0 0 3px rgba(220,38,38,0.12); }
+    .inq-input::placeholder, .inq-textarea::placeholder { color: #94a3b8; }
+    .inq-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .inq-chip { position: relative; display: inline-block; }
+    .inq-chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+    .inq-chip span { display: inline-block; padding: 9px 15px; border: 1.5px solid #cbd5e1; border-radius: 999px; font-size: 14px; font-weight: 600; color: #334155; background: #fff; transition: all 0.15s; }
+    .inq-chip:hover span { border-color: #0052cc; }
+    .inq-chip input:checked + span { background: #0052cc; border-color: #0052cc; color: #fff; }
+    .inq-chip.check input:checked + span::before { content: "✓ "; }
+    .inq-chip input:focus-visible + span { outline: 3px solid rgba(0,82,204,0.35); outline-offset: 2px; }
+    .inq-note { font-size: 12.5px; color: #475569; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; line-height: 1.6; margin-bottom: 12px; word-break: keep-all; }
+    .inq-privacy { font-size: 12.5px; color: #7a5200; background: #fff6e5; border: 1px solid #f0d49a; border-radius: 10px; padding: 10px 14px; line-height: 1.6; margin-bottom: 12px; word-break: keep-all; }
+    .inq-foot { padding: 12px 26px 18px; border-top: 1px solid #e2e8f0; background: #f8fafc; }
+    .inq-msg { min-height: 20px; font-size: 13px; font-weight: 700; margin-bottom: 8px; color: #475569; }
+    .inq-msg.err { color: #dc2626; }
+    .inq-msg.ok { color: #0a8f5a; }
+    .inq-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .inq-btn { flex: 1 1 auto; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 18px; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; border: 2px solid transparent; white-space: nowrap; transition: all 0.15s; }
+    .inq-btn.primary { background: #002266; color: #fff; }
+    .inq-btn.primary:hover { background: #00143d; }
+    .inq-btn.secondary { background: #fff; color: #0052cc; border-color: #0052cc; }
+    .inq-btn.secondary:hover { background: #0052cc; color: #fff; }
+    .inq-btn.ghost { background: #fff; color: #475569; border-color: #cbd5e1; flex: 0 0 auto; padding: 13px 16px; }
+    .inq-btn.ghost:hover { background: #f1f5f9; }
+    @media (max-width: 600px) {
+      .inq-overlay { padding: 0; align-items: stretch; }
+      .inq-modal { max-width: none; max-height: none; height: 100%; border-radius: 0; }
+      .inq-head, .inq-body, .inq-foot { padding-left: 18px; padding-right: 18px; }
+      .inq-btn { flex: 1 1 calc(50% - 4px); padding: 12px 6px; font-size: 14px; }
+      .inq-btn.ghost { flex: 1 1 calc(50% - 4px); padding: 12px 6px; }
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -432,12 +487,270 @@
       </p>
       <div class="contact-info">
         <div><i class="fa-solid fa-building"></i> SINGAGONGSAM 신가공삶</div>
-        <div><i class="fa-solid fa-envelope"></i> hello@voicebell.app</div>
+        <div><i class="fa-solid fa-envelope"></i> <a href="mailto:hello@voicebell.app" id="inquiryOpen" class="inquiry-link" title="클릭하면 간편 제안 문의 양식이 열립니다">hello@voicebell.app</a></div>
         <div><i class="fa-solid fa-phone"></i> PM 핫라인 010.1111.1111</div>
       </div>
       <p style="font-size: 13px; color: #64748b;">© SINGAGONGSAM. All rights reserved. Professional Consultation Operations.</p>
     </div>
   </footer>
+
+
+  <!-- 간편 제안 문의 팝업 (바깥 영역 클릭·ESC로는 닫히지 않음: 작성 중 내용 보호) -->
+  <div class="inq-overlay" id="inqOverlay">
+    <div class="inq-modal" id="inqModal" role="dialog" aria-modal="true" aria-labelledby="inqTitle">
+      <div class="inq-head">
+        <h3 id="inqTitle">간편 제안 문의</h3>
+        <p>아래 내용으로 이메일 문의를 보내주시면 성실히 이메일로 회신드리겠습니다.</p>
+        <button type="button" class="inq-x" id="inqClose" aria-label="닫기">✕</button>
+      </div>
+
+      <div class="inq-body">
+        <div class="inq-to"><i class="fa-solid fa-envelope"></i> 수신 이메일 : <b>hello@voicebell.app</b></div>
+
+        <div class="inq-row">
+          <label class="inq-label" for="inqOrg">기관 / 업체명<span class="req">*</span></label>
+          <input type="text" class="inq-input" id="inqOrg" placeholder="예: OO 협회, OO 스타트업" autocomplete="organization">
+        </div>
+
+        <div class="inq-row">
+          <label class="inq-label" for="inqContact">담당자 연락처<span class="req">*</span></label>
+          <input type="text" class="inq-input" id="inqContact" placeholder="핸드폰 번호 또는 이메일" autocomplete="off">
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">필요 상담원 수</span>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqCnt" value="1명"><span>1명</span></label>
+            <label class="inq-chip"><input type="radio" name="inqCnt" value="2명"><span>2명</span></label>
+            <label class="inq-chip"><input type="radio" name="inqCnt" value="3명"><span>3명</span></label>
+            <label class="inq-chip"><input type="radio" name="inqCnt" value="2~3명"><span>2~3명</span></label>
+            <label class="inq-chip"><input type="radio" name="inqCnt" value="미정/상담 후 결정"><span>미정/상담 후 결정</span></label>
+          </div>
+        </div>
+
+        <div class="inq-row">
+          <label class="inq-label" for="inqPeriod">운영 기간 및 시작 희망일</label>
+          <input type="text" class="inq-input" id="inqPeriod" placeholder="예: 3개월 단기 / ASAP 또는 3월 1일 시작" autocomplete="off">
+        </div>
+
+        <div class="inq-row">
+          <label class="inq-label" for="inqTopic">주요 문의 내용</label>
+          <input type="text" class="inq-input" id="inqTopic" placeholder="예: 쇼핑몰 고객 응대, 단기 이벤트 콜 대행, 기술지원 등" autocomplete="off">
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">운영 유형</span>
+          <p class="inq-hint"><b>inbound</b> 고객이 걸어오는 전화를 받는 상담 · <b>outbound</b> 먼저 전화를 거는 상담</p>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqType" value="inbound"><span>inbound</span></label>
+            <label class="inq-chip"><input type="radio" name="inqType" value="outbound"><span>outbound</span></label>
+            <label class="inq-chip"><input type="radio" name="inqType" value="둘 다"><span>둘 다</span></label>
+          </div>
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">상담프로그램(CTI) 사용 여부</span>
+          <p class="inq-hint"><b>CTI</b>는 전화와 상담 프로그램을 연결해 주는 콜센터용 전화 시스템입니다. 이미 사용 중인 시스템이 있으면 ‘사용 중’을 선택해 주세요.</p>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqCti" value="미사용"><span>미사용</span></label>
+            <label class="inq-chip"><input type="radio" name="inqCti" value="사용 중"><span>사용 중</span></label>
+          </div>
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">정보열람 범위</span>
+          <p class="inq-hint">상담원이 업무 중 <b>볼 수 있는</b> 고객·내부 정보의 범위입니다.<br>
+            <b>상</b> 주민번호·계좌 등 민감정보까지 열람 · <b>중</b> 이름·연락처·이용내역 등 일반 개인정보 · <b>하</b> 개인정보 없이 일반 안내 위주</p>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqView" value="상"><span>상</span></label>
+            <label class="inq-chip"><input type="radio" name="inqView" value="중"><span>중</span></label>
+            <label class="inq-chip"><input type="radio" name="inqView" value="하"><span>하</span></label>
+          </div>
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">정보수집 범위</span>
+          <p class="inq-hint">상담 중 고객에게 <b>묻고 기록하는</b> 정보의 범위입니다.<br>
+            <b>상</b> 민감정보 또는 다수 항목 수집 · <b>중</b> 이름·연락처 등 기본 정보 · <b>하</b> 문의 내용 외 수집 거의 없음</p>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqCollect" value="상"><span>상</span></label>
+            <label class="inq-chip"><input type="radio" name="inqCollect" value="중"><span>중</span></label>
+            <label class="inq-chip"><input type="radio" name="inqCollect" value="하"><span>하</span></label>
+          </div>
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">인터넷 사용 제한</span>
+          <p class="inq-hint">상담 PC에서 외부 인터넷(검색·이메일·구글시트 등) 사용이 가능한지 알려주세요. 상담콘솔(구글시트)은 인터넷 접속이 필요합니다.</p>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqNet" value="불가"><span>불가</span></label>
+            <label class="inq-chip"><input type="radio" name="inqNet" value="가능"><span>가능</span></label>
+            <label class="inq-chip"><input type="radio" name="inqNet" value="제한적 가능"><span>제한적 가능</span></label>
+          </div>
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">운영 희망 범위</span>
+          <p class="inq-hint"><b>인력공급만</b> 상담 인력만 · <b>상담콘솔(구글시트)만</b> 자체 상담관리 시스템만 · <b>둘 다</b> 인력 + 콘솔</p>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqScope" value="인력공급만"><span>인력공급만</span></label>
+            <label class="inq-chip"><input type="radio" name="inqScope" value="상담콘솔(구글시트)만"><span>상담콘솔(구글시트)만</span></label>
+            <label class="inq-chip"><input type="radio" name="inqScope" value="둘 다"><span>둘 다</span></label>
+          </div>
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">요청 문서<span class="sub">중복 선택 가능</span></span>
+          <div class="inq-chips">
+            <label class="inq-chip check"><input type="checkbox" name="inqDoc" value="사업자등록증"><span>사업자등록증</span></label>
+            <label class="inq-chip check"><input type="checkbox" name="inqDoc" value="소개서"><span>소개서</span></label>
+            <label class="inq-chip check"><input type="checkbox" name="inqDoc" value="제안서"><span>제안서</span></label>
+            <label class="inq-chip check"><input type="checkbox" name="inqDoc" value="견적서"><span>견적서</span></label>
+          </div>
+        </div>
+
+        <div class="inq-row">
+          <label class="inq-label" for="inqEtc">그 외 문의</label>
+          <textarea class="inq-textarea" id="inqEtc" placeholder="추가 문의사항이나 특이사항을 적어주세요."></textarea>
+        </div>
+
+        <div class="inq-note">※ <b>기관 / 업체명</b>과 <b>담당자 연락처</b>는 필수입니다. 선택하지 않거나 비워 둔 항목은 복사 내용에서 빠지고, 선택한 항목을 다시 누르면 해제됩니다.</div>
+        <div class="inq-privacy">🔒 <b>개인정보 안내</b> · 이 창에 입력한 내용은 서버로 전송·저장되지 않고 이 화면에서만 사용됩니다. [작성 양식 복사] 또는 [메일 앱 열기]로 직접 보내주신 내용만 접수되며, 연락처는 회신 목적으로만 사용합니다.</div>
+      </div>
+
+      <div class="inq-foot">
+        <div class="inq-msg" id="inqMsg" role="status" aria-live="polite"></div>
+        <div class="inq-actions">
+          <button type="button" class="inq-btn primary" id="inqCopy">📋 작성 양식 복사</button>
+          <button type="button" class="inq-btn secondary" id="inqMail">✉ 메일 앱 열기</button>
+          <button type="button" class="inq-btn ghost" id="inqReset">초기화</button>
+          <button type="button" class="inq-btn ghost" id="inqClose2">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var TO = 'hello@voicebell.app';
+    var overlay = document.getElementById('inqOverlay');
+    var modal = document.getElementById('inqModal');
+    var msg = document.getElementById('inqMsg');
+    var opener = null;
+
+    function val(id) { return document.getElementById(id).value.trim(); }
+    function radio(name) { var c = modal.querySelector('input[name="' + name + '"]:checked'); return c ? c.value : ''; }
+    function checks(name) {
+      return Array.prototype.map.call(modal.querySelectorAll('input[name="' + name + '"]:checked'), function (c) { return c.value; }).join(', ');
+    }
+    // [항목명, 값을 읽는 함수] — 값이 비어 있으면 복사 내용에서 제외됩니다 (placeholder 예시는 값이 아니므로 포함되지 않음)
+    var FIELDS = [
+      ['기관 / 업체명', function () { return val('inqOrg'); }],
+      ['담당자 연락처', function () { return val('inqContact'); }],
+      ['필요 상담원 수', function () { return radio('inqCnt'); }],
+      ['운영 기간 및 시작 희망일', function () { return val('inqPeriod'); }],
+      ['주요 문의 내용', function () { return val('inqTopic'); }],
+      ['운영 유형', function () { return radio('inqType'); }],
+      ['상담프로그램(CTI) 사용 여부', function () { return radio('inqCti'); }],
+      ['정보열람 범위', function () { return radio('inqView'); }],
+      ['정보수집 범위', function () { return radio('inqCollect'); }],
+      ['인터넷 사용 제한', function () { return radio('inqNet'); }],
+      ['운영 희망 범위', function () { return radio('inqScope'); }],
+      ['요청 문서', function () { return checks('inqDoc'); }],
+      ['그 외 문의', function () { return val('inqEtc'); }]
+    ];
+
+    function buildText() {
+      var lines = ['[간편 제안 문의]'];
+      FIELDS.forEach(function (f) { var v = f[1](); if (v) lines.push(f[0] + ': ' + v); });
+      return lines.join('\n');
+    }
+    function setMsg(t, cls) { msg.textContent = t || ''; msg.className = 'inq-msg' + (cls ? ' ' + cls : ''); }
+    function validate() {
+      var bad = null;
+      ['inqOrg', 'inqContact'].forEach(function (id) {
+        var el = document.getElementById(id), empty = !el.value.trim();
+        el.classList.toggle('err', empty);
+        if (empty && !bad) bad = el;
+      });
+      if (bad) { setMsg('기관 / 업체명과 담당자 연락처를 입력해 주세요.', 'err'); bad.focus(); return false; }
+      return true;
+    }
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      return ok;
+    }
+    function copyForm() {
+      if (!validate()) return;
+      var text = buildText();
+      var done = function () { setMsg('✅ 복사되었습니다. 이메일 본문에 붙여넣어 ' + TO + ' 로 보내주세요.', 'ok'); };
+      var fail = function () { setMsg('복사에 실패했습니다. [메일 앱 열기]를 이용해 주세요.', 'err'); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text) ? done() : fail(); });
+      } else { fallbackCopy(text) ? done() : fail(); }
+    }
+    function openMail() {
+      if (!validate()) return;
+      var subject = '[간편 제안 문의] ' + val('inqOrg');
+      var body = buildText().replace(/\n/g, '\r\n');
+      window.location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      setMsg('메일 앱이 열리지 않으면 [작성 양식 복사] 후 직접 이메일로 보내주세요.', '');
+    }
+    function resetForm() {
+      if (!confirm('작성한 내용을 모두 지울까요?')) return;
+      Array.prototype.forEach.call(modal.querySelectorAll('input, textarea'), function (el) {
+        if (el.type === 'radio' || el.type === 'checkbox') el.checked = false; else el.value = '';
+        el.classList.remove('err');
+      });
+      setMsg('');
+    }
+    function openModal(e) {
+      if (e) e.preventDefault();
+      opener = document.activeElement;
+      overlay.classList.add('show');
+      document.body.classList.add('inq-lock');
+      setMsg('');
+      setTimeout(function () { document.getElementById('inqOrg').focus(); }, 30);
+    }
+    // 닫아도 입력 내용은 유지됩니다 (실수로 닫아도 다시 열면 그대로). 바깥 영역 클릭·ESC로는 닫히지 않습니다.
+    function closeModal() {
+      overlay.classList.remove('show');
+      document.body.classList.remove('inq-lock');
+      if (opener && opener.focus) opener.focus();
+    }
+
+    // 라디오는 한 번 선택하면 해제할 수 없으므로, 선택된 항목을 다시 누르면 해제되게 함
+    Array.prototype.forEach.call(modal.querySelectorAll('input[type=radio]'), function (r) {
+      r.addEventListener('mousedown', function () { r.dataset.was = r.checked ? '1' : ''; });
+      r.addEventListener('blur', function () { r.dataset.was = ''; });
+      r.addEventListener('click', function () { if (r.dataset.was === '1') r.checked = false; r.dataset.was = ''; });
+    });
+    ['inqOrg', 'inqContact'].forEach(function (id) {
+      document.getElementById(id).addEventListener('input', function () { this.classList.remove('err'); });
+    });
+    // 팝업 안에서만 Tab 이동
+    modal.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var f = Array.prototype.filter.call(modal.querySelectorAll('button, input, textarea'), function (el) { return !el.disabled && el.offsetParent !== null; });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    document.getElementById('inquiryOpen').addEventListener('click', openModal);
+    document.getElementById('inqClose').addEventListener('click', closeModal);
+    document.getElementById('inqClose2').addEventListener('click', closeModal);
+    document.getElementById('inqCopy').addEventListener('click', copyForm);
+    document.getElementById('inqMail').addEventListener('click', openMail);
+    document.getElementById('inqReset').addEventListener('click', resetForm);
+  })();
+  </script>
 
 </body>
 </html>
