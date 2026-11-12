@@ -1494,6 +1494,7 @@ function showEndScreen(title, html){
 }
 function sessionLost(msg){
   if(ended) return; ended = true; ctiBlocked = true; loggedOut = true;
+  try{ clearRecent(); }catch(e){}
   try{ CTI.disable(); }catch(e){}
   if(wlTimer){ clearInterval(wlTimer); wlTimer = null; }
   if(teamPollTimer){ clearInterval(teamPollTimer); teamPollTimer = null; }
@@ -1799,6 +1800,7 @@ function pushRecent(rec){   // 같은 상담번호(수정)는 갱신 후 맨 위
   try{ localStorage.setItem(recentKey(), JSON.stringify(list)); }catch(_){}
   renderRecent();
 }
+function clearRecent(){ try{ localStorage.removeItem(recentKey()); }catch(_){} renderRecent(); }   // 퇴근·접속 종료 시 최근 상담 목록(전화번호·문의 요약) 삭제
 function renderRecent(){
   const box = $('recentList'); if(!box) return;
   const list = loadRecent();
@@ -1950,6 +1952,7 @@ async function logout(){
   })();
   await Promise.race([finish, new Promise(r=>setTimeout(r,6000))]);
   loggedOut = true;
+  clearRecent();
   SESSION_TOKEN = '';
   if(wlTimer){ clearInterval(wlTimer); wlTimer = null; }
   hasUnsavedChanges = false;
