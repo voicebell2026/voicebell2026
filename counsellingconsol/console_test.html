@@ -31,7 +31,7 @@
   }
 
   #consoleScreen{
-    max-width:1480px;
+    max-width:1880px;
     margin:0 auto;
     padding:20px 20px 60px;
   }
@@ -133,13 +133,18 @@
   }
   .mini-copy-btn:hover{background:var(--surface-alt);color:var(--ink);}
 
+  /* 3분할: 가이드+검색결과 / 상세 답변+최근 상담 / 입력 영역. 폭이 좁으면 2분할, 더 좁으면 1열 */
   .input-grid{
     display:grid;
-    grid-template-columns:minmax(0,16fr) minmax(0,8fr);
+    grid-template-columns:minmax(0,3fr) minmax(0,4fr) minmax(0,3.3fr);
+    grid-template-areas:"a b c";
     gap:20px;
     align-items:start;
   }
-  .col-left,.col-right{
+  .col-left{grid-area:a;}
+  .col-mid{grid-area:b;}
+  .col-right{grid-area:c;}
+  .col-left,.col-mid,.col-right{
     display:flex;
     flex-direction:column;
     min-width:0;
@@ -147,8 +152,19 @@
   .col-right .panel-box{margin-top:16px;}
   .col-right .input-box-wrap + .input-box-wrap{margin-top:16px;}
   .col-left .result-list{max-height:380px;}
+  .col-mid .panel-box{margin-top:16px;}
+  .col-mid .panel-box:first-child{margin-top:0;}
+  .guide-box{margin-top:0;margin-bottom:14px;padding:10px 12px;}
+  .guide-safety{font-size:12.5px;font-weight:700;color:#C00000;background:#FCE4D6;border-radius:6px;padding:7px 10px;margin-bottom:8px;line-height:1.45;}
+  .guide-details summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--ink);}
+  .guide-sub{font-weight:400;color:var(--ink-muted);font-size:11.5px;}
+  .guide-list{margin:8px 0 2px;padding-left:20px;font-size:12.5px;line-height:1.55;color:var(--ink);}
+  .guide-list li{margin-bottom:4px;}
+  @media (max-width:1450px){
+    .input-grid{grid-template-columns:minmax(0,16fr) minmax(0,8fr);grid-template-areas:"a c" "b c";grid-template-rows:auto 1fr;}
+  }
   @media (max-width:900px){
-    .input-grid{grid-template-columns:1fr;}
+    .input-grid{grid-template-columns:1fr;grid-template-areas:"a" "b" "c";}
   }
   .input-box-wrap{
     display:flex;
@@ -465,8 +481,19 @@
 
     <!-- 왼쪽 (16): 검색결과 → 상세 답변 -->
     <div class="col-left">
+      <!-- 공통 안내 가이드 (문구는 아래 스크립트의 GUIDE_LINES 에서 수정) -->
+      <div class="panel-box show guide-box" id="guideBox">
+        <div class="guide-safety" id="guideSafety"></div>
+        <details class="guide-details" open>
+          <summary>💬 공통 안내 가이드 <span class="guide-sub">(조치 안내 · 접수 판단)</span></summary>
+          <ol class="guide-list" id="guideList"></ol>
+        </details>
+      </div>
   <div class="section-label" style="margin-bottom:8px;">검색결과 · 매칭 상위 순 (클릭해서 선택)</div>
   <div class="result-list" id="resultList"></div>
+    </div>
+
+    <div class="col-mid">
 
 
 
@@ -521,7 +548,7 @@
     </div>
     <div class="input-box-wrap">
       <div class="panel-header-wrap">
-        <div class="section-label">공통 확인 체크리스트 <span style="font-weight:400;letter-spacing:0;text-transform:none;">· 입력하면 상담이력 문의에 남고, 좌측 자료가 검색됩니다</span></div>
+        <div class="section-label">공통 확인 체크리스트 <span style="font-weight:400;letter-spacing:0;text-transform:none;">· 모두 상담이력 문의에 남고, 제품·증상·에러코드는 좌측 자료 검색에 반영됩니다</span></div>
       </div>
       <div class="checklist" id="commonChecklist">
         <div class="cl-row">
@@ -541,8 +568,8 @@
           <div class="cl-a"><input id="cl-why" placeholder="ex. 어제부터 / 한파 후 / 설치 직후" oninput="onChecklistInput()"></div>
         </div>
         <div class="cl-row">
-          <div class="cl-q">기타</div>
-          <div class="cl-a"><input id="cl-etc" placeholder="ex. 전원 재시작해 봄, 해본 조치 등" oninput="onChecklistInput()"></div>
+          <div class="cl-q">해본 조치</div>
+          <div class="cl-a"><input id="cl-etc" placeholder="ex. 전원 껐다 켬 / 밸브 확인함 / 배터리 교체" oninput="onChecklistInput()"></div>
         </div>
       </div>
     </div>
@@ -926,6 +953,23 @@ function renderResults(query = "") {
 let autoPrefix = '';          // 문의칸 맨 앞에 자동으로 넣은 체크리스트 줄
 let inqManual = false;        // 상담사가 자동 줄을 직접 고치면 true → 이후 체크리스트 자동 반영 중단
 const CL_IDS = ['cl-who','cl-when','cl-what','cl-why','cl-etc'];
+// 공통 안내 가이드 문구 (프로젝트마다 여기만 수정). 첫 줄은 안전 안내로 접어도 항상 표시됩니다.
+const GUIDE_LINES = [
+  '🚨 가스 냄새·연기·타는 냄새 → 사용 중지 안내 후 즉시 출동 접수',
+  '증상이 "고장"이면 → 난방·온수 중 무엇인지, 에러코드가 뜨는지 먼저 확인',
+  '(보일러) 가스·수도 밸브, 설정온도, 전원 확인 후 재시작 · (카본매트) 접속구·조절기 연결, 리모컨 배터리 확인',
+  '이미 해 봤는데 그대로이거나 에러코드가 반복되면 → 출동 접수',
+  '한파·난방 전무 등 급한 건 → 일정 우선 안내 (귀뚜라미 기준 확인 필요)'
+];
+function renderGuide(){
+  document.getElementById('guideSafety').textContent = GUIDE_LINES[0] || '';
+  const ol = document.getElementById('guideList'); ol.innerHTML = '';
+  GUIDE_LINES.slice(1).forEach(t => { const li = document.createElement('li'); li.textContent = t; ol.appendChild(li); });
+}
+renderGuide();
+// 검색에는 제품·모델 / 증상 / 에러코드 3칸만 사용 (언제부터·해본 조치는 기록·판단용)
+const SEARCH_CL_IDS = ['cl-who','cl-when','cl-what'];
+function searchChecklistValues(){ return SEARCH_CL_IDS.map(id => document.getElementById(id).value.trim()).filter(Boolean); }
 function checklistValues(){ return CL_IDS.map(id => document.getElementById(id).value.trim()).filter(Boolean); }
 function freeInquiryText(){
   const cur = document.getElementById('d-inquiry').value;
@@ -941,7 +985,7 @@ function syncChecklistToInquiry(){
   box.value = autoPrefix + rest;
 }
 function runSearch(){
-  const query = (freeInquiryText() + ' ' + checklistValues().join(' ')).trim();
+  const query = (freeInquiryText() + ' ' + searchChecklistValues().join(' ')).trim();
   selectedIdx = 0;
   renderResults(query);
   if(currentResults.length > 0) selectResult(0, true);
