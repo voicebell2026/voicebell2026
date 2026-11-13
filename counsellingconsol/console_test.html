@@ -442,6 +442,7 @@
         <span id="syncStatus" style="font-size:11.5px;color:var(--ink-muted);"></span>
         <button class="top-btn master-reset-btn" onclick="syncFaq(true)">🔃 FAQ 새로고침</button>
       </span>
+      <button class="top-btn" id="faqCsvBtn" style="display:none" title="시트의 최신 FAQ를 CSV로 저장합니다. 인터넷이 끊겼을 때 오프라인 콘솔의 [FAQ 불러오기]로 사용합니다." onclick="downloadFaqCsv()">⬇ FAQ(csv) 저장</button>
       <button class="top-btn" id="statsBtn" style="display:none" onclick="openStats()">📊 통계</button>
       <button class="top-btn" id="agentAdminBtn" style="display:none" onclick="openAgentAdmin()">👥 상담사 관리</button>
       <div class="clock" id="clock"></div>
@@ -485,7 +486,7 @@
   <!-- 최근 상담 5건 (이 PC 브라우저에 저장, 저장 버튼 누를 때 함께 기록) -->
   <div class="panel-box show" id="recentPanel">
     <div class="panel-header-wrap">
-      <div class="panel-title"><span>🕘</span> 최근 상담 5건 <span style="font-size:11px; color:var(--ink-muted); font-weight:normal;">(이 브라우저에서만 보이며 퇴근 시 삭제)</span></div>
+      <div class="panel-title"><span>🕘</span> 최근 상담 5건 <span style="font-size:11px; color:var(--ink-muted); font-weight:normal;">(이 브라우저에서만 보이며 퇴근 처리 시 삭제됨)</span></div>
     </div>
     <div id="recentList"></div>
   </div>
@@ -524,24 +525,24 @@
       </div>
       <div class="checklist" id="commonChecklist">
         <div class="cl-row">
-          <div class="cl-q">누가</div>
-          <div class="cl-a"><input id="cl-who" placeholder="ex. 구매자" oninput="onChecklistInput()"></div>
+          <div class="cl-q">제품·모델</div>
+          <div class="cl-a"><input id="cl-who" placeholder="ex. 가스보일러 L20 / 카본매트 KME-22 (본체 라벨)" oninput="onChecklistInput()"></div>
         </div>
         <div class="cl-row">
-          <div class="cl-q">언제·어디서</div>
-          <div class="cl-a"><input id="cl-when" placeholder="ex. 오늘 아침" oninput="onChecklistInput()"></div>
+          <div class="cl-q">증상</div>
+          <div class="cl-a"><input id="cl-when" placeholder="ex. 온수가 안 나옴 / 난방 안 됨 / 소음" oninput="onChecklistInput()"></div>
         </div>
         <div class="cl-row">
-          <div class="cl-q">무엇을·어떻게</div>
-          <div class="cl-a"><input id="cl-what" placeholder="ex. 모르는 거래처 3만원" oninput="onChecklistInput()"></div>
+          <div class="cl-q">에러코드</div>
+          <div class="cl-a"><input id="cl-what" placeholder="선택 · ex. 화면에 표시된 코드 그대로 (E1)" oninput="onChecklistInput()"></div>
         </div>
         <div class="cl-row">
-          <div class="cl-q">왜 (선택)</div>
-          <div class="cl-a"><input id="cl-why" placeholder="ex. 확인된 오류코드 또는 메시지" oninput="onChecklistInput()"></div>
+          <div class="cl-q">언제부터</div>
+          <div class="cl-a"><input id="cl-why" placeholder="ex. 어제부터 / 한파 후 / 설치 직후" oninput="onChecklistInput()"></div>
         </div>
         <div class="cl-row">
           <div class="cl-q">기타</div>
-          <div class="cl-a"><input id="cl-etc" placeholder="기타 확인한 내용 입력" oninput="onChecklistInput()"></div>
+          <div class="cl-a"><input id="cl-etc" placeholder="ex. 전원 재시작해 봄, 해본 조치 등" oninput="onChecklistInput()"></div>
         </div>
       </div>
     </div>
@@ -996,10 +997,37 @@ function showToast(msg){
   setTimeout(()=>toast.classList.remove('show'), 2400);
 }
 
+// 관리자: 지금 FAQ를 CSV로 저장 (인터넷 장애 시 오프라인 콘솔 [FAQ 불러오기]용). 저장 전에 시트에서 최신본을 한 번 받아 온다.
+function faqDataToCsvText(data){
+  const esc = (v) => {
+    v = (v === undefined || v === null) ? '' : String(v);
+    return (v.includes(',') || v.includes('"') || v.includes('\n')) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  };
+  const lines = [CSV_HEADER.join(',')];
+  data.forEach(item => {
+    const kw = item.keywords || [], syn = item.synonyms || [];
+    lines.push([item.id, item.category, item.subCategory, item.smallCat,
+      kw[0]||'', kw[1]||'', kw[2]||'', syn[0]||'', syn[1]||'', syn[2]||'',
+      item.qtype, item.answer, item.path, item.transfer ? 'O' : 'X', item.transferText || ''].map(esc).join(','));
+  });
+  return lines.join('\r\n');
+}
+async function downloadFaqCsv(){
+  try { await syncFaq(false); } catch(e) { /* 실패해도 마지막으로 받은 FAQ로 저장 */ }
+  const csv = faqDataToCsvText(faqData);
+  const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'FAQ_' + new Date().toISOString().slice(0, 10) + '.csv';
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  showToast('FAQ ' + faqData.length + '건을 CSV로 저장했습니다. (오프라인 콘솔 [FAQ 불러오기]에서 사용)');
+}
+
 function updateAdminUI(){
   const name = document.getElementById('agentName').textContent.trim();
   document.getElementById('agentAdminBtn').style.display = (adminUnlocked && SESSION_ROLE === 'admin') ? '' : 'none';
   document.getElementById('statsBtn').style.display = (adminUnlocked && SESSION_ROLE === 'admin') ? '' : 'none';
+  document.getElementById('faqCsvBtn').style.display = (adminUnlocked && SESSION_ROLE === 'admin') ? '' : 'none';
   document.getElementById('callCounter').style.display = isAdmin() ? 'none' : '';
   document.getElementById('dialBtn').style.display = '';
   if (typeof onInquiryInput === 'function') {
