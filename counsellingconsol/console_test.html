@@ -1096,6 +1096,33 @@ let editLock = false, loadedId = null, loadedPast = false;   // loadedPast: 지�
 const $ = id => document.getElementById(id);
 
 // 로그인하면 서버가 입장권(토큰)을 발급하고, 이후 모든 요청에 이 토큰을 함께 보냅니다. (HTML 안에는 비밀이 없음)
+// ===== 발신번호 받기: 전화 시스템이 주소 뒤에 번호를 붙여 열어 줄 때 (예: ?ani=01012345678) =====
+// 업체마다 파라미터 이름이 달라서 아래 이름들을 모두 받습니다. 번호를 읽으면 주소창에서는 바로 지웁니다(새로고침 중복 처리·기록 노출 방지).
+const ANI_PARAM_NAMES = ['ani','caller','callerid','caller_id','callernumber','caller_number','cid','clid','phone','tel','from','src','calling','number'];
+function normalizeAni(v){
+  let d = String(v == null ? '' : v).replace(/\D/g, '');             // 숫자만 남김 (하이픈·공백·괄호 제거, 주소의 '+'가 공백이 된 경우도 처리)
+  if(d.indexOf('0082') === 0) d = '0' + d.slice(4);                  // 0082-10-… → 010-…
+  else if(d.indexOf('82') === 0 && d.length >= 11 && d.length <= 12) d = '0' + d.slice(2);   // +82-10-… → 010-…
+  return (d.length >= 8 && d.length <= 15) ? d : '';                 // 전화번호 길이가 아니면 버림
+}
+function captureAniFromUrl(){
+  let found = '';
+  try{
+    const u = new URL(location.href), p = u.searchParams, keys = [];
+    p.forEach((val, key) => {
+      if(ANI_PARAM_NAMES.indexOf(key.toLowerCase()) < 0) return;
+      keys.push(key);
+      if(!found){ const n = normalizeAni(val); if(n) found = n; }
+    });
+    if(keys.length){
+      keys.forEach(k => p.delete(k));                                // 번호가 아닌 값이 들어 있어도 주소에서는 모두 제거
+      const qs = p.toString();
+      history.replaceState(null, '', u.pathname + (qs ? '?' + qs : '') + u.hash);
+    }
+  }catch(_){}
+  return found;
+}
+let PENDING_ANI = captureAniFromUrl();   // 로그인 전에 받은 번호는 로그인이 끝날 때까지 여기에 보관 (브라우저에는 저장하지 않음)
 let SESSION_TOKEN = '', SESSION_ROLE = '', ended = false;
 function gasGet(qs){ return GAS_URL + '?' + qs + '&token=' + encodeURIComponent(SESSION_TOKEN); }
 // 서버가 "접속 종료"를 알려오면 즉시 이 창을 멈춥니다 (다른 곳에서 로그인 / 관리자가 해제 / 시간 경과)
@@ -1151,10 +1178,16 @@ async function startConsole(){
   try { startFaqSync(); } catch(e) { console.warn(e); }
   try { startTeamMonitor(); } catch(e) { console.warn(e); }
 
-  const ani = new URLSearchParams(location.search).get('ani');
-  if(ani) {
-    try { onIncomingCall(ani); } catch(e) {}
+  if(PENDING_ANI){                       // 전화 시스템이 번호를 붙여 열어 준 경우
+    const n = PENDING_ANI; PENDING_ANI = '';
+    try { handleArrivedAni(n); } catch(e) { console.warn(e); }
   }
+}
+// 로그인 직후 도착한 번호 처리: 이미 [대기]면 바로 수신 처리, 아니면 수신번호 칸에 넣어 두고 [대기] → [받기] 안내
+function handleArrivedAni(num){
+  if(agentStatus === 'ready' && !ringing){ onIncomingCall(num); return; }
+  $('callNum').value = num;
+  showToast('📞 수신번호 ' + num + ' 입력됨 · [대기]로 바꾼 뒤 [받기]를 누르세요.');
 }
 // 통계: 관리자 전용 파일의 '통계' 탭을 최신으로 갱신하고 새 탭으로 엽니다
 async function openStats(){
@@ -1416,7 +1449,7 @@ function startTeamMonitor(){
 }
 
 // ===== 인터넷 전화(CTI) · 상담사 상태 =====
-// 전화 시스템 → 콘솔: ① 주소 뒤 ?ani=전화번호  ② window.postMessage({type:'CTI_RING',number:'010...'}) / {type:'CTI_END'}
+// 전화 시스템 → 콘솔: ① 주소 뒤 ?ani=전화번호 (caller·cid·phone·tel 등 여러 이름 가능, 읽은 뒤 주소에서 삭제)  ② window.postMessage({type:'CTI_RING',number:'010...'}) / {type:'CTI_END'}
 // 콘솔 → 전화 시스템: 아래 CTI.answer / hangup / setStatus 안에 전화 시스템의 호출을 넣으면 됩니다.
 const CTI_ORIGINS = [];   // postMessage를 보낼 전화 화면의 주소(예: 'https://cti.example.com'). 같은 주소는 기본 허용
 const CTI = {
