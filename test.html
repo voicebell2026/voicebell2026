@@ -539,6 +539,7 @@
   <div class="adm-dash" id="admDash">
     <div class="adm-tabs" id="admTabs"><button data-t="Home" class="on">현황</button><button data-t="Stats">통계</button><button data-t="Report">보고서</button><button data-t="Search">이력 검색</button><button data-t="Faq">FAQ 관리</button></div>
     <div class="adm-pane on" id="admPaneHome">
+    <div class="adm-card" id="admPendAlert" style="display:none;padding:10px 16px;"><span id="admPendAlertTxt" style="font-weight:700;"></span> <button class="pend-btn" style="margin:0 0 0 8px" onclick="admTab('Search')">이력 검색에서 보기 ▶</button></div>
     <div class="adm-card" id="admAddrCard" style="display:none">
       <h3>🌐 상담사 접속 주소 <span style="font-size:12px;color:var(--ink-muted);font-weight:normal;">상담사 PC 브라우저에 입력하거나 바탕화면 바로가기로 만드세요 · 공유기에서 이 PC의 IP를 고정해 두세요</span></h3>
       <div id="admAddr" style="font-family:var(--font-mono);font-size:14px;line-height:2"></div>
@@ -546,16 +547,16 @@
     <div class="adm-card">
       <h3>👥 실시간 근무현황 <span style="font-size:12px;color:var(--ink-muted);font-weight:normal;" id="admLiveInfo"></span></h3>
       <div id="admWork"></div>
+      <div id="admMonth" style="margin-top:14px;"></div>
     </div>
     <div class="adm-card">
-      <h3>📋 처리중 · 이관 <span id="admPendCnt" style="font-size:12px;color:var(--ink-muted);font-weight:normal;"></span>
-        <span class="seg" id="admPendSeg"><button data-f="" class="on">전체</button><button data-f="처리중">처리중</button><button data-f="이관">이관</button></span>
-        <span style="margin-left:auto;display:flex;gap:6px;">
-          <input type="text" id="admOpenNo" placeholder="상담번호 9자리" maxlength="9" inputmode="numeric" style="width:130px;border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-size:13px;" onkeypress="if(event.key==='Enter') admOpenNo()">
-          <button class="pend-btn" style="margin:0" onclick="admOpenNo()">열기</button>
-        </span>
-      </h3>
-      <div id="admPend"></div>
+      <h3>📆 일별 근무기록
+        <span style="margin-left:auto;display:flex;gap:6px;align-items:center;">
+          <button class="pend-btn" style="margin:0" onclick="admWorkDayMove(-1)">◀</button>
+          <input type="date" id="admWorkDate" onchange="admLoadWorkDay()" style="border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-size:13px;">
+          <button class="pend-btn" style="margin:0" onclick="admWorkDayMove(1)">▶</button>
+        </span></h3>
+      <div id="admWorkDay"></div>
     </div>
     </div>
     <div class="adm-pane" id="admPaneStats"><div class="adm-card"><h3>📊 상담 통계 <button class="pend-btn" style="margin-left:8px" onclick="loadStatsTab()">새로고침</button><span id="statsInfo" style="font-size:12px;color:var(--ink-muted);font-weight:normal"></span></h3><div id="statsBody">불러오는 중…</div></div></div>
@@ -586,7 +587,19 @@
       <div id="faqMsg" style="font-size:13px;margin-bottom:8px"></div>
       <div id="faqList"></div>
     </div></div>
-    <div class="adm-pane" id="admPaneSearch"><div class="adm-card">
+    <div class="adm-pane" id="admPaneSearch">
+    <div class="adm-card">
+      <h3>📋 미완료 상담 <span id="admPendCnt" style="font-size:12px;color:var(--ink-muted);font-weight:normal;"></span>
+        <span class="seg" id="admPendSeg"><button data-f="이관" class="on">이관 0</button><button data-f="처리중">처리중 0</button><button data-f="*">미완료 전체 0</button></span>
+        <span style="margin-left:auto;display:flex;gap:6px;">
+          <input type="text" id="admOpenNo" placeholder="상담번호 9자리" maxlength="9" inputmode="numeric" style="width:130px;border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-size:13px;" onkeypress="if(event.key==='Enter') admOpenNo()">
+          <button class="pend-btn" style="margin:0" onclick="admOpenNo()">열기</button>
+        </span>
+      </h3>
+      <div style="font-size:12px;color:var(--ink-muted);margin:-2px 0 8px;">이관·처리중인 상담만 표시합니다. 처리완료된 상담은 아래 [상담이력 검색]에서 결과를 [처리완료]로 골라 찾으세요.</div>
+      <div id="admPend"></div>
+    </div>
+<div class="adm-card">
       <h3>🔎 상담이력 검색</h3>
       <div class="flt">
         <input type="date" id="sFrom"> ~ <input type="date" id="sTo">
@@ -597,7 +610,7 @@
         <input type="text" id="sKey" placeholder="문의·안내 내용" style="width:150px">
         <input type="text" id="sPhone" placeholder="전화번호" style="width:130px">
         <input type="text" id="sId" placeholder="상담/고객번호" maxlength="9" style="width:110px">
-        <button class="pend-btn pri" onclick="runSearch()">검색</button>
+        <button class="pend-btn pri" onclick="runHistSearch()">검색</button>
         <button class="pend-btn" onclick="exportSearch()">⬇ CSV</button>
       </div>
       <div id="sInfo" style="font-size:12px;color:var(--ink-muted);margin-bottom:6px"></div>
@@ -664,7 +677,7 @@
   <div class="panel-box show" id="recentPanel">
     <div class="panel-header-wrap">
       <div class="panel-title"><span>🕘</span> 최근 상담 5건 <span style="font-size:11px; color:var(--ink-muted); font-weight:normal;">(이 브라우저에서만 보이며 퇴근 처리 시 삭제됨)</span>
-        <button class="pend-btn" onclick="openPendPopup()">📋 처리중·이관 보기</button></div>
+        <button class="pend-btn" onclick="openPendPopup()">📋 상담 목록 (처리중·이관·내 완료)</button></div>
     </div>
     <div id="recentList"></div>
   </div>
@@ -789,9 +802,9 @@
 <!-- 처리중·이관 목록 팝업 (상담사/관리자 공통) -->
 <div class="modal-overlay" id="pendModal">
   <div class="modal" style="width:760px;max-width:95vw;text-align:left;">
-    <div style="font-weight:800;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">📋 처리중 · 이관 상담
-      <span class="seg" id="pendSeg"><button data-f="" class="on">전체</button><button data-f="처리중">처리중</button><button data-f="이관">이관</button></span></div>
-    <div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">오래된 건부터 표시됩니다. 처리중 건은 불러와서 이어서 상담·수정할 수 있고, 이관 건은 보기만 가능합니다(처리 결과는 관리자가 변경).</div>
+    <div style="font-weight:800;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">📋 미완료 상담
+      <span class="seg" id="pendSeg"><button data-f="처리중" class="on">처리중</button><button data-f="이관">이관</button><button data-f="*">미완료 전체</button><button data-f="mine">내 처리완료</button></span></div>
+    <div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">처리중·이관은 모든 상담사의 건이 오래된 순으로 보입니다. 처리중 건은 불러와서 이어서 상담할 수 있고, 이관 건은 보기만 가능합니다(처리 결과는 관리자가 변경). [내 처리완료]는 내가 처리한 건만 최근 순으로 보이며, 불러와서 처리중·이관으로 다시 고칠 수 있습니다.</div>
     <div id="pendBox" style="max-height:55vh;overflow:auto;margin-top:10px;"></div>
     <div class="modal-btns" style="margin-top:12px;"><button class="btn-cancel" onclick="$('pendModal').classList.remove('show')">닫기</button></div>
   </div>
@@ -1526,23 +1539,23 @@ function renderAnswer(ans){
 function previewText(ans){ const p = splitAnswer(ans); return (p.line || p.body).replace(/\s*\n\s*/g, ' '); }
 function copyText(t, msg){
   const done = () => showToast(msg || '복사완료');
+  // http://서버IP:8444 처럼 보안 연결(HTTPS)이 아닌 주소에서는 navigator.clipboard 가 없으므로 legacyCopy 로 처리합니다
   if(navigator.clipboard && navigator.clipboard.writeText){
     navigator.clipboard.writeText(t).then(done).catch(() => legacyCopy(t, done));
   } else legacyCopy(t, done);
 }
 function legacyCopy(t, done){
-  const ta = document.createElement('textarea'); ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
-  document.body.appendChild(ta); ta.select();
-  try{ document.execCommand('copy'); done(); }catch(e){ showToast('복사에 실패했습니다.'); }
+  const ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, t.length);
+  let okc = false;
+  try{ okc = document.execCommand('copy'); }catch(e){}
   document.body.removeChild(ta);
+  if(okc) done(); else showToast('복사에 실패했습니다. 직접 선택해서 복사해 주세요.');
 }
 function copyTransfer(){
   const t = $('transferText').value;
   if(!t.trim()){ showToast('복사할 이관 내용이 없습니다.'); return; }
-  const msg = '📋 복사완료 · 상담이력 [안내] 칸에 붙여넣으세요 (Ctrl+V)';
-  navigator.clipboard.writeText(t).then(()=>showToast(msg)).catch(()=>{
-    $('transferText').select(); document.execCommand('copy'); showToast(msg);
-  });
+  copyText(t, '📋 복사완료 · 상담이력 [안내] 칸에 붙여넣으세요 (Ctrl+V)');
 }
 function newConsult(){
   loadedId = null; loadedPast = false; editLock = false; savedSig = ''; $('consultNo').value = '';
@@ -1652,9 +1665,26 @@ let agentStatus = 'start', ringing = false, ctiBlocked = false, talkDir = 'IN', 
 
 // ===== 최근 상담 5건: 브라우저(localStorage)에 저장, 상담사별 (전화번호는 입력한 그대로 표시) =====
 const RECENT_KEY = 'recentConsults_v2_', RECENT_MAX = 5;
+function maskPhoneUi(raw){   // 서버(lib/util.js maskPhone)와 같은 규칙: 010-1234-5671 → 010-1**4-***1
+  const t = String(raw || '').trim(); if(!t) return ''; if(t.indexOf('*') >= 0) return t;
+  const n = t.replace(/\D/g, ''); if(n.length < 7) return '';
+  let p = null;
+  if(n.length === 11) p = [n.slice(0,3), n.slice(3,7), n.slice(7)];
+  else if(n.length === 10 && n[1] === '2') p = [n.slice(0,2), n.slice(2,6), n.slice(6)];
+  else if(n.length === 10) p = [n.slice(0,3), n.slice(3,6), n.slice(6)];
+  else if(n.length === 9 && n[1] === '2') p = [n.slice(0,2), n.slice(2,5), n.slice(5)];
+  else if(n.length === 8) p = ['', n.slice(0,4), n.slice(4)];
+  if(!p) return n.slice(0,3) + '*'.repeat(Math.max(0, n.length - 4)) + n.slice(-1);
+  const b = p[1], c = p[2];
+  return (p[0] ? p[0] + '-' : '') + (b.length > 2 ? b[0] + '*'.repeat(b.length - 2) + b[b.length - 1] : '*'.repeat(b.length)) + '-' + '*'.repeat(c.length - 1) + c[c.length - 1];
+}
+function maskInText(t){   // 문의 요약 속 전화번호도 가림
+  return String(t || '').replace(/(^|[^\d])(0\d{1,2})[-.\s]?(\d{3,4})[-.\s]?(\d{4})(?!\d)/g, (m, pre, a, b, c) => pre + maskPhoneUi(a + b + c));
+}
 function recentKey(){ return RECENT_KEY + projectScope() + '_' + $('agentName').textContent.trim(); }
 function loadRecent(){ try{ return JSON.parse(localStorage.getItem(recentKey()) || '[]'); }catch(_){ return []; } }
 function pushRecent(rec){   // 같은 상담번호(수정)는 갱신 후 맨 위로
+  rec.phone = maskPhoneUi(rec.phone); rec.inquiry = maskInText(rec.inquiry);   // 전체 번호는 브라우저에 남기지 않음
   const old = loadRecent(), prev = old.find(x => x.id === rec.id);
   if(prev && !rec.phone) rec.phone = prev.phone || '';
   if(prev && !rec.cust) rec.cust = prev.cust || '';
@@ -1667,8 +1697,8 @@ function renderRecent(){
   const box = $('recentList'); if(!box) return;
   const list = loadRecent();
   box.innerHTML = list.length ? list.map(r => {
-    const inq = String(r.inquiry || '').replace(/\s*\n\s*/g, ' / ');
-    return `<div class="recent-row"><span class="recent-no">${escHtml(r.id)}</span><span class="recent-phone" title="고객번호">${escHtml(r.cust || '—')}</span><span class="recent-phone">${escHtml(r.phone || '—')}</span><span class="recent-inq" title="${escHtml(inq)}">${escHtml(inq)}</span></div>`;
+    const inq = maskInText(String(r.inquiry || '')).replace(/\s*\n\s*/g, ' / ');
+    return `<div class="recent-row"><span class="recent-no">${escHtml(r.id)}</span><span class="recent-phone" title="고객번호">${escHtml(r.cust || '—')}</span><span class="recent-phone">${escHtml(maskPhoneUi(r.phone) || '—')}</span><span class="recent-inq" title="${escHtml(inq)}">${escHtml(inq)}</span></div>`;
   }).join('') : '<div class="recent-empty">저장한 상담이 없습니다.</div>';
 }
 
@@ -1945,21 +1975,7 @@ function copyOfflineData() {
 안내: ${guide}
 ----------------------------------------`;
 
-  navigator.clipboard.writeText(offlineText).then(() => {
-    if (typeof showToast === 'function') {
-      showToast('📋 오프라인 상담 내용이 복사되었습니다! 메모장 등에 붙여넣으세요.');
-    } else {
-      alert('📋 오프라인 상담 내용이 클립보드에 복사되었습니다.');
-    }
-  }).catch(err => {
-    const textarea = document.createElement('textarea');
-    textarea.value = offlineText;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
-    alert('📋 오프라인 상담 내용이 클립보드에 복사되었습니다.');
-  });
+  copyText(offlineText, '📋 오프라인 상담 내용이 복사되었습니다! 메모장 등에 붙여넣으세요.');
 }
 </script>
 
@@ -1967,7 +1983,7 @@ function copyOfflineData() {
 // ===== 내부 서버 버전: 관리자 화면 · 처리중/이관 목록 =====
 function admDur(sec){ sec = Math.max(0, Math.floor(Number(sec)||0)); const h=Math.floor(sec/3600), m=Math.floor(sec%3600/60), s=sec%60, p=n=>String(n).padStart(2,'0'); return p(h)+':'+p(m)+':'+p(s); }
 function resultChip(r){ return '<span class="chip ' + (r==='처리중'?'ing':r==='이관'?'xfer':'') + '">' + escHtml(r||'처리완료') + '</span>'; }
-let admLiveTimer = null, admFilter = '', popFilter = '';
+let admLiveTimer = null, admFilter = '이관', popFilter = '처리중';
 function applyAdminLayout(){
   const adm = isAdmin();
   $('admDash').classList.toggle('show', adm); document.body.classList.toggle('is-admin', adm);
@@ -1982,7 +1998,7 @@ async function admRefresh(){
     const r = await postGas({type:'ADMIN_LIVE'});
     if(r.ok){ admRenderAddr(r.addr); admRenderWork(r); }
   }catch(e){ $('admLiveInfo').textContent = '서버 연결 끊김'; return; }
-  admLoadPend();
+  admLoadPend(); try{ admLoadWorkDay(); }catch(e){}
 }
 function admRenderAddr(list){
   const card = $('admAddrCard'); if(!card) return;
@@ -1990,10 +2006,7 @@ function admRenderAddr(list){
   card.style.display = '';
   $('admAddr').innerHTML = list.map(a => '<div>' + escHtml(a.url) + ' <span style="color:var(--ink-muted);font-size:12px">[' + escHtml(a.name) + ']</span> <button class="pend-btn" style="margin:0 0 0 6px" onclick="copyAddr(\'' + escHtml(a.url) + '\')">복사</button></div>').join('');
 }
-function copyAddr(u){
-  const ok = () => showToast('주소를 복사했습니다: ' + u);
-  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(u).then(ok, () => showToast(u)); } else showToast(u);
-}
+function copyAddr(u){ copyText(u, '주소를 복사했습니다: ' + u); }
 const WARN_SEC = {'후처리':600,'휴식':1200,'점심':3600};   // 이 시간을 넘으면 주황색으로 표시 (필요 시 조정)
 let admWorkAt = 0;
 function admRenderWork(r){
@@ -2001,6 +2014,8 @@ function admRenderWork(r){
   const on = new Map(); (r.presence||[]).forEach(p => on.set(p.agent, p));
   const rows = r.worklog || [];
   admWorkAt = Date.now();
+  admRenderMonth(r.monthly);
+  admRenderPendAlert(r.pending);
   if(!rows.length){ $('admWork').innerHTML = '<div class="adm-empty">오늘 근무 기록이 아직 없습니다.</div>'; return; }
   $('admWork').innerHTML = '<table class="adm-tbl"><thead><tr><th>상담사</th><th>현재 상태</th><th>출근</th><th>대기</th><th>통화</th><th>후처리</th><th>휴식·점심</th><th>IN</th><th>OUT</th><th>퇴근</th></tr></thead><tbody>' +
     rows.map(w => {
@@ -2012,6 +2027,35 @@ function admRenderWork(r){
     }).join('') + '</tbody></table>';
   tickWork();
 }
+function admWorkDayMove(n){ const el = $('admWorkDate'); el.value = addDaysS(el.value || addDaysS(todayS(), -1), n); admLoadWorkDay(); }
+async function admLoadWorkDay(){
+  const el = $('admWorkDate'), box = $('admWorkDay'); if(!el || !box) return;
+  if(!el.value) el.value = addDaysS(todayS(), -1);
+  try{
+    const r = await postGas({type:'ADMIN_WORKDAY', date: el.value});
+    if(!r.ok){ box.innerHTML = '<div class="adm-empty">' + escHtml(r.error || '불러오지 못했습니다.') + '</div>'; return; }
+    if(!r.rows.length){ box.innerHTML = '<div class="adm-empty">' + escHtml(r.date) + ' 근무 기록이 없습니다.</div>'; return; }
+    box.innerHTML = '<table class="adm-tbl"><thead><tr><th>상담사</th><th>출근</th><th>대기</th><th>통화</th><th>후처리</th><th>휴식·점심</th><th>IN</th><th>OUT</th><th>퇴근</th></tr></thead><tbody>' +
+      r.rows.map(w => '<tr><td><b>' + escHtml(w.agent) + '</b></td><td>' + escHtml(w.startTime||'—') + '</td><td>' + admDur(w.durations.ready) + '</td><td>' + admDur(w.durations.talking) + '</td><td>' + admDur(w.durations.after) + '</td><td>' + admDur(w.durations.rest) + '</td><td>' + w.counts.inbound + '</td><td>' + w.counts.outbound + '</td><td>' + escHtml(w.offTime||'—') + '</td></tr>').join('') + '</tbody></table>';
+  }catch(e){ box.innerHTML = '<div class="adm-empty">서버에 연결할 수 없습니다.</div>'; }
+}
+function admRenderPendAlert(p){
+  const box = $('admPendAlert'), btn = document.querySelector('#admTabs button[data-t=Search]'); if(!box) return;
+  const n1 = (p && p['처리중']) || 0, n2 = (p && p['이관']) || 0;
+  box.style.display = (n1 + n2) ? '' : 'none';
+  $('admPendAlertTxt').textContent = '📋 처리 대기 : 이관 ' + n2 + '건 · 처리중 ' + n1 + '건';
+  if(btn) btn.textContent = '이력 검색' + (n2 ? ' (이관 ' + n2 + ')' : '');
+}
+function admRenderMonth(m){
+  const box = $('admMonth'); if(!box) return;
+  if(!m || !m.rows || !m.rows.length){ box.innerHTML = ''; return; }
+  const sum = m.rows.reduce((a, w) => { ['ready','talking','after','rest'].forEach(k => a.d[k] += w.durations[k]); a.i += w.counts.inbound; a.o += w.counts.outbound; return a; }, { d:{ready:0,talking:0,after:0,rest:0}, i:0, o:0 });
+  const tr = (name, days, d, i, o, b) => '<tr' + (b ? ' style="font-weight:800;background:var(--surface-2,#f6f7fa)"' : '') + '><td>' + name + '</td><td>' + days + '일</td><td>' + admDur(d.ready) + '</td><td>' + admDur(d.talking) + '</td><td>' + admDur(d.after) + '</td><td>' + admDur(d.rest) + '</td><td>' + i + '</td><td>' + o + '</td></tr>';
+  box.innerHTML = '<div style="font-size:13px;font-weight:800;margin-bottom:6px;">📅 월간 누적 근무현황 <span style="font-size:12px;color:var(--ink-muted);font-weight:normal;">' + escHtml(m.label) + ' (' + escHtml(m.from.slice(5)) + ' ~ ' + escHtml(m.to.slice(5)) + ', 오늘 포함)</span></div>' +
+    '<table class="adm-tbl"><thead><tr><th>상담사</th><th>근무일</th><th>대기</th><th>통화</th><th>후처리</th><th>휴식·점심</th><th>IN</th><th>OUT</th></tr></thead><tbody>' +
+    m.rows.map(w => tr('<b>' + escHtml(w.agent) + '</b>', w.days, w.durations, w.counts.inbound, w.counts.outbound, false)).join('') +
+    (m.rows.length > 1 ? tr('합계', '', sum.d, sum.i, sum.o, true).replace('<td></일</td>','<td></td>').replace('<td>일</td>','<td></td>') : '') + '</tbody></table>';
+}
 function fmtMS(sec){ sec = Math.max(0, Math.floor(sec)); const m = Math.floor(sec/60), s = sec%60; return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0'); }
 function tickWork(){
   const add = (Date.now() - admWorkAt) / 1000;
@@ -2022,17 +2066,20 @@ function tickWork(){
 }
 setInterval(() => { try{ if(isAdmin()) tickWork(); }catch(e){} }, 1000);
 function pendTable(items, onclickName){
-  if(!items.length) return '<div class="adm-empty">처리중·이관 건이 없습니다.</div>';
+  if(!items.length) return '<div class="adm-empty">해당하는 건이 없습니다.</div>';
   return '<table class="adm-tbl"><thead><tr><th>상담번호</th><th>고객번호</th><th>상담사</th><th>분류</th><th>접수</th><th>결과</th><th>문의</th></tr></thead><tbody>' +
     items.map(i => '<tr class="clk" onclick="' + onclickName + '(\'' + i.id + '\')"><td>' + i.id + '</td><td>' + escHtml(i.customerNo||'—') + '</td><td>' + escHtml(i.agent||'') + '</td><td>' + escHtml([i.catL,i.catM].filter(Boolean).join(' > ')||'—') + '</td><td>' + escHtml((i.createdAt||'').slice(5,16)) + '</td><td>' + resultChip(i.result) + '</td><td>' + escHtml((i.inquiryShort||'').replace(/\s*\n\s*/g,' / ')) + '</td></tr>').join('') + '</tbody></table>';
 }
 async function admLoadPend(){
   try{
-    const r = await gasGetJson('action=queue&result=' + encodeURIComponent(admFilter) + '&_=' + Date.now());
+    // 관리자: 이관(관리자가 처리할 건)을 먼저, 처리중(상담사가 이어서 처리할 건)과 미완료 전체는 옆 탭으로. 건수는 탭에 표시
+    const r = await gasGetJson('action=queue&result=&_=' + Date.now());
     if(!r.ok) return;
     const n1 = r.items.filter(i => i.result==='처리중').length, n2 = r.items.filter(i => i.result==='이관').length;
-    $('admPendCnt').textContent = admFilter ? (r.items.length + '건') : ('처리중 ' + n1 + ' · 이관 ' + n2);
-    $('admPend').innerHTML = pendTable(r.items, 'openCase');
+    const bs = document.querySelectorAll('#admPendSeg button');
+    bs.forEach(x => { const f = x.dataset.f; x.textContent = (f==='*' ? '미완료 전체 ' + (n1 + n2) : f + ' ' + (f==='처리중' ? n1 : n2)); });
+    $('admPendCnt').textContent = '';
+    $('admPend').innerHTML = pendTable(r.items.filter(i => admFilter==='*' ? true : i.result===admFilter), 'openCase');
   }catch(e){}
 }
 document.addEventListener('click', ev => {
@@ -2046,9 +2093,13 @@ function openPendPopup(){ $('pendModal').classList.add('show'); loadPendPopup();
 async function loadPendPopup(){
   const box = $('pendBox'); box.textContent = '불러오는 중…';
   try{
-    const r = await gasGetJson('action=queue&result=' + encodeURIComponent(popFilter) + '&_=' + Date.now());
+    const [r, m] = await Promise.all([gasGetJson('action=queue&result=&_=' + Date.now()), gasGetJson('action=queue&result=mine&_=' + Date.now())]);
     if(!r.ok){ box.textContent = r.error || '불러오지 못했습니다.'; return; }
-    box.innerHTML = pendTable(r.items, 'openCase');
+    const mine = m.ok ? m.items : [];
+    const n1 = r.items.filter(i => i.result==='처리중').length, n2 = r.items.filter(i => i.result==='이관').length;
+    document.querySelectorAll('#pendSeg button').forEach(x => { const f = x.dataset.f; x.textContent = (f==='*' ? '미완료 전체 ' + (n1 + n2) : f==='mine' ? '내 처리완료 ' + mine.length : f + ' ' + (f==='처리중' ? n1 : n2)); x.classList.toggle('on', f===popFilter); });
+    const list = popFilter==='mine' ? mine : r.items.filter(i => popFilter==='*' ? true : i.result===popFilter);
+    box.innerHTML = pendTable(list, 'openCase');
   }catch(e){ box.textContent = '서버에 연결할 수 없습니다.'; }
 }
 // 상세 (읽기 전용). 상담사: 처리중 건은 [불러와서 수정], 관리자: 처리결과 변경
@@ -2061,12 +2112,13 @@ async function openCase(id){
     const row = (k, v, cls) => '<b>' + k + '</b><span class="' + (cls||'') + '">' + escHtml(v || '—') + '</span>';
     $('caseBody').innerHTML = row('결과', c.result) + row('상담사', c.agent) + row('접수', c.createdAt) + row('최종 수정', c.updatedAt + (c.lastEditor ? ' (' + c.lastEditor + ')' : '')) +
       row('전화번호', c.phone) + row('분류', [c.catL,c.catM,c.catS].filter(Boolean).join(' > ')) + row('문의 내용', c.inquiryNote, 'case-txt') + row('안내 내용', c.guide, 'case-txt');
+    if(!isAdmin() && r.canEdit && c.result === '처리완료') $('caseBody').innerHTML += '<b>안내</b><span>처리완료 때 연락처(전화·이메일·성함)는 이미 가려져 있어, 다시 처리하려면 필요한 내용을 새로 적어 주세요.</span>';
     const bt = $('caseBtns'); bt.innerHTML = '';
     const mk = (label, fn, primary) => { const b = document.createElement('button'); b.textContent = label; b.className = 'pend-btn'; b.style.margin = '0'; if(primary){ b.style.background = 'var(--accent)'; b.style.color = '#fff'; } b.onclick = fn; bt.appendChild(b); };
     if(isAdmin()){
       ['처리완료','처리중','이관'].filter(v => v !== c.result).forEach(v => mk('결과를 [' + v + '] 로 변경', () => setCaseResult(c.id, v), v==='처리완료'));
-    }else if(c.result === '처리중'){
-      mk('불러와서 이어서 수정', () => { $('caseModal').classList.remove('show'); $('pendModal').classList.remove('show'); $('consultNo').value = c.id; loadConsult(); }, true);
+    }else if(r.canEdit){
+      mk(c.result === '처리완료' ? '불러와서 다시 수정 (처리중·이관으로 변경 가능)' : '불러와서 이어서 수정', () => { $('caseModal').classList.remove('show'); $('pendModal').classList.remove('show'); $('consultNo').value = c.id; loadConsult(); }, true);
     }
     $('caseModal').classList.add('show');
   }catch(e){ showToast('서버에 연결할 수 없습니다.'); }
@@ -2091,6 +2143,8 @@ function admTab(name){
   if(name === 'Stats') loadStatsTab();
   if(name === 'Report' && !$('repBase').value){ $('repBase').value = addDaysS(todayS(), -1); $('repFrom').value = addDaysS(todayS(), -6); $('repTo').value = todayS(); }
   if(name === 'Faq') loadFaqTab();
+  if(name === 'Home') admLoadWorkDay();
+  if(name === 'Search') admLoadPend();
   if(name === 'Search' && !$('sFrom').value){ $('sFrom').value = addDaysS(todayS(), -6); $('sTo').value = todayS(); }
 }
 document.addEventListener('click', ev => { const b = ev.target.closest('#admTabs button'); if(b) admTab(b.dataset.t); });
@@ -2269,8 +2323,8 @@ window.DEMO_PUBLIC=true;
   const nowStr = () => new Date(Date.now() + 9*3600000).toISOString().slice(0,19).replace('T',' ');
   const NO = {ok:false, error:'체험 화면에서는 저장·변경되지 않습니다. (실제 서버에서는 바로 반영됩니다)'};
   const pendingCounts = () => ({ '처리중': ROWS.filter(r => r.result === '처리중').length, '이관': ROWS.filter(r => r.result === '이관').length });
-  const qItems = f => ROWS.filter(r => f ? r.result === f : (r.result === '처리중' || r.result === '이관')).slice().sort((a,b) => a.id < b.id ? -1 : 1)
-    .map(r => ({id:r.id, customerNo:r.customerNo, createdAt:r.createdAt, updatedAt:r.updatedAt || r.createdAt, agent:r.agent, catL:r.catL, catM:r.catM, catS:r.catS, phone:r.phone, result:r.result, inquiryShort:r.inquiryShort}));
+  const qItems = f => ROWS.filter(r => f === 'mine' ? (r.result === '처리완료' && !!VIEWS[r.id]) : f ? r.result === f : (r.result === '처리중' || r.result === '이관')).slice().sort((a,b) => f === 'mine' ? (a.id < b.id ? 1 : -1) : (a.id < b.id ? -1 : 1))
+    .slice(0, f === 'mine' ? 3 : 500).map(r => ({id:r.id, customerNo:r.customerNo, createdAt:r.createdAt, updatedAt:r.updatedAt || r.createdAt, agent:r.agent, catL:r.catL, catM:r.catM, catS:r.catS, phone:r.phone, result:r.result, inquiryShort:r.inquiryShort}));
   function searchRows(q){
     const has = (v, k) => !k || String(v || '').toLowerCase().includes(String(k).toLowerCase());
     return ROWS.filter(r => {
@@ -2309,8 +2363,16 @@ window.DEMO_PUBLIC=true;
     }
     if (t === 'ADMIN_LIVE') {
       const r = clone(LIVE); r.serverTime = nowStr(); r.pending = pendingCounts();
+      { const td = nowStr().slice(0,10), k = [9, 8, 9];   // 체험용 월간 누적 (오늘 값 × 근무일 수 가량)
+        r.monthly = { label: td.slice(0,7), from: td.slice(0,8) + '01', to: td, rows: r.worklog.map((w, i) => ({ agent: w.agent, days: k[i % 3],
+          durations: { ready: w.durations.ready * k[i % 3] + 1260, talking: w.durations.talking * k[i % 3] + 5400, after: w.durations.after * k[i % 3] + 2100, rest: w.durations.rest * k[i % 3] + 9000 },
+          counts: { inbound: w.counts.inbound * k[i % 3] + 14, outbound: w.counts.outbound * k[i % 3] + 3 } })) }; }
       r.presence.forEach(p => { p.ageSec = Math.floor(Math.random()*8); }); r.worklog.forEach(w => { w.ageSec = Math.floor(Math.random()*8); });
       return r;
+    }
+    if (t === 'ADMIN_WORKDAY') {   // 체험용: 날짜마다 조금씩 다른 샘플
+      const dt = payload.date || '', seed = (dt.split('-').reduce((a, x) => a + Number(x), 0)) % 5;
+      return {ok:true, date:dt, rows: clone(LIVE).worklog.map((w, i) => ({ agent:w.agent, startTime:'09:0' + ((i + seed) % 6) + ':00', durations:{ ready: 2400 + seed*180 + i*300, talking: 5200 + seed*240 - i*200, after: 780 + seed*60, rest: 4500 }, counts:{ inbound: 18 + seed*2 + i*3, outbound: 2 + (seed % 3) }, offTime:'18:0' + ((i + seed) % 6) + ':00' }))};
     }
     if (t === 'ADMIN_LIST') return {ok:true, agents:clone(SNAP.agents)};
     if (t === 'ADMIN_STATS') return clone(STATS);
