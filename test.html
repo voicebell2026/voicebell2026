@@ -206,6 +206,7 @@
   }
   .cl-row:last-child{border-bottom:none;}
   .cl-q{font-size:12px;color:var(--ink-muted);font-weight:600;}
+  #pendBox .chip{white-space:nowrap;}
   .cl-a input{
     width:100%;border:1px solid var(--border);border-radius:8px;
     padding:7px 10px;font-size:12.5px;font-family:var(--font-sans);outline:none;
@@ -802,7 +803,7 @@
 <!-- 처리중·이관 목록 팝업 (상담사/관리자 공통) -->
 <div class="modal-overlay" id="pendModal">
   <div class="modal" style="width:760px;max-width:95vw;text-align:left;">
-    <div style="font-weight:800;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">📋 미완료 상담
+    <div style="font-weight:800;font-size:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">📋 상담 목록
       <span class="seg" id="pendSeg"><button data-f="처리중" class="on">처리중</button><button data-f="이관">이관</button><button data-f="*">미완료 전체</button><button data-f="mine">내 처리완료</button></span></div>
     <div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">처리중·이관은 모든 상담사의 건이 오래된 순으로 보입니다. 처리중 건은 불러와서 이어서 상담할 수 있고, 이관 건은 보기만 가능합니다(처리 결과는 관리자가 변경). [내 처리완료]는 내가 처리한 건만 최근 순으로 보이며, 불러와서 처리중·이관으로 다시 고칠 수 있습니다.</div>
     <div id="pendBox" style="max-height:55vh;overflow:auto;margin-top:10px;"></div>
@@ -2108,7 +2109,7 @@ async function openCase(id){
     const r = await gasGetJson('action=view&id=' + encodeURIComponent(id));
     if(!r.ok){ showToast(r.error || '불러오지 못했습니다.'); return; }
     const c = r.record;
-    $('caseTitle').textContent = '상담 ' + c.id + '  ·  고객번호 ' + (c.customerNo || '—');
+    $('caseTitle').textContent = '상담번호 ' + c.id + '  ·  고객번호 ' + (c.customerNo || '—');
     const row = (k, v, cls) => '<b>' + k + '</b><span class="' + (cls||'') + '">' + escHtml(v || '—') + '</span>';
     $('caseBody').innerHTML = row('결과', c.result) + row('상담사', c.agent) + row('접수', c.createdAt) + row('최종 수정', c.updatedAt + (c.lastEditor ? ' (' + c.lastEditor + ')' : '')) +
       row('전화번호', c.phone) + row('분류', [c.catL,c.catM,c.catS].filter(Boolean).join(' > ')) + row('문의 내용', c.inquiryNote, 'case-txt') + row('안내 내용', c.guide, 'case-txt');
@@ -2124,7 +2125,7 @@ async function openCase(id){
   }catch(e){ showToast('서버에 연결할 수 없습니다.'); }
 }
 async function setCaseResult(id, result){
-  if(!confirm('상담 ' + id + ' 의 처리결과를 [' + result + '] 로 변경할까요?')) return;
+  if(!confirm('상담번호 ' + id + ' 의 처리결과를 [' + result + '] 로 변경할까요?')) return;
   try{
     const r = await postGas({type:'ADMIN_SET_RESULT', id, result});
     if(!r.ok){ showToast(r.error || '변경 실패'); return; }
