@@ -1,699 +1,161 @@
 <!DOCTYPE html>
+<!-- © 2026 SINGAGONGSAM Voicebell. 이 페이지의 문구·디자인의 무단 복제·재사용을 금합니다. -->
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<script>
-(function() {
-  if (localStorage.getItem('vb_lang') === 'en') {
-    document.documentElement.classList.add('lang-en-early');
-  }
-})();
-</script>
-<style>
-  .lang-en-early .ko { display: none !important; }
-</style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>개인정보처리방침 — VoiceBell</title>
-<meta name="description" content="VoiceBell 개인정보처리방침. 수집 항목, 보관 위치, 이용자 권리를 안내합니다.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --beige:     #F4F1EA;
-    --beige-mid: #EDE6D8;
-    --beige-dark:#D6CCBA;
-    --ink:       #2C2318;
-    --ink-mid:   #5C4F3A;
-    --ink-light: #9C8E78;
-    --purple:    #7B6FA0;
-    --purple-lt: #EDE7F6;
-    --purple-mid:#C5B8E0;
-    --green:     #4A7C59;
-    --green-lt:  #E8F5ED;
-    --accent:    #C17F3A;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--beige);
-    color: var(--ink);
-    font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 300;
-    line-height: 1.8;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--beige);
-    border-bottom: 1px solid var(--beige-dark);
-    padding: 0 2rem;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 56px;
-  }
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem; font-weight: 600; color: var(--ink);
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--purple); }
-  .nav-back {
-    font-size: 0.85rem; color: var(--ink-mid);
-    text-decoration: none; display: flex; align-items: center; gap: 6px;
-    transition: color 0.2s;
-  }
-  .nav-back::before {
-    content: '';
-    display: inline-block;
-    width: 16px; height: 16px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239C8E78' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='15 18 9 12 15 6'/%3E%3C/svg%3E");
-    background-size: contain; background-repeat: no-repeat; background-position: center;
-    flex-shrink: 0; transition: transform 0.2s;
-  }
-  .nav-back:hover { color: var(--ink); }
-  .nav-back:hover::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232C2318' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='15 18 9 12 15 6'/%3E%3C/svg%3E");
-    transform: translateX(-2px);
-  }
-
-
-  .lang-btn {
-    background: none; border: 1px solid var(--beige-dark);
-    border-radius: 4px; padding: 4px 10px;
-    font-size: 0.8rem; cursor: pointer; color: var(--ink-mid);
-    font-family: 'Noto Sans KR', sans-serif;
-    transition: all 0.2s;
-  }
-  .lang-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
-  .lang-controls { display: flex; gap: 6px; align-items: center; }
-  .nav-links { display: flex; align-items: center; gap: 2rem; }
-  .nav-links a {
-    font-size: 0.85rem;
-    color: var(--ink-mid);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--ink); }
-
-
-
-
-
-
-  /* ── LANG SWITCH ── */
-  body:not(.lang-en) .en { display: none !important; }
-  body.lang-en .ko { display: none !important; }
-
-  /* ── PAGE HEADER ── */
-  .page-top {
-    padding-top: 7rem;
-    padding-bottom: 3rem;
-    padding-left: 5%;
-    padding-right: 5%;
-    border-bottom: 1px solid var(--beige-dark);
-    background: var(--beige);
-  }
-  .page-top-inner {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  .page-eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--ink-light);
-    margin-bottom: 1rem;
-  }
-  .page-title {
-    font-family: 'Noto Serif KR', serif;
-    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-    font-weight: 300;
-    line-height: 1.25;
-    color: var(--ink);
-    margin-bottom: 0.4rem;
-  }
-  .page-title-en {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1rem, 2vw, 1.4rem);
-    font-style: italic;
-    color: var(--ink-light);
-    margin-bottom: 1.5rem;
-  }
-  .page-effective {
-    display: inline-block;
-    font-size: 0.8rem;
-    color: var(--ink-light);
-    border: 1px solid var(--beige-dark);
-    border-radius: 2px;
-    padding: 0.25rem 0.75rem;
-  }
-
-  /* ── CONTENT LAYOUT ── */
-  .content-wrap {
-    display: block;
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 4rem 5% 6rem;
-  }
-  /* ── ARTICLE ── */
-  article { width: 100%; }
-
-  .policy-section { margin-bottom: 3.5rem; }
-  .policy-section:last-child { margin-bottom: 0; }
-
-  .policy-section h2 {
-    font-family: 'Noto Serif KR', serif;
-    font-size: 1.05rem;
-    font-weight: 400;
-    color: var(--ink);
-    margin-bottom: 1.2rem;
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid var(--beige-dark);
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-  }
-  .art-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-weight: 300;
-    color: var(--beige-dark);
-  }
-
-  .policy-section h3 {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--ink-mid);
-    margin: 1.4rem 0 0.6rem;
-    letter-spacing: 0.04em;
-  }
-
-  .policy-section p {
-    font-size: 0.88rem;
-    color: var(--ink-mid);
-    line-height: 1.9;
-    margin-bottom: 0.8rem;
-  }
-
-  .policy-section ul, .policy-section ol {
-    padding-left: 1.2rem;
-    margin: 0.6rem 0;
-  }
-  .policy-section li {
-    font-size: 0.88rem;
-    color: var(--ink-mid);
-    line-height: 1.9;
-    margin-bottom: 0.3rem;
-  }
-  .policy-section li strong {
-    color: var(--ink);
-    font-weight: 500;
-  }
-
-  /* 항목 카드 */
-  .info-card {
-    background: var(--beige-mid);
-    border: 1px solid var(--beige-dark);
-    border-radius: 4px;
-    padding: 1.2rem 1.4rem;
-    margin: 1rem 0;
-  }
-  .info-card .item {
-    display: flex;
-    gap: 0.6rem;
-    font-size: 0.85rem;
-    color: var(--ink-mid);
-    line-height: 1.7;
-    padding: 0.4rem 0;
-    border-bottom: 1px solid var(--beige-dark);
-  }
-  .info-card .item:last-child { border-bottom: none; }
-  .info-card .item-label {
-    flex: 0 0 130px;
-    font-weight: 500;
-    color: var(--ink);
-    font-size: 0.82rem;
-  }
-
-  /* 외부 링크 */
-  .policy-section a {
-    color: var(--purple);
-    text-decoration: none;
-  }
-  .policy-section a:hover { text-decoration: underline; }
-
-  /* 강조 박스 */
-  .notice-box {
-    background: var(--green-lt);
-    border-left: 3px solid var(--green);
-    border-radius: 0 4px 4px 0;
-    padding: 1rem 1.2rem;
-    margin: 1rem 0;
-    font-size: 0.85rem;
-    color: var(--ink-mid);
-    line-height: 1.8;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--ink);
-    color: var(--beige-dark);
-    padding: 3.5rem 5% 2rem;
-  }
-  .footer-inner {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    gap: 3rem;
-    flex-wrap: wrap;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(214,204,186,0.2);
-    margin-bottom: 1.5rem;
-  }
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--beige);
-    letter-spacing: 0.04em;
-    margin-bottom: 0.5rem;
-  }
-  .footer-tagline {
-    font-size: 0.8rem;
-    color: var(--ink-light);
-    font-style: italic;
-    font-family: 'Cormorant Garamond', serif;
-    margin-bottom: 1.2rem;
-  }
-  .footer-biz {
-    font-size: 0.78rem;
-    color: var(--ink-light);
-    line-height: 2;
-  }
-  .footer-biz span { color: var(--beige-dark); }
-  .footer-links { list-style: none; }
-  .footer-links li { margin-bottom: 0.5rem; }
-  .footer-links a {
-    font-size: 0.82rem;
-    color: var(--ink-light);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: var(--beige); }
-  .footer-links a.active { color: var(--purple-mid); }
-  .footer-bottom {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.75rem;
-    color: var(--ink-light);
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  @media (max-width: 600px) {
-    .footer-inner { flex-direction: column; gap: 2rem; }
-    .footer-bottom { flex-direction: column; }
-    .content-wrap { padding: 3rem 5% 5rem; }
-  }
-
-  /* ── HAMBURGER + MOBILE MENU ── */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-    background: none;
-    border: none;
-  }
-  .hamburger span {
-    display: block;
-    width: 22px; height: 2px;
-    background: var(--ink);
-    border-radius: 2px;
-    transition: all 0.25s;
-  }
-  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  .mobile-menu {
-    display: none;
-    position: sticky;
-    top: 56px;
-    left: 0; right: 0;
-    background: rgba(244,241,234,0.98);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--beige-dark);
-    padding: 0.5rem 2rem;
-    z-index: 99;
-    flex-direction: column;
-  }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a {
-    font-size: 0.95rem; color: var(--ink-mid);
-    text-decoration: none;
-    padding: 0.9rem 0;
-    border-bottom: 1px solid var(--beige-dark);
-  }
-  .mobile-menu a:last-child { border-bottom: none; }
-  .mobile-menu .mobile-lang {
-    display: flex; gap: 0.5rem;
-    padding: 0.9rem 0; align-items: center;
-  }
-  .mobile-menu .mobile-lang-label {
-    font-size: 0.78rem; color: var(--ink-light); margin-right: 0.3rem;
-  }
-  .mobile-menu .m-lang-btn {
-    padding: 0.25rem 0.7rem; font-size: 0.78rem;
-    background: none; border: 1px solid var(--beige-dark);
-    border-radius: 4px; cursor: pointer; color: var(--ink-light);
-    font-family: 'Noto Sans KR', sans-serif; transition: all 0.2s;
-  }
-  .mobile-menu .m-lang-btn.active { background: var(--ink); color: var(--beige); border-color: var(--ink); }
-  @media (max-width: 600px) {
-    .lang-controls { display: none; }
-    .hamburger { display: flex; }
-  }
-</style>
-<script>
-  (function() {
-    if (localStorage.getItem('vb_lang') === 'en') {
-      var s = document.createElement('style');
-      s.id = 'early-lang';
-      s.textContent = 'body .ko{display:none!important}.lang-btn[onclick*=\'ko\']{background:none!important;color:var(--ink-mid)!important;border-color:var(--beige-dark)!important}.lang-btn[onclick*=\'en\']{background:var(--ink)!important;color:#fff!important;border-color:var(--ink)!important}';
-      document.head.appendChild(s);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>개인정보 처리방침 | Voicebell Consultation</title>
+  <meta name="robots" content="index,follow">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", Roboto, "Noto Sans KR", sans-serif; background: #f4f7fc; color: #1e293b; line-height: 1.75; }
+    header { background: rgba(244,247,252,0.95); box-shadow: 0 4px 20px rgba(0,0,0,0.04); padding: 16px 5%; }
+    .header-inner { max-width: 960px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .logo { text-decoration: none; display: flex; align-items: center; gap: 12px; }
+    .logo b { font-size: 20px; font-weight: 800; color: #0d1b2a; }
+    .logo span { font-size: 13px; font-weight: 600; color: #556987; letter-spacing: 1px; border-left: 1px solid #cbd5e1; padding-left: 12px; }
+    .back { text-decoration: none; color: #0052cc; border: 2px solid #0052cc; background: #fff; padding: 8px 18px; border-radius: 30px; font-size: 14px; font-weight: 700; white-space: nowrap; }
+    .back:hover { background: #0052cc; color: #fff; }
+    main { max-width: 960px; margin: 32px auto 60px; padding: 0 5%; }
+    .doc { background: #fff; border: 1px solid #e2e8f0; border-radius: 20px; padding: 44px 48px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+    h1 { font-size: 30px; font-weight: 900; color: #0d1b2a; letter-spacing: -0.5px; }
+    .lead { margin-top: 14px; color: #475569; font-size: 15.5px; word-break: keep-all; }
+    .meta { margin-top: 10px; font-size: 13px; color: #64748b; }
+    h2 { font-size: 19px; font-weight: 800; color: #0d1b2a; margin: 36px 0 10px; padding-top: 22px; border-top: 1px solid #e2e8f0; }
+    h2:first-of-type { border-top: none; padding-top: 0; margin-top: 28px; }
+    p, li { font-size: 15px; color: #334155; word-break: keep-all; }
+    p + p { margin-top: 8px; }
+    ul { margin: 8px 0 0 20px; }
+    li { margin: 4px 0; }
+    .tbl { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+    .tbl th, .tbl td { border: 1px solid #e2e8f0; padding: 10px 12px; vertical-align: top; text-align: left; word-break: keep-all; }
+    .tbl th { background: #f1f5f9; color: #0f172a; font-weight: 800; white-space: nowrap; }
+    .tbl-wrap { overflow-x: auto; }
+    .tbl-wrap + p, .tbl-wrap + ul { margin-top: 12px; }
+    .note { margin-top: 12px; font-size: 13.5px; color: #475569; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; }
+    a { color: #0052cc; }
+    footer { text-align: center; color: #64748b; font-size: 13px; padding: 0 5% 40px; }
+    @media (max-width: 700px) {
+      .doc { padding: 26px 20px; border-radius: 14px; }
+      h1 { font-size: 24px; }
+      .logo span { display: none; }
+      .tbl th { white-space: normal; }
     }
-  })();
-</script>
+    @media print { header, .back, footer { display: none; } body { background: #fff; } .doc { border: none; box-shadow: none; padding: 0; } }
+  </style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <a href="main.html" class="nav-logo">Voice<span>Bell</span></a>
-  <div class="lang-controls">
-    <button class="lang-btn active" onclick="setLang('ko')">한국어</button>
-    <button class="lang-btn" onclick="setLang('en')">English</button>
-    <a href="main.html" class="nav-back">
-      <span class="ko">홈으로</span>
-      <span class="en">Home</span>
-    </a>
-  </div>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="메뉴">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- 모바일 메뉴 -->
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-lang">
-    <span class="mobile-lang-label">Language</span>
-    <button class="m-lang-btn active" id="mLangKo" onclick="setLang('ko')">한국어</button>
-    <button class="m-lang-btn" id="mLangEn" onclick="setLang('en')">English</button>
-  </div>
-  <a href="main.html" onclick="closeMenu()">
-    <span class="ko">← 홈으로</span>
-    <span class="en">← Home</span>
-  </a>
-</div>
-
-<!-- PAGE HEADER -->
-<div class="page-top">
-  <div class="page-top-inner">
-    <p class="page-eyebrow"><span class="ko">법적 문서</span><span class="en">Legal</span></p>
-    <h1 class="page-title ko">개인정보처리방침</h1>
-    <h1 class="page-title en">Privacy Policy</h1>
-    <p class="page-title-en ko">Privacy Policy</p>
-    <p class="page-title-en en">개인정보처리방침</p>
-    <span class="page-effective"><span class="ko">시행일: 2026년 7월 1일</span><span class="en">Effective: July 1, 2026</span></span>
-  </div>
-</div>
-
-<!-- CONTENT -->
-<div class="content-wrap">
-
-  <!-- ARTICLE -->
-  <article>
-
-        <p style="font-size:0.88rem; color:var(--ink-mid); margin-bottom:2.5rem; line-height:1.9;">
-      <span class="ko">VoiceBell은 고객님의 개인정보를 소중히 다룹니다. 수집하는 정보, 사용 목적, 보관 방법을 안내합니다.</span>
-      <span class="en">VoiceBell takes your privacy seriously. This policy explains what we collect, why, and how we store it.</span>
-    </p>
-
-    <!-- 제1조 -->
-    <div class="policy-section" id="art1">
-      <h2>
-        <span class="art-num">01</span>
-        <span class="ko">수집 정보</span>
-        <span class="en">What We Collect</span>
-      </h2>
-
-      <div class="notice-box" style="background:#fff8e6; border-left-color:#C17F3A; margin-bottom:1rem;">
-        <span class="ko">만 14세 이상만 이용할 수 있습니다.</span>
-        <span class="en">This service is for users aged 14 and over.</span>
-      </div>
-
-      <h3><span class="ko">점주(이용자) 정보</span><span class="en">Owner (User) Information</span></h3>
-      <div class="info-card">
-        <div class="item">
-          <span class="item-label"><span class="ko">Gmail 계정 정보 (이메일, 앱 비밀번호)</span><span class="en">Gmail account info (email address, app password)</span></span>
-          <span><span class="ko">이용자가 직접 설정하는 매장 이메일 알림 발송용 계정입니다. (결제 완료, 매출 리포트, 임시 비밀번호 등)</span><span class="en">Used as the sender account for store email notifications configured by the user. (payment confirmation, sales reports, temporary password, etc.)</span></span>
-        </div>
-        <div class="item">
-          <span class="item-label"><span class="ko">이름</span><span class="en">Name</span></span>
-          <span><span class="ko">관리자 인증 기록, 비밀번호 변경·실패 알림 이름 표시, 이메일 알림 발신자 이름 설정에 사용됩니다.</span><span class="en">Used for admin authentication records, password change/failure notification name display, and email notification sender name.</span></span>
-        </div>
-      </div>
-
-      <h3><span class="ko">손님(키오스크 이용객) 정보</span><span class="en">Guest (Kiosk User) Information</span></h3>
-      <div class="notice-box">
-        <span class="ko">VoiceBell은 손님의 개인정보를 자체 서버에 저장하지 않습니다.<br>음성 주문은 브라우저의 Google Web Speech API 음성 인식 서비스를 이용하며 VoiceBell 서버를 거치지 않습니다.<br>손님이 이메일을 입력한 경우, 해당 이메일은 점주의 Gmail로만 전송되며 VoiceBell 서버에 저장되지 않습니다.</span>
-        <span class="en">VoiceBell does not store guest personal information on its own servers.<br>Voice orders use the browser's Google Web Speech API speech recognition service and never pass through VoiceBell servers.<br>If a guest enters their email, it is sent only via the owner's Gmail and not stored by VoiceBell.</span>
-      </div>
+  <header>
+    <div class="header-inner">
+      <a class="logo" href="/"><b>Voicebell</b><span>SINGAGONGSAM</span></a>
+      <a class="back" href="/">홈페이지로 돌아가기</a>
     </div>
+  </header>
 
-    <!-- 제2조 -->
-    <div class="policy-section" id="art2">
-      <h2>
-        <span class="art-num">02</span>
-        <span class="ko">정보 보관 위치</span>
-        <span class="en">Where We Store It</span>
-      </h2>
-      <div class="info-card">
-        <div class="item">
-          <span class="item-label"><span class="ko">이용자 PC 로컬</span><span class="en">Local PC (orders/)</span></span>
-          <span><span class="ko">주문 기록. 외부로 전송되지 않습니다.</span><span class="en">Order records. Never sent to external servers.</span></span>
-        </div>
+  <main>
+    <article class="doc">
+      <h1>개인정보 처리방침</h1>
+      <p class="lead">신가공삶(SINGAGONGSAM, 서비스명 Voicebell, 이하 &ldquo;회사&rdquo;)은 「개인정보 보호법」에 따라 이용자의 개인정보를 보호하고, 이와 관련한 고충을 신속하게 처리하기 위해 다음과 같이 개인정보 처리방침을 정하여 공개합니다. 이 방침은 이 홈페이지의 <b>제안 문의</b>와 <b>견적 문의</b>를 이용하시는 분께 적용됩니다.</p>
+      <p class="meta">시행일: 2026년 11월 18일</p>
+
+      <h2>1. 개인정보의 처리 목적, 항목 및 보유 기간</h2>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>처리 목적</th><td>제안·견적 문의의 접수, 문의 내용 확인과 회신, 요청하신 문서(소개서·제안서·견적서 등)의 전달</td></tr>
+          <tr><th>처리 항목</th><td>
+            <b>필수</b>: 기관(업체)명, 담당자 연락처(휴대전화번호 또는 이메일 주소)<br>
+            <b>선택</b>: 담당자 이름, 필요 상담원 수, 운영 기간·시간, 문의 내용, 이용자가 직접 적은 그 밖의 내용
+          </td></tr>
+          <tr><th>보유 및 이용 기간</th><td>문의 접수일부터 회신 완료 후 1년까지 보유한 뒤 지체 없이 파기합니다. 다만 계약이 체결된 경우에는 계약 및 관계 법령이 정한 기간 동안 해당 법령에 따라 보관합니다.</td></tr>
+        </table>
       </div>
-    </div>
+      <p class="note">이 홈페이지의 문의 창과 견적 예상 창에 입력하신 내용은 회사 서버로 전송되거나 저장되지 않고 이용자의 화면에서만 사용됩니다. 이용자가 [메일 앱 열기] 또는 [작성 양식 복사] 후 이메일(hello@voicebell.app)로 직접 보내신 내용만 회사가 받게 됩니다.</p>
 
-    <!-- 제3조 -->
-    <div class="policy-section" id="art3">
-      <h2>
-        <span class="art-num">03</span>
-        <span class="ko">제3자 제공</span>
-        <span class="en">Third-party Disclosure</span>
-      </h2>
-      <p>
-        <span class="ko">아래 경우에만 정보를 공유합니다.</span>
-        <span class="en">We only share your information in these cases.</span>
-      </p>
-      <div class="info-card">
-        <div class="item">
-          <span class="item-label">Gmail SMTP</span>
-          <span><span class="ko">이용자가 직접 설정한 Gmail 계정을 통해 매장 운영 알림(결제 알림, 매출 리포트, 비밀번호 변경 알림 등)을 발송합니다. 이 이메일은 VoiceBell 서버가 아닌 이용자 본인의 Gmail을 통해 발송됩니다.</span><span class="en">Sends store operation notifications (payment alerts, sales reports, password change alerts, etc.) via the Gmail account configured by the user. These emails are sent through the user's own Gmail, not VoiceBell's servers.</span></span>
-        </div>
+      <h2>2. 개인정보 처리의 위탁 및 국외 이전</h2>
+      <p>회사는 문의 이메일을 받고 회신하기 위해 아래의 외부 서비스를 이용하며, 이 과정에서 개인정보가 국외로 이전될 수 있습니다.</p>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>이전받는 자<br>(서비스)</th><th>이전 국가</th><th>이전 항목</th><th>이전 시기 및 방법</th><th>이용 목적</th><th>보유·이용 기간</th></tr>
+          <tr>
+            <td>Cloudflare, Inc.<br>(이메일 수신 전달)</td>
+            <td>미국</td>
+            <td>수신한 문의 이메일의 내용(기관명, 연락처, 문의 내용 등)</td>
+            <td>이용자가 이메일을 보낼 때마다 정보통신망을 통해 전송</td>
+            <td>수신 이메일을 회사가 사용하는 메일함으로 전달</td>
+            <td>전달 목적 달성 시까지(해당 사업자의 정책에 따름)</td>
+          </tr>
+          <tr>
+            <td>Google LLC<br>(Gmail)</td>
+            <td>미국</td>
+            <td>수신·회신 이메일의 내용(기관명, 연락처, 문의 내용, 회신 내용 등)</td>
+            <td>이메일을 받거나 회신할 때마다 정보통신망을 통해 전송</td>
+            <td>문의 이메일의 보관 및 회신</td>
+            <td>이 방침 제1항의 보유 기간까지, 이후 회사가 삭제</td>
+          </tr>
+          <tr>
+            <td>Resend, Inc.<br>(회신 메일 발송)</td>
+            <td>미국</td>
+            <td>회신 메일의 수신자 이메일 주소와 회신 내용</td>
+            <td>회사가 회신을 보낼 때마다 정보통신망을 통해 전송</td>
+            <td>회신 이메일의 발송</td>
+            <td>발송 목적 달성 시까지(해당 사업자의 정책에 따름)</td>
+          </tr>
+        </table>
       </div>
-      <p>
-        <span class="ko">그 외에는 동의 없이 공유하지 않습니다.</span>
-        <span class="en">We do not share your information with anyone else without your consent.</span>
-      </p>
-    </div>
-
-    <!-- 제4조 -->
-    <div class="policy-section" id="art4">
-      <h2>
-        <span class="art-num">04</span>
-        <span class="ko">개인정보 보관 기간</span>
-        <span class="en">Retention Period</span>
-      </h2>
+      <p>이전받는 자의 개인정보 처리에 관한 사항은 각 사업자의 개인정보 처리방침에서 확인하실 수 있습니다.</p>
       <ul>
-        <li><span class="ko">PC 로컬 데이터 (주문 기록): 이용자가 직접 삭제합니다.</span><span class="en">Local PC data (order records): deleted by you directly.</span></li>
-        <li><span class="ko">삭제를 요청하시려면 hello@voicebell.app으로 문의해 주세요.</span><span class="en">To request deletion, email hello@voicebell.app.</span></li>
+        <li>Cloudflare: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy</a></li>
+        <li>Google: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></li>
+        <li>Resend: <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener">resend.com/legal/privacy-policy</a></li>
       </ul>
-    </div>
+      <p class="note"><b>거부할 권리</b> · 이용자는 개인정보의 국외 이전에 동의하지 않을 수 있으며, 이 경우 위 이메일 경로로 문의를 보내지 않으시면 됩니다. 이메일을 보내지 않으면 문의 접수와 회신, 문서 전달이 제한될 수 있습니다.</p>
+      <p>회사는 상담 서비스 제공 과정에서 상담 업무를 수행하는 상담원의 로그인 인증 코드를 이메일로 보내기 위해서도 위 Resend 서비스를 이용합니다. 상담원과 근로자의 개인정보는 근로계약 체결 시 별도로 안내하고 동의를 받습니다.</p>
 
-    <!-- 제5조 -->
-    <div class="policy-section" id="art5">
-      <h2>
-        <span class="art-num">05</span>
-        <span class="ko">이용자의 권리</span>
-        <span class="en">Your Rights</span>
-      </h2>
-      <p>
-        <span class="ko">언제든지 정보 열람·수정·삭제를 요청할 수 있습니다.</span>
-        <span class="en">You can request to view, correct, or delete your information at any time.</span>
-      </p>
+      <h2>3. 개인정보의 파기 절차 및 방법</h2>
       <ul>
-        <li>
-          <span class="ko">PC 로컬 데이터는 <code style="font-size:0.82rem; background:var(--beige-mid); padding:0.1rem 0.3rem; border-radius:2px;">orders/</code> 폴더를 직접 삭제하세요.</span>
-          <span class="en">Delete the <code style="font-size:0.82rem; background:var(--beige-mid); padding:0.1rem 0.3rem; border-radius:2px;">orders/</code> folder to remove local data.</span>
-        </li>
-        <li>
-          <span class="ko">이메일 알림 설정은 카운터 → 기타업무 → 6)에서 수정·삭제할 수 있습니다.</span>
-          <span class="en">Email notification settings can be updated via Counter → Other Tasks → 6).</span>
-        </li>
+        <li>보유 기간이 지나거나 처리 목적이 달성된 개인정보는 지체 없이 파기합니다.</li>
+        <li>이메일 등 전자적 파일은 복구할 수 없는 방법으로 삭제하며, 종이로 출력한 문서는 파쇄하거나 소각합니다.</li>
+        <li>다른 법령에 따라 보존해야 하는 경우에는 해당 정보를 다른 정보와 분리하여 보관합니다.</li>
       </ul>
-    </div>
 
-    <!-- 제6조 -->
-    <div class="policy-section" id="art6">
-      <h2>
-        <span class="art-num">06</span>
-        <span class="ko">개인정보 보호 조치</span>
-        <span class="en">Security Measures</span>
-      </h2>
+      <h2>4. 정보주체의 권리와 행사 방법</h2>
+      <p>이용자는 회사에 대해 언제든지 개인정보 열람, 정정·삭제, 처리정지, 동의 철회를 요구할 수 있습니다. 아래 개인정보 보호책임자의 이메일로 요청하시면 지체 없이 조치하고 그 결과를 알려 드립니다. 대리인을 통해 요청하시는 경우에는 위임장 등 대리 권한을 확인할 수 있는 자료가 필요합니다.</p>
+
+      <h2>5. 개인정보의 안전성 확보 조치</h2>
       <ul>
-        <li><span class="ko">매장 내 로컬 네트워크에서만 작동합니다. 외부 접근이 차단됩니다.</span><span class="en">The service runs on your local network only. External access is blocked.</span></li>
-        <li><span class="ko">VoiceBell은 손님의 개인정보를 자체 서버에 저장하지 않으며, 주문 종료 후 매장 기기의 데이터도 자동으로 초기화됩니다.</span><span class="en">VoiceBell does not store guest personal information on its own servers. Device data is automatically cleared after the order ends.</span></li>
-        <li><span class="ko">관리자 비밀번호는 이용자 기기에만 저장됩니다.</span><span class="en">Admin passwords are stored on your device only.</span></li>
+        <li>개인정보를 취급하는 사람을 대표자로 한정하고 필요한 최소한의 범위에서만 접근합니다.</li>
+        <li>문의 내용은 접근이 제한된 업무용 이메일 계정에서만 확인하며, 보유 기간이 지난 메일은 정기적으로 삭제합니다.</li>
+        <li>개인정보를 불필요하게 출력하거나 복사해 두지 않습니다.</li>
       </ul>
-    </div>
 
-    <!-- 제7조 -->
-    <div class="policy-section" id="art7">
-      <h2>
-        <span class="art-num">07</span>
-        <span class="ko">제3자 서비스</span>
-        <span class="en">Third-party Services</span>
-      </h2>
-      <p>
-        <span class="ko">아래 서비스와 연동됩니다.</span>
-        <span class="en">We work with these services.</span>
-      </p>
-      <div class="info-card">
-        <div class="item">
-          <span class="item-label">Google Web Speech API</span>
-          <span><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></span>
-        </div>
-        <div class="item">
-          <span class="item-label">Gmail SMTP</span>
-          <span><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></span>
-        </div>
+      <h2>6. 쿠키 및 접속 정보</h2>
+      <p>이 홈페이지는 이용자를 추적하기 위한 쿠키나 분석 도구를 사용하지 않습니다. 다만 홈페이지를 제공하는 호스팅·네트워크 사업자와 외부 아이콘·글꼴 파일(cdnjs.cloudflare.com)을 불러오는 과정에서 이용자의 접속 정보(IP 주소 등)가 해당 사업자의 서버에 기록될 수 있습니다.</p>
+
+      <h2>7. 개인정보 보호책임자</h2>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>사업자</th><td>신가공삶 (SINGAGONGSAM)</td></tr>
+          <tr><th>개인정보 보호책임자</th><td>대표 노순영</td></tr>
+          <tr><th>연락처</th><td><a href="mailto:hello@voicebell.app">hello@voicebell.app</a></td></tr>
+        </table>
       </div>
-    </div>
+      <p>개인정보와 관련한 문의, 불만 처리, 피해 구제 요청은 위 연락처로 접수해 주시면 신속하게 답변드리겠습니다.</p>
 
-    <!-- 제8조 -->
-    <div class="policy-section" id="art8">
-      <h2>
-        <span class="art-num">08</span>
-        <span class="ko">개인정보 보호책임자</span>
-        <span class="en">Privacy Contact</span>
-      </h2>
-      <div class="info-card">
-        <div class="item">
-          <span class="item-label"><span class="ko">이메일</span><span class="en">Email</span></span>
-          <span><a href="mailto:hello@voicebell.app">hello@voicebell.app</a></span>
-        </div>
-        <div class="item">
-          <span class="item-label"><span class="ko">처리 기간</span><span class="en">Response time</span></span>
-          <span><span class="ko">영업일 기준 7일 이내</span><span class="en">Within 7 business days</span></span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 제9조 -->
-    <div class="policy-section" id="art9">
-      <h2>
-        <span class="art-num">09</span>
-        <span class="ko">방침의 변경</span>
-        <span class="en">Changes to This Policy</span>
-      </h2>
-      <p>
-        <span class="ko">본 방침이 변경될 경우, 변경 7일 전에 서비스 홈페이지 또는 이메일을 통해 공지합니다. 중요한 변경의 경우 30일 전에 공지합니다.</span>
-        <span class="en">If this policy is updated, we will notify you at least 7 days in advance via the website or email. For material changes, we will provide at least 30 days' notice.</span>
-      </p>
-    </div>
-
-  </article>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div>
-      <div class="footer-logo">VoiceBell</div>
-      <div class="footer-tagline">Order by voice, or just tap.</div>
-      <div class="footer-biz">
-        <span class="ko">
-          상호명: <span>신가공삶</span><br>
-          대표자: <span>노순영</span><br>
-          사업자등록번호: <span>448-17-02829</span><br>
-          이메일: <span>hello@voicebell.app</span>
-        </span>
-        <span class="en">
-          Business name: <span>Singagong-salm</span><br>
-          Representative: <span>Roh Soon-young</span><br>
-          Business reg. no.: <span>448-17-02829</span><br>
-          Email: <span>hello@voicebell.app</span>
-        </span>
-      </div>
-    </div>
-    <div>
-      <ul class="footer-links">
-        <li><a href="terms.html"><span class="ko">이용약관</span><span class="en">Terms of Service</span></a></li>
-        <li><a href="privacy.html" class="active"><span class="ko">개인정보처리방침</span><span class="en">Privacy Policy</span></a></li>
-        <li><a href="licenses.html"><span class="ko">오픈소스 라이선스</span><span class="en">Open Source Licenses</span></a></li>
-        <li><a href="faq.html">FAQ</a></li>
+      <h2>8. 권익침해 구제 방법</h2>
+      <p>개인정보 침해에 대한 신고나 상담이 필요하시면 아래 기관에 문의하실 수 있습니다.</p>
+      <ul>
+        <li>개인정보침해 신고센터 (한국인터넷진흥원) : 국번 없이 118 · privacy.kisa.or.kr</li>
+        <li>개인정보 분쟁조정위원회 : 1833-6972 · kopico.go.kr</li>
+        <li>대검찰청 : 국번 없이 1301 · spo.go.kr</li>
+        <li>경찰청 사이버범죄 신고시스템 : 국번 없이 182 · ecrm.police.go.kr</li>
       </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 VoiceBell. All rights reserved.</span>
-  </div>
-</footer>
 
-<script>
-function setLang(lang) {
-  localStorage.setItem('vb_lang', lang);
-  const isEn = lang === 'en';
-  // early-lang 스타일 제거 (ko 전환 시 !important 해제)
-  if (!isEn) {
-    const earlyLang = document.getElementById('early-lang');
-    if (earlyLang) {
-      earlyLang.remove();
-      document.querySelectorAll('.ko').forEach(el => el.style.removeProperty('display'));
-    }
-    document.documentElement.classList.remove('lang-en-early');
-  }
-  document.body.classList.toggle('lang-en', isEn);
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
-  document.querySelectorAll('.m-lang-btn').forEach(b => b.classList.remove('active'));
-  const mBtn = document.getElementById(isEn ? 'mLangEn' : 'mLangKo');
-  if (mBtn) mBtn.classList.add('active');
-  document.documentElement.lang = lang;
-}
-function toggleMenu() {
-  const h = document.getElementById('hamburger');
-  const m = document.getElementById('mobileMenu');
-  h.classList.toggle('open');
-  m.classList.toggle('open');
-}
-function closeMenu() {
-  document.getElementById('hamburger').classList.remove('open');
-  document.getElementById('mobileMenu').classList.remove('open');
-}
-// 언어 복원
-document.addEventListener('DOMContentLoaded', function() {
-  const lang = localStorage.getItem('vb_lang') ?? 'ko';
-  setLang(lang);
-});
-</script>
+      <h2>9. 처리방침의 변경</h2>
+      <p>이 개인정보 처리방침은 법령이나 서비스의 변경에 따라 바뀔 수 있으며, 내용을 변경하는 경우 이 페이지에 시행일과 함께 공지합니다.</p>
+      <p class="meta">공고일 및 시행일: 2026년 11월 18일</p>
+    </article>
+  </main>
+
+  <footer>© 2026 SINGAGONGSAM. All rights reserved.</footer>
 </body>
 </html>
