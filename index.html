@@ -346,7 +346,7 @@
       </div>
       <div class="feature-item">
         <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
-        <div class="feature-title">폐쇄형 내부 서버</div>
+        <div class="feature-title">사업장 내부 서버</div>
         <div class="feature-desc">상담 데이터는 사업장 서버에만 저장</div>
       </div>
       <div class="feature-item">
@@ -460,10 +460,10 @@
     <div class="tech-box">
       <div class="tech-info">
         <span class="section-num" style="color: #60a5fa;">OUR TECHNOLOGY</span>
-        <h3>폐쇄형 내부 서버 기반 상담관리 시스템</h3>
+        <h3>사업장 내부 서버 기반 상담관리 시스템</h3>
         <p>
           상담원의 경험에만 의존하지 않고 자체 상담콘솔로 업무 지식과 상담 이력을 체계적으로 관리합니다.<br><br>
-          상담 이력과 고객 정보는 <strong>외부 클라우드나 공유 문서에 올리지 않고 사업장 내부 서버에만 저장</strong>합니다. 인터넷은 로그인 코드 메일 발송 등에만 사용하며, 프로젝트(발주처)마다 서버와 데이터를 따로 구성합니다.
+          상담 이력과 고객 정보는 <strong>외부 클라우드나 공유 문서에 올리지 않고 사업장 내부 서버에만 저장</strong>합니다. 서버는 외부에서 접속할 수 없도록 운영하고, 인터넷은 통신사 전화 회선 연결 등 필요한 경우에만 밖으로 연결합니다. 프로젝트(발주처)마다 서버와 데이터를 따로 구성합니다.
         </p>
         <a href="/test.html" target="_blank" class="btn-main" style="background: #0052cc;">상담콘솔 체험하기 &rarr;</a>
       </div>
@@ -472,7 +472,7 @@
           <li><strong>FAQ 스마트 검색</strong><br>키워드·유사표현 분석(Bigram)으로 알맞은 답변 안내</li>
           <li><strong>상담·고객 이력</strong><br>같은 전화번호는 한 고객으로 묶어 이전 상담 조회</li>
           <li><strong>관리자 대시보드</strong><br>실시간 근무 현황 · 통계 · 보고서 · 이력 검색</li>
-          <li><strong>일회용 코드 로그인</strong><br>로그인할 때마다 등록된 메일로 6자리 코드 발급</li>
+          <li><strong>개별 계정 로그인</strong><br>사번·비밀번호 로그인, 실패가 반복되면 접속 제한</li>
           <li><strong>장애 대비</strong><br>백업 · 오프라인 비상 콘솔 · 복구 후 이력 통합</li>
           <!-- 클릭 시 main.html로 이동하는 파란색 포인트 별도 사업 분야 카드 -->
           <li class="side-business-link">
@@ -506,7 +506,7 @@
         <ul>
           <li>정확성, 친절성, 신속성, 처리 완결성 중심 케어</li>
           <li>최소한의 필수 개인정보만 처리, 고객 전화번호는 암호화 저장</li>
-          <li>상담사별 일회용 코드 로그인, 한 사람은 한 곳에서만 접속</li>
+          <li>상담사별 사번·비밀번호 로그인, 한 사람은 한 곳에서만 접속</li>
           <li>일일 백업과 외장 디스크 백업을 운영 기준으로, 장애 시 오프라인 콘솔로 업무 지속</li>
           <li>계약 종료 시 데이터 납품·파기 (요청 시 파기 확인서 제출)</li>
         </ul>
@@ -599,7 +599,31 @@
         </div>
 
         <div class="inq-row">
-          <span class="inq-label">상담프로그램(CTI) 사용 여부</span>
+          <span class="inq-label">대표번호 종류</span>
+          <p class="inq-hint">상담을 받을 전화번호의 종류입니다. 아직 번호가 없으면 <b>신규(번호 없음)</b>를 선택해 주세요.</p>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqLine" value="일반 유선"><span>일반 유선</span></label>
+            <label class="inq-chip"><input type="radio" name="inqLine" value="인터넷전화"><span>인터넷전화</span></label>
+            <label class="inq-chip"><input type="radio" name="inqLine" value="15xx 전국대표번호"><span>15xx 전국대표번호</span></label>
+            <label class="inq-chip"><input type="radio" name="inqLine" value="휴대폰"><span>휴대폰</span></label>
+            <label class="inq-chip"><input type="radio" name="inqLine" value="신규(번호 없음)"><span>신규(번호 없음)</span></label>
+            <label class="inq-chip"><input type="radio" name="inqLine" value="모름"><span>모름</span></label>
+          </div>
+          <input type="text" class="inq-input" id="inqCarrier" style="margin-top:8px" placeholder="이용 중인 통신사 (예: KT, SK, LG U+, 모름)" autocomplete="off" aria-label="통신사">
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">통화 녹음 필요 여부</span>
+          <p class="inq-hint">기본 운영에는 통화 녹음이 포함되지 않습니다. 필요하시면 협의 후 별도로 구성합니다.</p>
+          <div class="inq-chips">
+            <label class="inq-chip"><input type="radio" name="inqRec" value="불필요"><span>불필요</span></label>
+            <label class="inq-chip"><input type="radio" name="inqRec" value="필요"><span>필요</span></label>
+            <label class="inq-chip"><input type="radio" name="inqRec" value="협의 후 결정"><span>협의 후 결정</span></label>
+          </div>
+        </div>
+
+        <div class="inq-row">
+          <span class="inq-label">전화·상담프로그램 연동(CTI) 사용 여부</span>
           <p class="inq-hint"><b>CTI</b>는 전화와 상담 프로그램을 연결해 주는 콜센터용 전화 시스템입니다. 이미 사용 중인 시스템이 있으면 ‘사용 중’을 선택해 주세요.</p>
           <div class="inq-chips">
             <label class="inq-chip"><input type="radio" name="inqCti" value="미사용"><span>미사용</span></label>
@@ -728,7 +752,7 @@
           <div class="inq-chips">
             <label class="inq-chip"><input type="radio" name="estCnt" value="1"><span>1명</span></label>
             <label class="inq-chip"><input type="radio" name="estCnt" value="2"><span>2명</span></label>
-            <label class="inq-chip"><input type="radio" name="estCnt" value="3"><span>3명</span></label>
+            <label class="inq-chip"><input type="radio" name="estCnt" value="3"><span>3명 (피크 기간 포함)</span></label>
           </div>
         </div>
         <div class="inq-row">
@@ -841,7 +865,10 @@
       }],
       ['주요 문의 내용', function () { return val('inqTopic'); }],
       ['운영 유형', function () { return radio('inqType'); }],
-      ['상담프로그램(CTI) 사용 여부', function () { return radio('inqCti'); }],
+      ['대표번호 종류', function () { return radio('inqLine'); }],
+      ['통신사', function () { return val('inqCarrier'); }],
+      ['통화 녹음 필요 여부', function () { return radio('inqRec'); }],
+      ['전화·상담프로그램 연동(CTI) 사용 여부', function () { return radio('inqCti'); }],
       ['업무 난이도', function () { return radio('inqLevel'); }],
       ['민원(항의) 성향', function () { return radio('inqComplaint'); }],
       ['정보열람 범위', function () { return radio('inqView'); }],
@@ -1039,7 +1066,7 @@
         '<br>월 평균 기준 (운영 기간 약 ' + c.months + '개월로 계산)' +
         (c.plan ? '<br>어울리는 제안안 : <b>' + c.plan + '</b>' : '') +
         (c.hours === 'etc' ? '<br><b>※ 기타 스케줄은 협의 후 확정되며, 위 금액은 평일 기준 참고치입니다.</b>' : '') +
-        '<br>※ 참고용 예상치입니다. 통화 녹음·ARS 연동 등은 포함하지 않으며 협의 후 견적서로 확정합니다.</div>';
+        '<br>※ 참고용 예상치입니다. 통화 녹음·ARS 연동과 전화번호·회선·통화료 등 통신 비용은 포함하지 않으며 협의 후 견적서로 확정합니다.</div>';
       html += '<div class="est-actions">' +
         '<button type="button" class="inq-btn secondary" id="estCopy2">📋 입력한 내용 복사</button>' +
         '<a class="inq-btn primary" id="estMailLink" href="#">✉ hello@voicebell.app</a></div>' +
@@ -1069,7 +1096,7 @@
       if (c.setup > 0) L.push('- 초기 구축비(1회): 약 ' + man(c.setup));
       if (c.plan) L.push('어울리는 제안안: ' + c.plan);
       if (c.hours === 'etc') L.push('※ 기타 스케줄은 협의 후 확정 (위 금액은 평일 기준 참고치)');
-      L.push('※ 참고용 예상치이며 통화 녹음·ARS 연동은 별도 협의, 정식 견적은 협의 후 견적서로 확정');
+      L.push('※ 참고용 예상치이며 통화 녹음·ARS 연동, 통신 비용(번호·회선·통화료)은 별도 협의, 정식 견적은 협의 후 견적서로 확정');
       return L.join('\n');
     }
     function doCalc() {
